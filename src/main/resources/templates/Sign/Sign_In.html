@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="layout/config :: header('IPTABLE_Sign_In')">
+    </head>
+    <body>
+        <nav th:replace="layout/nav_no">
+        </nav>
+        <div class="container">
+            <div class="m-5">
+                <p class="fs-1 text-center">IPTABLECOMMANDCODE_REGISTER</p>
+            </div>
+            <div>
+                <!--                아이디-->
+                <div class="d-flex justify-content-center">
+                    <div class="col-1">
+                        <p class="fs-5">ID : </p>
+                    </div>
+                    <div class="col-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control col-5" id="ID">
+                        </div>
+                    </div>
+                </div>
+                <!--                패스워드-->
+                <div class="d-flex justify-content-center">
+                    <div class="col-1">
+                        <p class="fs-5">PW : </p>
+                    </div>
+                    <div class="col-3">
+                        <input type="password" class="form-control col-5" id="PW">
+                    </div>
+                </div>
+            </div>
+            <div class="mt-5 d-flex justify-content-center">
+                <div class="me-5">
+                    <button class="btn btn-primary btn-lg" onclick="Sign_In()">Sign_In</button>
+                </div>
+                <div class="ms-5">
+                    <button class="btn btn-danger btn-lg" onclick="main_Page()">back</button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

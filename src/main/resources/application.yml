@@ -1,0 +1,20 @@
+spring:
+  profiles:
+    active: local
+  datasource:
+    url: jdbc:mariadb://freash97.synology.me:43306/stagingDB
+    username:
+    password:
+---
+#stg 구분
+spring:
+  profiles: stg
+  datasource:
+    url: jdbc:mariadb://freash97.synology.me:43306/stagingDB
+    username:
+    password:
+
+---
+#main 구분
+spring:
+  profiles: main

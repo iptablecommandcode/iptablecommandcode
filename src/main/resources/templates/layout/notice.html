@@ -1,0 +1,39 @@
+<table th:fragment="notice" class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">No.</th>
+        <th scope="col">작성자</th>
+        <th scope="col">제목</th>
+        <th scope="col">시간</th>
+        <th scope="col">말머리</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr th:each="map : ${noticelist}">
+            <td><span th:text="${map.NOTICE_NO}"></span></td>
+            <td><span th:text="${map.ID}"></span></td>
+            <td><span th:text="${map.TITLE}"></span></td>
+            <td><span th:text="${map.DATE}"></span></td>
+            <td><span th:text="${map.SUBTITLE}"></span></td>
+        </tr>
+    </tbody>
+</table>
+<nav class="d-flex justify-content-center">
+    <ul class="pagination">
+        <li class="page-item" th:if="${start > 1}">
+            <a class="page-link" th:href="@{/list?(page=1)}" th:text="'<<'"></a></li>
+        </li>
+        <li class="page-item" th:if="${start > 1}">
+            <a class="page-link" th:href="@{/list?(page=${start - 1})}" th:text="'<'"></a>
+        </li>
+        <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}">
+            <a class="page-link" th:href="@{/list?(page=${page})}" th:text="${page}"></a></li>
+        </li>
+        <li class="page-item" th:if="${end < maxpage}">
+            <a class="page-link" th:href="@{/list?(page=${end + 1})}" th:text="'>'"></a>
+        </li>
+        <li class="page-item" th:if="${end < maxpage}">
+            <a class="page-link" th:href="@{/list?(page=${maxpage})}" th:text="'>>'"></a></li>
+        </li>
+    </ul>
+</nav>
