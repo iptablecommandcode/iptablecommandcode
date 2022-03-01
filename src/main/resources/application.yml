@@ -5,22 +5,25 @@ spring:
     url: ${DATASOURCE_URL}
     username: ${DATASOURCE_USERNAME}
     password: ${DATASOURCE_PASSWORD}
+
 ---
 #stg 구분
 spring:
-  profiles:
-    active: stg
   datasource:
     url: ${DATASOURCE_URL}
     username: ${DATASOURCE_USERNAME}
     password: ${DATASOURCE_PASSWORD}
+  config:
+    activate:
+      on-profile: stg
 
 ---
 #main 구분
 spring:
-  profiles:
-    active: main
   datasource:
     url: ${DATASOURCE_URL}
     username: ${DATASOURCE_USERNAME}
     password: ${DATASOURCE_PASSWORD}
+  config:
+    activate:
+      on-profile: main
