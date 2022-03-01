@@ -1,6 +1,7 @@
 spring:
-  profiles:
-    active: local
+  config:
+    activate:
+      on-profile: local
   datasource:
     url: ${DATASOURCE_URL}
     username: ${DATASOURCE_USERNAME}
@@ -13,12 +14,6 @@ spring:
     url: ${DATASOURCE_URL}
     username: ${DATASOURCE_USERNAME}
     password: ${DATASOURCE_PASSWORD}
-  thymeleaf:
-    prefix: classpath:src/main/resources/
-    check-template: true
-    suffix: .html
-    cache: false
-    enabled: true
   config:
     activate:
       on-profile: stg
