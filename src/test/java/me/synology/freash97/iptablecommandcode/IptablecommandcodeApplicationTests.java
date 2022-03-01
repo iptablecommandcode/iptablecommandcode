@@ -9,5 +9,4 @@ class IptablecommandcodeApplicationTests {
     @Test
     void contextLoads() {
     }
-
 }

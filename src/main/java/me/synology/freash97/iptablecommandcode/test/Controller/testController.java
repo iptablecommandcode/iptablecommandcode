@@ -9,7 +9,7 @@ import java.util.*;
 @Controller
 public class testController {
 
-    @RequestMapping("/")
+    @RequestMapping("")
     public String test_Index_Data(Model model){
 
         List<Object> noticelist = new ArrayList<>();
