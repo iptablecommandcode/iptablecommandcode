@@ -2,19 +2,34 @@ spring:
   profiles:
     active: local
   datasource:
-    url: jdbc:mariadb://freash97.synology.me:43306/stagingDB
-    username:
-    password:
+    url: ${DATASOURCE_URL}
+    username: ${DATASOURCE_USERNAME}
+    password: ${DATASOURCE_PASSWORD}
+
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
 ---
 #stg 구분
 spring:
   profiles: stg
   datasource:
-    url: jdbc:mariadb://freash97.synology.me:43306/stagingDB
-    username:
-    password:
+    url: ${DATASOURCE_URL}
+    username: ${DATASOURCE_USERNAME}
+    password: ${DATASOURCE_PASSWORD}
 
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
 ---
 #main 구분
 spring:
   profiles: main
+  datasource:
+    url: ${DATASOURCE_URL}
+    username: ${DATASOURCE_USERNAME}
+    password: ${DATASOURCE_PASSWORD}
+
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
