@@ -5,31 +5,22 @@ spring:
     url: ${DATASOURCE_URL}
     username: ${DATASOURCE_USERNAME}
     password: ${DATASOURCE_PASSWORD}
-
-jasypt:
-  encryptor:
-    bean: jasyptStringEncryptor
 ---
 #stg 구분
 spring:
-  profiles: stg
+  profiles:
+    active: stg
   datasource:
     url: ${DATASOURCE_URL}
     username: ${DATASOURCE_USERNAME}
     password: ${DATASOURCE_PASSWORD}
 
-jasypt:
-  encryptor:
-    bean: jasyptStringEncryptor
 ---
 #main 구분
 spring:
-  profiles: main
+  profiles:
+    active: main
   datasource:
     url: ${DATASOURCE_URL}
     username: ${DATASOURCE_USERNAME}
     password: ${DATASOURCE_PASSWORD}
-
-jasypt:
-  encryptor:
-    bean: jasyptStringEncryptor
