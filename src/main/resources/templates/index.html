@@ -1,21 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
         <title>IPTABLE</title>
-<!--        <link rel="stylesheet" type="text/css" th:href="@{bootstrap/css/bootstrap.min.css}">-->
+        <link rel="stylesheet" type="text/css" th:href="@{bootstrap/css/bootstrap.min.css}">
     </head>
     <body>
 <!--    ${NAME} 로 값을 받아 nav바 로그인 호출-->
-<!--        <nav th:replace="layout/nav :: nav('asdf')">-->
-<!--        </nav>-->
-<!--        <div class="container">-->
-<!--            <div class="m-5">-->
-<!--                <p class="fs-1 text-center">IPTABLECOMMANDCODE</p>-->
-<!--            </div>-->
-<!--            <table th:replace="layout/notice">-->
-<!--            </table>-->
-<!--        </div>-->
-    <p>test</p>
+        <nav th:replace="layout/nav :: nav('asdf')">
+        </nav>
+        <div class="container">
+            <div class="m-5">
+                <p class="fs-1 text-center">IPTABLECOMMANDCODE</p>
+            </div>
+            <table th:replace="layout/notice">
+            </table>
+        </div>
     </body>
 </html>
