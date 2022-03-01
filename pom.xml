@@ -61,12 +61,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-<!--        was/DB아이디 비밀번호등 주소 암호화를 위한 의존성 주입-->
-        <dependency>
-            <groupId>com.github.ulisesbocchio</groupId>
-            <artifactId>jasypt-spring-boot-starter</artifactId>
-            <version>3.0.3</version>
-        </dependency>
     </dependencies>
 
     <profiles>
