@@ -5,7 +5,8 @@ spring:
     url: ${DATASOURCE_URL}
     username: ${DATASOURCE_USERNAME}
     password: ${DATASOURCE_PASSWORD}
-
+logging:
+  config: classpath:static/log4j2/log4j2_local.xml
 ---
 #stg 구분
 spring:
@@ -16,7 +17,8 @@ spring:
   config:
     activate:
       on-profile: stg
-
+logging:
+  config: classpath:static/log4j2/log4j2_stg.xml
 ---
 #main 구분
 spring:
@@ -27,3 +29,5 @@ spring:
   config:
     activate:
       on-profile: main
+logging:
+  config: classpath:static/log4j2/log4j2_main.xml
