@@ -1,11 +1,13 @@
 package me.synology.freash97.iptablecommandcode.test.Controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.*;
 
+@Slf4j
 @Controller
 public class testController {
 
@@ -20,6 +22,9 @@ public class testController {
         test.put("TITLE","제목테스트");
         test.put("DATE","2021-12-21");
         test.put("SUBTITLE","머릿말");
+        log.debug("debugtest");
+        log.info("infotest");
+        log.warn("warntest");
 
         noticelist.add(test);
 
