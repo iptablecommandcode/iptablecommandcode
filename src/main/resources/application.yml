@@ -1,33 +1,22 @@
 spring:
-  profiles:
-    active: local
+  config:
+    activate:
+      on-profile: local
   datasource:
-    url: ${DATASOURCE_URL}
-    username: ${DATASOURCE_USERNAME}
-    password: ${DATASOURCE_PASSWORD}
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DDB_PW}
 logging:
   config: classpath:static/log4j2/log4j2_local.xml
 ---
 #stg 구분
 spring:
-  datasource:
-    url: ${DATASOURCE_URL}
-    username: ${DATASOURCE_USERNAME}
-    password: ${DATASOURCE_PASSWORD}
   config:
     activate:
       on-profile: stg
-logging:
-  config: classpath:static/log4j2/log4j2_stg.xml
 ---
 #main 구분
 spring:
-  datasource:
-    url: ${DATASOURCE_URL}
-    username: ${DATASOURCE_USERNAME}
-    password: ${DATASOURCE_PASSWORD}
   config:
     activate:
       on-profile: main
-logging:
-  config: classpath:static/log4j2/log4j2_main.xml
