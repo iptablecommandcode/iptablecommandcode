@@ -1,6 +1,7 @@
 spring:
-  profiles:
-    active: local
+  config:
+    activate:
+      on-profile: local
   datasource:
     url: ${DATASOURCE_URL}
     username: ${DATASOURCE_USERNAME}
