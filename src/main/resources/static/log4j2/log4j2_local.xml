@@ -2,7 +2,6 @@
 <Configuration >
     <!-- 해당 설정파일에서 사용하는 프로퍼티-->
     <Properties>
-        <Property name="logNm">local</Property>
         <Property name="layoutPattern">%style{%d{yyyy/MM/dd HH:mm:ss,SSS}}{cyan} %highlight{[%-5p]}{FATAL=bg_red, ERROR=red, INFO=green, DEBUG=blue} [%C] %style{[%t]}{yellow} %m%n </Property>
         <Property name="path">c:/logs</Property>
     </Properties>
@@ -11,7 +10,23 @@
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="${layoutPattern}"/>
         </Console>
-        <RollingFile name="File" fileName="${path}/${logNm}.log" filePattern="${path}/${logNm}_%d{yyyy-MM-dd}_%i.log.gz">
+        <RollingFile name="rootFile" fileName="${path}/root.log" filePattern="${path}/root_%d{yyyy-MM-dd}_%i.log.gz">
+            <PatternLayout pattern="${layoutPattern}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="200KB"/>
+                <TimeBasedTriggeringPolicy interval="1"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10" fileIndex="min"/>
+        </RollingFile>
+        <RollingFile name="AuthFile" fileName="${path}/Auth.log" filePattern="${path}/Auth_%d{yyyy-MM-dd}_%i.log.gz">
+            <PatternLayout pattern="${layoutPattern}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="200KB"/>
+                <TimeBasedTriggeringPolicy interval="1"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10" fileIndex="min"/>
+        </RollingFile>
+        <RollingFile name="TestFile" fileName="${path}/Test.log" filePattern="${path}/Test_%d{yyyy-MM-dd}_%i.log.gz">
             <PatternLayout pattern="${layoutPattern}"/>
             <Policies>
                 <SizeBasedTriggeringPolicy size="200KB"/>
@@ -24,11 +39,15 @@
     <Loggers>
         <Root level="INFO" additivity="false">
             <AppenderRef ref="Console"/>
-            <AppenderRef ref="File"/>
+            <AppenderRef ref="rootFile"/>
         </Root>
-        <Logger name="me.synology.freash97.iptablecommandcode" level="DEBUG" additivity="false">
+        <Logger name="me.synology.freash97.iptablecommandcode.Auth" level="DEBUG" additivity="false">
             <AppenderRef ref="Console"/>
-            <AppenderRef ref="File"/>
+            <AppenderRef ref="AuthFile"/>
+        </Logger>
+        <Logger name="me.synology.freash97.iptablecommandcode.test" level="DEBUG" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="TestFile"/>
         </Logger>
     </Loggers>
 </Configuration>
