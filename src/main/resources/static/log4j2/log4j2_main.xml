@@ -37,15 +37,15 @@
     </Appenders>
     <!-- 실제 Logger-->
     <Loggers>
-        <Root level="INFO" additivity="false">
+        <Root level="ERROR" additivity="false">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="rootFile"/>
         </Root>
-        <Logger name="me.synology.freash97.iptablecommandcode.Auth" level="info" additivity="false">
+        <Logger name="me.synology.freash97.iptablecommandcode.Auth" level="ERROR" additivity="false">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="AuthFile"/>
         </Logger>
-        <Logger name="me.synology.freash97.iptablecommandcode.test" level="info" additivity="false">
+        <Logger name="me.synology.freash97.iptablecommandcode.test" level="ERROR" additivity="false">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="TestFile"/>
         </Logger>
