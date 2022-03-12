@@ -4,8 +4,29 @@
         <meta charset="UTF-8">
         <title>IPTABLE</title>
         <link rel="stylesheet" type="text/css" th:href="@{bootstrap/css/bootstrap.min.css}">
-    </head>
-    <body>
 
+    </head>
+
+    <body>
+    <!--    ${NAME} 로 값을 받아 nav바 로그인 호출-->
+        <nav th:replace="layout/nav :: nav('asdf')">
+        </nav>
+        <div class="container">
+            <div class="m-5">
+                <p class="fs-1 text-center">Iptablecommandcode_Admin</p>
+            </div>
+        </div>
+
+        <table th:fragment="index_admin" class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Entr_no</th>
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Create_date</th>
+                <th scope="col">Admin_check</th>
+            </tr>
+            </thead>
+        </table>
     </body>
 </html>
