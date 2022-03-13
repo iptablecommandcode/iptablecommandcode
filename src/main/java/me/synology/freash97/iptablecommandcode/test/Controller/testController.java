@@ -5,14 +5,40 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @Slf4j
 @Controller
 public class testController {
 
     @RequestMapping("/admin")
-    public String test_Index_Data(ModelAndView modelAndView){
-        log.debug("어드민 페이지 확인");
-        return "/Auth/index_admin";
-    }
+    public ModelAndView test_Index_Data(ModelAndView modelAndView){
 
+        List<Object> noticelist = new ArrayList<>();
+        Map<String,String> notice = new HashMap<>();
+
+        notice.put("ENTR_NO", "1");
+        notice.put("ID", "test");
+        notice.put("NAME", "제목테스트");
+        notice.put("DATE", "2021-12-21");
+        notice.put("ADMIN_CHECK", "머릿말");
+
+        log.debug("ACCOUNT 기본 정보 입력 -> " + String.valueOf(notice));
+
+        noticelist.add(notice);
+
+        modelAndView.addObject("noticelist",noticelist);
+        modelAndView.addObject("start",2);
+        modelAndView.addObject("end",4);
+        modelAndView.addObject("maxpage",10);
+
+        modelAndView.setViewName("/Auth/index_admin");
+
+        log.debug("model 기본 정보 입력" + modelAndView);
+
+        return modelAndView;
+    }
 }
