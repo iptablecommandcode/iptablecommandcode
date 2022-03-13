@@ -34,7 +34,7 @@
             </Policies>
             <DefaultRolloverStrategy max="10" fileIndex="min"/>
         </RollingFile>
-        <RollingFile name="TestFile" fileName="${path}/Index.log" filePattern="${path}/Index_%d{yyyy-MM-dd}_%i.log.gz">
+        <RollingFile name="IndexFile" fileName="${path}/Index.log" filePattern="${path}/Index_%d{yyyy-MM-dd}_%i.log.gz">
             <PatternLayout pattern="${layoutPattern}"/>
             <Policies>
                 <SizeBasedTriggeringPolicy size="200KB"/>
@@ -59,7 +59,7 @@
         </Logger>
         <Logger name="me.synology.freash97.iptablecommandcode.Index" level="WARN" additivity="false">
             <AppenderRef ref="Console"/>
-            <AppenderRef ref="AuthFile"/>
+            <AppenderRef ref="IndexFile"/>
         </Logger>
     </Loggers>
 </Configuration>
