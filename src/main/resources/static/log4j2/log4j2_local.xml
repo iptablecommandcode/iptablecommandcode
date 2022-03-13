@@ -34,6 +34,14 @@
             </Policies>
             <DefaultRolloverStrategy max="10" fileIndex="min"/>
         </RollingFile>
+        <RollingFile name="IndexFile" fileName="${path}/Index.log" filePattern="${path}/Index_%d{yyyy-MM-dd}_%i.log.gz">
+            <PatternLayout pattern="${layoutPattern}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="200KB"/>
+                <TimeBasedTriggeringPolicy interval="1"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10" fileIndex="min"/>
+        </RollingFile>
     </Appenders>
     <!-- 실제 Logger-->
     <Loggers>
@@ -48,6 +56,10 @@
         <Logger name="me.synology.freash97.iptablecommandcode.test" level="DEBUG" additivity="false">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="TestFile"/>
+        </Logger>
+        <Logger name="me.synology.freash97.iptablecommandcode.Index" level="DEBUG" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="IndexFile"/>
         </Logger>
     </Loggers>
 </Configuration>
