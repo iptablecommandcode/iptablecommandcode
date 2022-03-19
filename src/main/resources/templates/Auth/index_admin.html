@@ -4,17 +4,6 @@
         <meta charset="UTF-8">
         <title>IPTABLE</title>
         <link rel="stylesheet" type="text/css" th:href="@{bootstrap/css/bootstrap.min.css}">
-        <!-- table, td, tr, th css  -->
-        <style>
-            table {
-                border-collapse: collapse;
-                border: 100px solid;
-
-            }
-            td, tr, th{
-                border: 1px solid;
-            }
-        </style>
     </head>
 
     <body>
@@ -22,60 +11,33 @@
         <nav th:replace="layout/nav :: nav('asdf')">
         </nav>
         <div class="container">
-            <div class="m-5">
-                <p class="fs-1 text-center">Iptablecommandcode_Admin</p>
+            <div>
+                <div class="m-5">
+                    <p class="fs-1 text-center">Iptablecommandcode_Admin</p>
+                </div>
             </div>
-        </div>
 
-        <table th:fragment="index_admin" class="table table-striped">
-            <thead>
-            <tr>
-                <th scope="col">Entr_no</th>
-                <th scope="col">Id</th>
-                <th scope="col">Name</th>
-                <th scope="col">Create_date</th>
-                <th scope="col">Admin_check</th>
-            </tr>
-            </thead>
-            <tbody>
-                <!-- <tr th:each="map : ${adminlist}">
-                    <td><span th:text="${map.Entr_no}"></span></td>
-                    <td><span th:text="${map.ID}"></span></td>
-                    <td><span th:text="${map.Name}"></span></td>
-                    <td><span th:text="${map.Create_date}"></span></td>
-                    <td><span th:text="${map.Admin_check}"></span></td>
-                </tr> -->
-                <!-- 4개의 값 넣어보기-->
+            <table th:fragment="index_admin" class="table table-striped">
+                <thead>
                 <tr>
-                    <th>0001</th>
-                    <th>aaa123</th>
-                    <th>홍길동</th>
-                    <th>2022-01-13</th>
-                    <th>admin</th>
+                    <th scope="col">가입번호</th>
+                    <th scope="col">아이디</th>
+                    <th scope="col">이름</th>
+                    <th scope="col">생성 일자</th>
+                    <th scope="col">관리자 여부</th>
                 </tr>
-                <tr>
-                    <th>0002</th>
-                    <th>bbb123</th>
-                    <th>김말똥</th>
-                    <th>2022-02-17</th>
-                    <th>user</th>
-                </tr>
-                <tr>
-                    <th>0003</th>
-                    <th>ccc123</th>
-                    <th>이소똥</th>
-                    <th>2022-02-23</th>
-                    <th>user</th>
-                </tr>
-                <tr>
-                    <th>0004</th>
-                    <th>ddd123</th>
-                    <th>박주먹</th>
-                    <th>2022-03-11</th>
-                    <th>user</th>
-                </tr>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <!-- 4개의 값 넣어보기-->
+                    <tr th:each="map : ${adminlist}">
+                        <td><span th:text="${map.ENTR_NO}"></span></td>
+                        <td><span th:text="${map.ID}"></span></td>
+                        <td><span th:text="${map.NAME}"></span></td>
+                        <td><span th:text="${map.DATE}"></span></td>
+                        <td><span th:text="${map.ADMIN_CHECK}"></span></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </body>
 </html>

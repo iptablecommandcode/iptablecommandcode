@@ -17,20 +17,20 @@ public class testController {
     @RequestMapping("/admin")
     public ModelAndView test_Index_Data(ModelAndView modelAndView){
 
-        List<Object> noticelist = new ArrayList<>();
-        Map<String,String> notice = new HashMap<>();
+        List<Object> adminlist = new ArrayList<>();
+        Map<String,String> admin = new HashMap<>();
 
-        notice.put("ENTR_NO", "1");
-        notice.put("ID", "test");
-        notice.put("NAME", "제목테스트");
-        notice.put("DATE", "2021-12-21");
-        notice.put("ADMIN_CHECK", "머릿말");
+        admin.put("ENTR_NO", "1");
+        admin.put("ID", "test");
+        admin.put("NAME", "제목테스트");
+        admin.put("DATE", "2021-12-21");
+        admin.put("ADMIN_CHECK", "관리자");
 
-        log.debug("ACCOUNT 기본 정보 입력 -> " + String.valueOf(notice));
+        log.debug("ACCOUNT 기본 정보 입력 -> " + String.valueOf(admin));
 
-        noticelist.add(notice);
+        adminlist.add(admin);
 
-        modelAndView.addObject("noticelist",noticelist);
+        modelAndView.addObject("adminlist",adminlist);
         modelAndView.addObject("start",2);
         modelAndView.addObject("end",4);
         modelAndView.addObject("maxpage",10);
