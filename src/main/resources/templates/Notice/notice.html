@@ -18,22 +18,3 @@
         </tr>
     </tbody>
 </table>
-<nav class="d-flex justify-content-center">
-            <ul class="pagination">
-                <li class="page-item" th:if="${start > 1}">
-                    <a class="page-link" th:href="@{/list?(page=1)}" th:text="'<<'"></a></li>
-                </li>
-                <li class="page-item" th:if="${start > 1}">
-                    <a class="page-link" th:href="@{/list?(page=${start - 1})}" th:text="'<'"></a>
-                </li>
-                <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}">
-                    <a class="page-link" th:href="@{/list?(page=${page})}" th:text="${page}"></a></li>
-                </li>
-                <li class="page-item" th:if="${end < maxpage}">
-                    <a class="page-link" th:href="@{/list?(page=${end + 1})}" th:text="'>'"></a>
-                </li>
-                <li class="page-item" th:if="${end < maxpage}">
-                    <a class="page-link" th:href="@{/list?(page=${maxpage})}" th:text="'>>'"></a></li>
-        </li>
-    </ul>
-</nav>

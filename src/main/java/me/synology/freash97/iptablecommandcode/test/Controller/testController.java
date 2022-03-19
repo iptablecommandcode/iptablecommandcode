@@ -20,16 +20,18 @@ public class testController {
         List<Object> adminlist = new ArrayList<>();
         Map<String,String> admin = new HashMap<>();
 
-        admin.put("ENTR_NO", "1");
-        admin.put("ID", "test");
-        admin.put("NAME", "제목테스트");
-        admin.put("DATE", "2021-12-21");
-        admin.put("ADMIN_CHECK", "관리자");
+        for (int i = 1; i < 3; i++){
+            admin.put("ENTR_NO", "" + i);
+            admin.put("ID", "test" + i);
+            admin.put("NAME", "제목테스트" + i);
+            admin.put("DATE", "2021-12-2" + i);
+            admin.put("ADMIN_CHECK", "관리자" + i);
 
-        log.debug("ACCOUNT 기본 정보 입력 -> " + String.valueOf(admin));
+            log.debug("ACCOUNT 기본 정보 입력 -> " + String.valueOf(admin));
+            adminlist.add(admin);
+        }
 
-        adminlist.add(admin);
-
+        log.debug("입력받은 내용 리스트" + adminlist);
         modelAndView.addObject("adminlist",adminlist);
         modelAndView.addObject("start",2);
         modelAndView.addObject("end",4);

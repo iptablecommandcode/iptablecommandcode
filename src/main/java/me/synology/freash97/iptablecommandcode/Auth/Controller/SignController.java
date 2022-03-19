@@ -1,5 +1,6 @@
 package me.synology.freash97.iptablecommandcode.Auth.Controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Controller
 public class SignController {
 
@@ -19,6 +21,7 @@ public class SignController {
 //    로그인페이지
     @RequestMapping(urlVal + "/Sign_In")
     public String Sign_In(){
+        log.debug("Sign_In 페이지 접속");
         return urlVal + "/Sign_In";
     }
 

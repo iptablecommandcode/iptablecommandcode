@@ -1,43 +1,25 @@
-<!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
-        <title>IPTABLE</title>
-        <link rel="stylesheet" type="text/css" th:href="@{bootstrap/css/bootstrap.min.css}">
-    </head>
+<div class="container">
+    <div th:replace="Banner/banner_admin"/>
 
-    <body>
-    <!--    ${NAME} 로 값을 받아 nav바 로그인 호출-->
-        <nav th:replace="layout/nav :: nav('asdf')">
-        </nav>
-        <div class="container">
-            <div>
-                <div class="m-5">
-                    <p class="fs-1 text-center">Iptablecommandcode_Admin</p>
-                </div>
-            </div>
-
-            <table th:fragment="index_admin" class="table table-striped">
-                <thead>
-                <tr>
-                    <th scope="col">가입번호</th>
-                    <th scope="col">아이디</th>
-                    <th scope="col">이름</th>
-                    <th scope="col">생성 일자</th>
-                    <th scope="col">관리자 여부</th>
-                </tr>
-                </thead>
-                <tbody>
-                    <!-- 4개의 값 넣어보기-->
-                    <tr th:each="map : ${adminlist}">
-                        <td><span th:text="${map.ENTR_NO}"></span></td>
-                        <td><span th:text="${map.ID}"></span></td>
-                        <td><span th:text="${map.NAME}"></span></td>
-                        <td><span th:text="${map.DATE}"></span></td>
-                        <td><span th:text="${map.ADMIN_CHECK}"></span></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </body>
-</html>
+    <table th:fragment="index_admin" class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">가입번호</th>
+            <th scope="col">아이디</th>
+            <th scope="col">이름</th>
+            <th scope="col">생성 일자</th>
+            <th scope="col">관리자 여부</th>
+        </tr>
+        </thead>
+        <tbody>
+            <!-- 4개의 값 넣어보기-->
+            <tr th:each="map : ${adminlist}">
+                <td><span th:text="${map.ENTR_NO}"></span></td>
+                <td><span th:text="${map.ID}"></span></td>
+                <td><span th:text="${map.NAME}"></span></td>
+                <td><span th:text="${map.DATE}"></span></td>
+                <td><span th:text="${map.ADMIN_CHECK}"></span></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
