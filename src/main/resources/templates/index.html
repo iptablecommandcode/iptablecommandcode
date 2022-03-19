@@ -10,7 +10,9 @@
         <nav th:replace="layout/nav :: nav('asdf')">
         </nav>
         <div class="container">
+            <!--            thymleaf if 조건으로 관리자, 메인페이지등으로 향할 수 있도록 변경할 예정-->
             <div th:replace="Banner/banner_main"/>
+            <!--            thymleaf if 조건으로 관리자, 메인페이지등으로 향할 수 있도록 변경할 예정-->
             <table th:replace="Notice/notice">
             </table>
         </div>
