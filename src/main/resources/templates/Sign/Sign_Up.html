@@ -1,102 +1,93 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="layout/config :: header('IPTABLE_Sign_Up')">
-    </head>
-    <body>
-        <nav th:replace="layout/nav_no">
-        </nav>
-        <div class="container">
-            <div th:replace="Banner/banner_register"/>
-            <div>
+<div class="container">
+    <div th:replace="Banner/banner_register"/>
+    <div>
 <!--                아이디-->
-                <div class="d-flex justify-content-center">
-                    <div class="col-1">
-                        <p class="fs-5">ID : </p>
-                    </div>
-                    <div class="col-5">
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="ID" placeholder="아이디 입력(A,a,특수,6~18자)" onchange="id_Check()">
-                            <button class="btn btn-outline-secondary" onclick="double_Check()">중복확인</button>
-                        </div>
-                    </div>
-                </div>
-<!--                패스워드-->
-                <div class="d-flex justify-content-center">
-                    <div class="col-1">
-                        <p class="fs-5">PW : </p>
-                    </div>
-                    <div class="col-5">
-                        <input type="password" class="form-control" id="PW1" placeholder="비밀번호 입력(A,a,특수,8~16자)" onchange="pw_Check()">
-                    </div>
-                </div>
-<!--                패스워드 재입력-->
-                <div class="d-flex justify-content-center">
-                    <div class="col-1">
-                        <p class="fs-5">PW RE : </p>
-                    </div>
-                    <div class="col-5">
-                        <input type="password" class="form-control" id="PW2" onchange="password_Check()" placeholder="비밀번호 재입력">
-                    </div>
-                </div>
-<!--                이름-->
-                <div class="d-flex justify-content-center">
-                    <div class="col-1">
-                        <p class="fs-5">NAME : </p>
-                    </div>
-                    <div class="col-5">
-                        <input type="text" class="form-control" id="NAME" onchange="name_Check()">
-                    </div>
-                </div>
-<!--                주소-->
-                <div class="d-flex justify-content-center">
-                    <div class="col-1">
-                        <p class="fs-5">ADDR : </p>
-                    </div>
-                    <div class="col-3">
-                        <div class="input-group">
-                            <button class="btn btn-outline-secondary" onclick="Address()" id="SearchZIPCODE">우편번호</button>
-                            <input type="text" class="form-control" id="ZIPCODE" disabled placeholder="우편 번호">
-                        </div>
-                    </div>
-                    <div class="col-2">
-                    </div>
-                </div>
-                <!--                상세주소-->
-                <div class="d-flex justify-content-center">
-                    <div class="col-6 mb-2">
-                        <input type="text" id="StreetAddress" class="form-control" placeholder="도로명 주소" disabled>
-                    </div>
-                </div>
-                <!--                상세주소-->
-                <div class="d-flex justify-content-center">
-                    <div class="col-6 mb-2">
-                        <input type="text" id="ExtraAddress" class="form-control" placeholder="참고 주소" disabled>
-                    </div>
-                </div>
-<!--                상세주소-->
-                <div class="d-flex justify-content-center">
-                    <div class="col-6 mb-2">
-                        <input type="text" id="DetailAddress" class="form-control" placeholder="상세주소" onchange="address_Check()">
-                    </div>
-                </div>
-<!--                전화번호-->
-                <div class="d-flex justify-content-center">
-                    <div class="col-1">
-                        <p class="fs-5">Tel : </p>
-                    </div>
-                    <div class="col-5">
-                        <input type="text" class="form-control" id="Tel" onchange="Tel_Check()">
-                    </div>
-                </div>
+        <div class="d-flex justify-content-center">
+            <div class="col-1">
+                <p class="fs-5">ID : </p>
             </div>
-            <div class="mt-5 d-flex justify-content-center">
-                <div class="me-5">
-                    <button class="btn btn-primary btn-lg" onclick="Sign_Up()">Sign_Up</button>
-                </div>
-                <div class="ms-5">
-                    <button class="btn btn-danger btn-lg" onclick="main_Page()">back</button>
+            <div class="col-5">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="ID" placeholder="아이디 입력(A,a,특수,6~18자)" onchange="id_Check()">
+                    <button class="btn btn-outline-secondary" onclick="double_Check()">중복확인</button>
                 </div>
             </div>
         </div>
-    </body>
-</html>
+<!--                패스워드-->
+        <div class="d-flex justify-content-center">
+            <div class="col-1">
+                <p class="fs-5">PW : </p>
+            </div>
+            <div class="col-5">
+                <input type="password" class="form-control" id="PW1" placeholder="비밀번호 입력(A,a,특수,8~16자)" onchange="pw_Check()">
+            </div>
+        </div>
+<!--                패스워드 재입력-->
+        <div class="d-flex justify-content-center">
+            <div class="col-1">
+                <p class="fs-5">PW RE : </p>
+            </div>
+            <div class="col-5">
+                <input type="password" class="form-control" id="PW2" onchange="password_Check()" placeholder="비밀번호 재입력">
+            </div>
+        </div>
+<!--                이름-->
+        <div class="d-flex justify-content-center">
+            <div class="col-1">
+                <p class="fs-5">NAME : </p>
+            </div>
+            <div class="col-5">
+                <input type="text" class="form-control" id="NAME" onchange="name_Check()">
+            </div>
+        </div>
+<!--                주소-->
+        <div class="d-flex justify-content-center">
+            <div class="col-1">
+                <p class="fs-5">ADDR : </p>
+            </div>
+            <div class="col-3">
+                <div class="input-group">
+                    <button class="btn btn-outline-secondary" onclick="Address()" id="SearchZIPCODE">우편번호</button>
+                    <input type="text" class="form-control" id="ZIPCODE" disabled placeholder="우편 번호">
+                </div>
+            </div>
+            <div class="col-2">
+            </div>
+        </div>
+        <!--                상세주소-->
+        <div class="d-flex justify-content-center">
+            <div class="col-6 mb-2">
+                <input type="text" id="StreetAddress" class="form-control" placeholder="도로명 주소" disabled>
+            </div>
+        </div>
+        <!--                상세주소-->
+        <div class="d-flex justify-content-center">
+            <div class="col-6 mb-2">
+                <input type="text" id="ExtraAddress" class="form-control" placeholder="참고 주소" disabled>
+            </div>
+        </div>
+<!--                상세주소-->
+        <div class="d-flex justify-content-center">
+            <div class="col-6 mb-2">
+                <input type="text" id="DetailAddress" class="form-control" placeholder="상세주소" onchange="address_Check()">
+            </div>
+        </div>
+<!--                전화번호-->
+        <div class="d-flex justify-content-center">
+            <div class="col-1">
+                <p class="fs-5">Tel : </p>
+            </div>
+            <div class="col-5">
+                <input type="text" class="form-control" id="Tel" onchange="Tel_Check()">
+            </div>
+        </div>
+    </div>
+    <div class="mt-5 d-flex justify-content-center">
+        <div class="me-5">
+            <button class="btn btn-primary btn-lg" onclick="Sign_Up()">Sign_Up</button>
+        </div>
+        <div class="ms-5">
+            <button class="btn btn-danger btn-lg" onclick="main_Page()">back</button>
+        </div>
+    </div>
+</div>

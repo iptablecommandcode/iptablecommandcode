@@ -6,15 +6,17 @@
         <link rel="stylesheet" type="text/css" th:href="@{bootstrap/css/bootstrap.min.css}">
     </head>
     <body>
-<!--    ${NAME} 로 값을 받아 nav바 로그인 호출-->
-        <nav th:replace="layout/nav :: nav('asdf')">
-        </nav>
+    <!--nav 출력-->
+        <nav th:replace="layout/nav :: nav(${account})"/>
         <div class="container">
-            <!--            thymleaf if 조건으로 관리자, 메인페이지등으로 향할 수 있도록 변경할 예정-->
-            <div th:replace="Banner/banner_main"/>
-            <!--            thymleaf if 조건으로 관리자, 메인페이지등으로 향할 수 있도록 변경할 예정-->
-            <table th:replace="Notice/notice">
-            </table>
+            <!--Banner 출력-->
+            <div th:if="${notice_info.equals('notice')}">
+                <div th:replace="Notice/notice"/>
+            </div>
+            <div th:if="${notice_info.equals('admin')}">
+                <div th:replace="Auth/index_admin"/>
+            </div>
+
         </div>
     </body>
 </html>

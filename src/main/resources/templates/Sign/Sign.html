@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="layout/config :: header('IPTABLE_Sign_In')"/>
+
+    <body>
+        <nav th:replace="layout/nav_no"/>
+        <div class="container">
+            <!--Sign_in, Sign_Up페이지 화면 출력-->
+            <div th:if="${Sign_info.equals('Sign_In')}">
+                <div th:replace="Sign/Sign_In"/>
+            </div>
+            <div th:if="${Sign_info.equals('Sign_Up')}">
+                <div th:replace="Sign/Sign_Up"/>
+            </div>
+        </div>
+    </body>
+</html>

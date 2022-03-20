@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,9 +21,14 @@ public class SignController {
 
 //    로그인페이지
     @RequestMapping(urlVal + "/Sign_In")
-    public String Sign_In(){
+    public ModelAndView Sign_In(ModelAndView modelAndView){
         log.debug("Sign_In 페이지 접속");
-        return urlVal + "/Sign_In";
+
+        modelAndView.addObject("Sign_info", "Sign_In");
+
+        modelAndView.setViewName(urlVal + "/Sign");
+
+        return modelAndView;
     }
 
 //    로그인 시도시
@@ -51,8 +57,14 @@ public class SignController {
     }
 
     @RequestMapping(urlVal + "/Sign_Up")
-    public String Sign_Up(){
-        return "Sign/Sign_Up";
+    public ModelAndView Sign_Up(ModelAndView modelAndView){
+        log.debug("Sign_Up 페이지 접속");
+
+        modelAndView.addObject("Sign_info", "Sign_Up");
+
+        modelAndView.setViewName(urlVal + "/Sign");
+
+        return modelAndView;
     }
 
     @PostMapping(urlVal + "/Sign_Up.do")
