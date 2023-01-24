@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="https://www.thymeleaf.org/" layout:decorator="layout/login">
+<head>
+    <meta charset="UTF-8">
+    <title>IPTABLE</title>
+    <!--bootstrasp-->
+    <script th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.min.css}">
+
+    <!--icon-->
+    <script src="https://kit.fontawesome.com/f555a58a6c.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="position-absolute top-50 start-50 translate-middle">
+        <p class="fs-1">IPTABLECOMMANDCODE</p>
+        <!-- 아이디 -->
+        <div class="input-group mb-3">
+            <span class="input-group-text">
+                <span class="fas fa-user"></span>
+            </span>
+            <div class="form-floating">
+                <input type="text" class="form-control" id="Id" placeholder="아이디">
+                <label for="floatingInputGroup1">아이디</label>
+            </div>
+        </div>
+        <!-- 패스워드 -->
+        <div class="input-group mb-3">
+            <span class="input-group-text">
+                <span class="fas fa-lock"></span>
+            </span>
+            <div class="form-floating">
+                <input type="password" class="form-control" id="Password" placeholder="패스워드">
+                <label for="floatingInputGroup1">패스워드</label>
+            </div>
+        </div>
+        <!-- 하단 버튼 -->
+        <div class="text-center m-2">
+            <a href="/Sign/Sign_Up" class="font-weight-bold m-2">회원가입</a>
+        </div>
+        <button type="submit" class="col-12 btn btn-primary">
+            <span class="fas fa-unlock"></span>
+            로그인
+        </button>
+    </div>
+</body>
+</html>

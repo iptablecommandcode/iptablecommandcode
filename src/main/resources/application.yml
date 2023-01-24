@@ -3,6 +3,6 @@ spring:
     livereload:
       enabled: true
   thymeleaf:
+    suffix: .html
     prefix:
       classpath: /templates/
-    suffix: .html
