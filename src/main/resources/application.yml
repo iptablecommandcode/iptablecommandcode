@@ -1,0 +1,8 @@
+spring:
+  devtools:
+    livereload:
+      enabled: true
+  thymeleaf:
+    prefix:
+      classpath: /templates/
+    suffix: .html
