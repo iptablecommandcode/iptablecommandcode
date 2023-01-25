@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="https://www.thymeleaf.org/" layout:decorator="layout/login">
+<head>
+  <meta charset="UTF-8">
+  <title>IPTABLECOMMANDCODE</title>
+  <!--bootstrasp-->
+  <script th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
+  <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.min.css}">
+
+  <!--icon-->
+  <script src="https://kit.fontawesome.com/f555a58a6c.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-primary">
+  <div class="container-fluid d-flex justify-content-between">
+    <div class="d-flex">
+      <a class="navbar-brand text-white" href="/">IPTABLECOMMANDCODE</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active text-white" aria-current="page" href="#">Notice</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" aria-current="page" href="#">추가예정</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="d-flex">
+      <div class="pt-2">
+        <span class="fw-bold text-decoration-underline text-white">xxx</span>
+        <span class="text-white">님 로그인 중 입니다.</span>&nbsp;&nbsp;
+      </div>
+      <button type="submit" class="btn btn-danger">로그아웃</button>
+    </div>
+  </div>
+</nav>
+<div class="container">
+  <div class="d-flex justify-content-center">
+    <p class="fs-1">IPTABLECOMMANDCODE</p>
+  </div>
+
+  <!--내용-->
+  <table class="table container">
+    <tbody>
+    <tr>
+      <th class="col-1">제목</th>
+      <td>{제목 내용}</td>
+    </tr>
+    <tr>
+      <th class="col-1">작성일</th>
+      <td>{날짜 입력}</td>
+    </tr>
+    <tr>
+      <th class="col-1">글쓴이</th>
+      <td>{글쓴이}</td>
+    </tr>
+    <tr>
+      <th colspan="2">{내용}</th>
+    </tr>
+    </tbody>
+  </table>
+  <div class="d-flex justify-content-end">
+    <button class="btn btn-light m-1">목록</button>
+    <button class="btn btn-success m-1">수정</button>
+    <button class="btn btn-danger m-1">삭제</button>
+    <button class="btn btn-primary m-1">글쓰기</button>
+  </div>
+</div>
+</body>
+</html>
