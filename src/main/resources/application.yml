@@ -17,12 +17,10 @@ spring:
     driver-class-name: org.h2.Driver
     username: sa
     password:
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-#    아래 적용하면 동작시 쿼리문 적용된다
+#    아래 적용하면 동작시 화면 수정이 적용된다
   sql:
     init:
       mode: always
 #mybatis설정
 mybatis:
-  mapper-locations: classpath:mapper/**/**.xml
+  mapper-locations: mapper/**/*.xml
