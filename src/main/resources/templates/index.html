@@ -12,38 +12,29 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Navbar</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Dropdown
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled">Disabled</a>
-                    </li>
-                </ul>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
+        <div class="container-fluid d-flex justify-content-between">
+            <div class="d-flex">
+                <a class="navbar-brand" href="/">IPTABLECOMMANDCODE</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Notice</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">추가예정</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="d-flex">
+                <div class="pt-2">
+                    <span class="fw-bold text-decoration-underline">xxx</span>
+                    <span>님 로그인 중 입니다.</span>&nbsp;&nbsp;
+                </div>
+                <button type="submit" class="btn btn-danger">로그아웃</button>
             </div>
         </div>
     </nav>
@@ -54,35 +45,73 @@
         <a href="Sign/Sign_In">Sign_In</a>
         <br>
         <a href="Sign/Sign_Up">Sign_Up</a>
-        <table class="table">
-            <thead>
+        <br>
+        <a href="Notice/Notice_write">Notice_write</a>
+
+        <div class="d-flex justify-content-end mt-5">
+            <form class="d-flex" role="search">
+                <div>
+                    <select class="form-select" id="Search" aria-label="게시판 내용 검색" style="width: 100px">
+                        <option selected>선택</option>
+                        <option value="Number">No.</option>
+                        <option value="Title">제목</option>
+                        <option value="Name">작성자</option>
+                    </select>
+                </div>
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+        <!--게시판-->
+        <table class="table container text-center mt-3">
+            <thead class="table-dark">
             <tr>
-                <th scope="col-1">No.</th>
-                <th scope="col">작성자</th>
-                <th scope="col">제목</th>
-                <th scope="col">작성 시각</th>
+                <th scope="col" class="col-1">No.</th>
+                <th scope="col" class="col">제목</th>
+                <th scope="col" class="col-1">작성자</th>
+                <th scope="col" class="col-1">작성 시각</th>
             </tr>
             </thead>
             <tbody class="table-group-divider">
             <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td colspan="2">Larry the Bird</td>
-                <td>@twitter</td>
+                <th scope="row" class="col-1">1</th>
+                <td class="col">Mark</td>
+                <td class="col-1">Otto</td>
+                <td class="col-1">@mdo</td>
             </tr>
             </tbody>
         </table>
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-primary">글 쓰기</button>
+        </div>
+
+        <!--paging-->
+        <nav class="d-flex justify-content-center">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&lt;</span>
+                    </a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&gt;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="End">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
     </div>
 </body>
 </html>
