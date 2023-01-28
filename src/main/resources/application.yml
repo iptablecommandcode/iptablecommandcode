@@ -24,3 +24,7 @@ spring:
 #mybatis설정
 mybatis:
   mapper-locations: mapper/**/*.xml
+
+Dspring:
+  profiles:
+    active: local
