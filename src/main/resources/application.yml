@@ -6,22 +6,17 @@ spring:
     suffix: .html
     prefix:
       classpath: /templates/
-#  h2database 연동
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
+#  mysql 연결
   datasource:
-    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;
-    #url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
+    url: jdbc:mysql://freash97.synology.me:43306/DEVELOPE?useSSL=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: developer
+    password: deve10perUser!
 #    아래 적용하면 동작시 화면 수정이 적용된다
   sql:
     init:
       mode: always
-#mybatis설정
+#mybatis 파일 경로 설정
 mybatis:
   mapper-locations: mapper/**/*.xml
 

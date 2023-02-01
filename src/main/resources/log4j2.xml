@@ -10,7 +10,7 @@
         <Console name="console" target="SYSTEM_OUT">
             <PatternLayout pattern="[%d{yyyy:MM:dd HH:mm:ss.SSS}] %-5level [%thread] %C{100} %M - %msg%n" />
         </Console>
-        <RollingFile name="file" fileName="./logs/${logName}.log" filePattern="/logs/${logName}_%d{yyyy-MM-dd}.log">
+        <RollingFile name="file" fileName="./logs/${logName}.log" filePattern="./logs/${logName}_%d{yyyy-MM-dd}.log">
             <PatternLayout pattern="${layoutPattern}" />
             <Policies>
                 <SizeBasedTriggeringPolicy size="10MB" /> <!-- 10MB 용량이 초과시 DefaultRolloverStrategy 정책만큼 넘버링 -->
@@ -96,7 +96,7 @@
         <!-- Root(Default) Setting												 -->
         <!-- =================================================================== -->
         <!-- off, fatal, error, warn, info, debug, trace, all -->
-        <Root level="debug" additivity="false">
+        <Root level="info" additivity="false">
             <AppenderRef ref="file"/>
             <AppenderRef ref="console" />
         </Root>
