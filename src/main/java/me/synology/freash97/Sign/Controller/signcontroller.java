@@ -1,4 +1,4 @@
-package me.synology.freash97.sign.controller;
+package me.synology.freash97.Sign.Controller;
 
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
