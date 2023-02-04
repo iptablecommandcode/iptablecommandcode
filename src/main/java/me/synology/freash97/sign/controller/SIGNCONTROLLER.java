@@ -13,35 +13,31 @@ import java.util.Map;
 @Slf4j
 @Controller
 @NoArgsConstructor
-public class signcontroller {
-    private final static String value = "Sign/";
+public class SIGNCONTROLLER {
+    private static final String VALUE = "Sign/";
 
-    @GetMapping(value + "Sign_In")
-    public ModelAndView sign_in(){
+    @GetMapping(VALUE + "Sign_In")
+    public ModelAndView signIn(){
         ModelAndView modelAndView = new ModelAndView();
 
-        modelAndView.setViewName(value + "Sign_In");
+        modelAndView.setViewName(VALUE + "Sign_In");
 
         return modelAndView;
     }
 
-    @GetMapping(value + "Sign_Up")
-    public ModelAndView sign_up(){
-
-        ModelAndView modelAndView = new ModelAndView();
-
-
-        return modelAndView;
+    @GetMapping(VALUE + "Sign_Up")
+    public String signUp(){
+        return VALUE + "Sign_Up";
     }
     /*Register의 Id 중복 확인용 */
-    @PostMapping (value + "id_Chk")
+    @PostMapping (VALUE + "id_Chk")
     @ResponseBody
-    public String id_chk(@RequestBody Map<String,Object> param, ModelAndView modelAndView){
+    public String idChk(@RequestBody Map<String,Object> param, ModelAndView modelAndView){
         String test = (String) param.get("Id");
         log.info(test);
         return "success";
     }
-    @PostMapping(value + "Register")
+    @PostMapping(VALUE + "Register")
     public String register(@RequestBody Map<String,Object> param){
         log.debug("success");
         return "index";

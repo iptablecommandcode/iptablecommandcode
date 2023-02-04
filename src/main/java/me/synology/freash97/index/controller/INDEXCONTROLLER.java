@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 @Slf4j
 @NoArgsConstructor
-public class indexcontroller {
+public class INDEXCONTROLLER {
     @GetMapping("/")
     public String index(){
         Integer a = 3123;
