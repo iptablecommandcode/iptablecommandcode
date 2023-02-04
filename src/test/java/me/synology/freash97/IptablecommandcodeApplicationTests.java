@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @Slf4j
 class IptablecommandcodeApplicationTests {
     @Test
-    private void testmethod(){
+    void testmethod(){
         System.out.println("test");
     }
 }
