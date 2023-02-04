@@ -1,4 +1,4 @@
-package me.synology.freash97.Sign.Controller;
+package me.synology.freash97.sign.controller;
 
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,11 +13,11 @@ import java.util.Map;
 @Slf4j
 @Controller
 @NoArgsConstructor
-public class SignController {
-    private final String value = "Sign/";
+public class signcontroller {
+    private final static String value = "Sign/";
 
     @GetMapping(value + "Sign_In")
-    public ModelAndView Sign_In(){
+    public ModelAndView sign_in(){
         ModelAndView modelAndView = new ModelAndView();
 
         modelAndView.setViewName(value + "Sign_In");
@@ -26,7 +26,7 @@ public class SignController {
     }
 
     @GetMapping(value + "Sign_Up")
-    public ModelAndView Sign_Up(){
+    public ModelAndView sign_up(){
 
         ModelAndView modelAndView = new ModelAndView();
 
@@ -36,13 +36,13 @@ public class SignController {
     /*Register의 Id 중복 확인용 */
     @PostMapping (value + "id_Chk")
     @ResponseBody
-    public String Sign_Up(@RequestBody Map<String,Object> param, ModelAndView modelAndView){
+    public String id_chk(@RequestBody Map<String,Object> param, ModelAndView modelAndView){
         String test = (String) param.get("Id");
         log.info(test);
         return "success";
     }
     @PostMapping(value + "Register")
-    public String Register(@RequestBody Map<String,Object> param){
+    public String register(@RequestBody Map<String,Object> param){
         log.debug("success");
         return "index";
     }
