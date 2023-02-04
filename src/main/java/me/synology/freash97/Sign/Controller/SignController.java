@@ -5,8 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 
 import me.synology.freash97.Sign.Service.UserService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Map;
 
 
 @Slf4j
@@ -33,5 +35,18 @@ public class SignController {
 
 
         return modelAndView;
+    }
+    /*Register의 Id 중복 확인용 */
+    @PostMapping (value + "id_Chk")
+    @ResponseBody
+    public String Sign_Up(@RequestBody Map<String,Object> param, ModelAndView modelAndView){
+        String test = (String) param.get("Id");
+        log.info(test);
+        return "success";
+    }
+    @PostMapping(value + "Register")
+    public String Register(@RequestBody Map<String,Object> param){
+        log.debug("success");
+        return "index";
     }
 }

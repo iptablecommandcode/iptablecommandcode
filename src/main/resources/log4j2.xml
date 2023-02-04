@@ -96,7 +96,7 @@
         <!-- Root(Default) Setting												 -->
         <!-- =================================================================== -->
         <!-- off, fatal, error, warn, info, debug, trace, all -->
-        <Root level="info" additivity="false">
+        <Root level="debug" additivity="false">
             <AppenderRef ref="file"/>
             <AppenderRef ref="console" />
         </Root>
