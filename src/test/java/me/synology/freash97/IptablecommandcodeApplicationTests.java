@@ -7,12 +7,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 @Slf4j
 class IptablecommandcodeApplicationTests {
-
-    @Test
-    public void userSaveTest1(){
-
-    }
-
     void contextLoads() {
     }
 

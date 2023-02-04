@@ -16,8 +16,6 @@ import java.util.Map;
 public class SignController {
     private final String value = "Sign/";
 
-    //private UserService userService;
-
     @GetMapping(value + "Sign_In")
     public ModelAndView Sign_In(){
         ModelAndView modelAndView = new ModelAndView();
@@ -28,7 +26,7 @@ public class SignController {
     }
 
     @GetMapping(value + "Sign_Up")
-    public ModelAndView Sign_Up() throws Exception{
+    public ModelAndView Sign_Up(){
 
         ModelAndView modelAndView = new ModelAndView();
 
