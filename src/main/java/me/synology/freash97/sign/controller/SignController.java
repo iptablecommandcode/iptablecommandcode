@@ -13,16 +13,12 @@ import java.util.Map;
 @Slf4j
 @Controller
 @NoArgsConstructor
-public class SIGNCONTROLLER {
+public class SignController {
     private static final String VALUE = "Sign/";
 
     @GetMapping(VALUE + "Sign_In")
-    public ModelAndView signIn(){
-        ModelAndView modelAndView = new ModelAndView();
-
-        modelAndView.setViewName(VALUE + "Sign_In");
-
-        return modelAndView;
+    public String signIn(){
+        return VALUE + "Sign_In";
     }
 
     @GetMapping(VALUE + "Sign_Up")
@@ -38,8 +34,8 @@ public class SIGNCONTROLLER {
         return "success";
     }
     @PostMapping(VALUE + "Register")
-    public String register(@RequestBody Map<String,Object> param){
+    public String register(@RequestParam Map<String,Object> param){
         log.debug("success");
-        return "index";
+        return "redirect:Sign_In";
     }
 }

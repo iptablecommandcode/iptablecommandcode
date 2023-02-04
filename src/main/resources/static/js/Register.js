@@ -1,14 +1,14 @@
 /*
 아이디 중복 확인용 메소드
 */
-$(function(){
-    var idChk = false;
-    var idDuplication = false;
-    var pwChk = false;
-    var nameChk = false;
-    var emailChk = false;
-    var phoneChk = false;
 
+var idChk = false;
+var idDuplication = false;
+var pwChk = false;
+var nameChk = false;
+var emailChk = false;
+var phoneChk = false;
+$(function(){
     /*
     Auth : 박치원
     title : 아이디 정렬
@@ -54,7 +54,6 @@ $(function(){
                 if (response == 'success') {
                     $('#idSuccess').show();
                     $('#idFail').hide();
-                    $('#idCheckFail').hide();
                     idDuplication = true;
                 } else {
                     $('#Id').focus();
@@ -184,78 +183,6 @@ $(function(){
             phoneChk = false;
         }
     });
-
-    /*
-    Auth : 박치원
-    title : 전화번호 정렬
-    Desc : common에 전화 번호 정렬로 전화번호를 정렬하고 비어있을 경우 오류 표시를 한다.
-    */
-    $('#idCheckFail').hide();
-    $('#Register').click(function (){
-        if(!idChk){
-            $('#id').addClass("is-invalid");
-            $('#id').removeClass("is-valid");
-            $('#id').focus();
-        } else if(!idDuplication){
-            $('#idCheckFail').show();
-        } else if (!pwChk){
-            $('#password').addClass("is-invalid");
-            $('#password').removeClass("is-valid");
-            $('#password').focus();
-            $('#passwordChk').addClass("is-invalid");
-            $('#passwordChk').removeClass("is-valid");
-        } else if (!nameChk){
-            $('#name').addClass("is-invalid");
-            $('#name').removeClass("is-valid");
-            $('#name').focus();
-        } else if(!emailChk){
-            $('#email').addClass("is-invalid");
-            $('#email').removeClass("is-valid");
-            $('#email').focus();
-        } else if(!phoneChk){
-            $('#phone').addClass("is-invalid");
-            $('#phone').removeClass("is-valid");
-            $('#phone').focus();
-        } else {
-            var data = {}
-            data["id"] = $('#Id').val();
-            data["password"] = $('#password').val();
-            data["name"] = $('#name').val();
-            data["email"] = $('#email').val();
-            data["phone"] = $('#phone').val();
-            data["postcode"] = $('#postcode').val();
-            data["roadAddress"] = $('#roadAddress').val();
-            data["detailAddress"] = $('#detailAddress').val();
-
-            $.ajax({
-                contentType: 'application/json',
-                datatype: 'json',
-                data: JSON.stringify(data),
-                url: 'Register',
-                type: 'POST',
-                success: function (response) {
-                    if (response == 'success') {
-                        $('#idSuccess').show();
-                        $('#idFail').hide();
-                        $('#idCheckFail').hide();
-                        idDuplication = true;
-                    } else {
-                        $('#Id').focus();
-                        $('#idFail').show();
-                        $('#idSuccess').hide();
-                        idDuplication = false;
-                    }
-                },
-                error: function () {
-                    $('#idError').show();
-                    $('#idFail').hide();
-                    $('#idSuccess').hide();
-                    $('#Id').focus();
-                    idDuplication = false;
-                }
-            })
-        }
-    });
 })
 /*
 Auth : 박치원
@@ -276,4 +203,63 @@ function execDaumPostcode() {
             document.getElementById("roadAddress").value = roadAddr;
         }
     }).open();
+}
+
+
+/*
+Auth : 박치원
+title : 회원가입 액션
+Desc : 회원 가입시 전송할 데이터를 form을 생성하여 전송처리한다.
+*/
+function Register(){
+    debugger;
+    if (valueChk()){
+        var form = document.createElement("form");
+
+        document.body.appendChild(form);
+
+        var id = inputValue(document.getElementById("id").value);
+        var password = inputPasswordValue(document.getElementById("password").value);
+        var name = inputValue(document.getElementById("name").value);
+        var email = inputEmailValue(document.getElementById("email").value);
+        var phone = inputValue(document.getElementById("phone").value);
+        var postcode = inputValue(document.getElementById("postcode").value);
+        var roadAddress = inputValue(document.getElementById("roadAddress").value);
+        var detailAddress = inputValue(document.getElementById("detailAddress").value);
+
+        form.appendChild(id);
+        form.appendChild(password);
+        form.appendChild(name);
+        form.appendChild(email);
+        form.appendChild(phone);
+        form.appendChild(postcode);
+        form.appendChild(roadAddress);
+        form.appendChild(detailAddress);
+
+        submitPostAction(form, "Register", "Register","Register");
+    }
+}
+
+function valueChk(){
+    if (!idChk){
+        document.getElementById("id").focus();
+        return false;
+    } else if(!idDuplication) {
+        document.getElementById("idCheck").focus();
+        return false;
+    } else if(!pwChk) {
+        document.getElementById("password").focus();
+        return false;
+    } else if(!nameChk) {
+        document.getElementById("name").focus();
+        return false;
+    } else if(!emailChk) {
+        document.getElementById("email").focus();
+        return false;
+    } else if(!phoneChk) {
+        document.getElementById("phone").focus();
+        return false;
+    } else {
+        return true;
+    }
 }

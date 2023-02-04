@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="https://www.thymeleaf.org/" layout:decorator="layout/login">
 <head>
+    <meta charset="UTF-8">
     <!--postcode-->
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <!--jQuery-->
@@ -99,13 +100,10 @@
             <input type="text" class="form-control my-1" id="detailAddress" name="ADDRESS_DETAIL" placeholder="상세주소">
         </div>
         <!-- 가입버튼 -->
-        <button class="col-12 btn btn-primary" id="Register">
+        <button class="col-12 btn btn-primary" id="Register" onClick="Register()">
             <span class="fas fa-check"></span>
             가입
         </button>
-        <div class="alert alert-danger mt-3" id="idCheckFail">
-            아이디 중복 확인을 진행하여 주세요
-        </div>
     </div>
 </body>
 </html>
