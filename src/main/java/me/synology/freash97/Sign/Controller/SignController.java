@@ -3,7 +3,6 @@ package me.synology.freash97.Sign.Controller;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import me.synology.freash97.Sign.Service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,7 +16,7 @@ import java.util.Map;
 public class SignController {
     private final String value = "Sign/";
 
-    private UserService userService;
+    //private UserService userService;
 
     @GetMapping(value + "Sign_In")
     public ModelAndView Sign_In(){

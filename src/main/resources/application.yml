@@ -17,8 +17,8 @@ spring:
     init:
       mode: always
 #mybatis 파일 경로 설정
-mybatis:
-  mapper-locations: mapper/**/*.xml
+#mybatis:
+#  mapper-locations: mapper/**/*.xml
 
 Dspring:
   profiles:
