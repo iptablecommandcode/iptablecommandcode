@@ -212,20 +212,18 @@ title : 회원가입 액션
 Desc : 회원 가입시 전송할 데이터를 form을 생성하여 전송처리한다.
 */
 function Register(){
-    debugger;
-    if (valueChk()){
-        var form = document.createElement("form");
+    console.log("Register");
+    if (registerValueChk()){
+        var form = createForm();
 
-        document.body.appendChild(form);
-
-        var id = inputValue(document.getElementById("id").value);
-        var password = inputPasswordValue(document.getElementById("password").value);
-        var name = inputValue(document.getElementById("name").value);
-        var email = inputEmailValue(document.getElementById("email").value);
-        var phone = inputValue(document.getElementById("phone").value);
-        var postcode = inputValue(document.getElementById("postcode").value);
-        var roadAddress = inputValue(document.getElementById("roadAddress").value);
-        var detailAddress = inputValue(document.getElementById("detailAddress").value);
+        var id = inputValue("id", document.getElementById("id").value);
+        var password = inputPasswordValue("password",document.getElementById("password").value);
+        var name = inputValue("name",document.getElementById("name").value);
+        var email = inputEmailValue("email",document.getElementById("email").value);
+        var phone = inputValue("phone",document.getElementById("phone").value);
+        var postcode = inputValue("postcode",document.getElementById("postcode").value);
+        var roadAddress = inputValue("roadAddress",document.getElementById("roadAddress").value);
+        var detailAddress = inputValue("detailAddress",document.getElementById("detailAddress").value);
 
         form.appendChild(id);
         form.appendChild(password);
@@ -240,7 +238,7 @@ function Register(){
     }
 }
 
-function valueChk(){
+function registerValueChk(){
     if (!idChk){
         document.getElementById("id").focus();
         return false;
@@ -262,4 +260,33 @@ function valueChk(){
     } else {
         return true;
     }
+}
+
+function signIn(){
+    debugger;
+    console.log("signIn");
+    var id = document.getElementById("id").value;
+    var password = document.getElementById("password").value;
+
+    if (id == null || id == '') {
+        document.getElementById("id").focus();
+    } else if (password == null || password == '') {
+        document.getElementById("password").focus();
+    } else {
+        var form = createForm();
+
+        id = inputValue("id", id);
+        password = inputPasswordValue("password", password);
+
+        form.appendChild(id);
+        form.appendChild(password);
+
+        submitPostAction(form,"Sign_In.do","signIn","signIn");
+    }
+}
+
+function goRegister(){
+    console.log("goRegister");
+    var form = createForm();
+    submitGetAction(form,"Sign_Up","register","register");
 }

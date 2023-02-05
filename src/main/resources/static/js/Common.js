@@ -12,6 +12,8 @@ title : Get전송
 Desc : form으로 데이터 전송시 get방식으로 데이터를 전송한다.
 */
 function submitGetAction(form, action, name, id){
+    console.log("submitGetAction");
+
     form.id = id;
     form.name = name;
     form.method = 'GET';
@@ -26,6 +28,8 @@ title : Post전송
 Desc : form으로 데이터 전송시 Post방식으로 데이터를 전송한다.
 */
 function submitPostAction(form, action, name, id){
+    console.log("submitPostAction");
+
     form.id = id;
     form.name = name;
     form.method = 'POST';
@@ -39,11 +43,14 @@ Auth : 박치원
 title : input 값 생성 (hidden)
 Desc : 화면에서 input, hidden 값을 생성할때 사용한다.
 */
-function inputValue(value){
+function inputValue(name, value){
+    console.log("name : " + name);
+    console.log("value : " + value);
+
     var input = document.createElement("input");
 
     input.setAttribute("type","hidden");
-    input.setAttribute("name","id");
+    input.setAttribute("name", name);
     input.setAttribute("value", value);
 
     return input;
@@ -53,11 +60,14 @@ Auth : 박치원
 title : input 값 생성 (Password)
 Desc : 화면에서 input, Password 값을 생성할때 사용한다.
 */
-function inputPasswordValue(value){
+function inputPasswordValue(name, value){
+    console.log("name : " + name);
+    console.log("value : " + value);
+
     var input = document.createElement("input");
 
     input.setAttribute("type","password");
-    input.setAttribute("name","id");
+    input.setAttribute("name", name);
     input.setAttribute("value", value);
 
     return input;
@@ -67,12 +77,21 @@ Auth : 박치원
 title : input 값 생성 (Email)
 Desc : 화면에서 input, Email 값을 생성할때 사용한다.
 */
-function inputEmailValue(value){
+function inputEmailValue(name, value){
+    console.log("name : " + name);
+    console.log("value : " + value);
+
     var input = document.createElement("input");
 
     input.setAttribute("type","email");
-    input.setAttribute("name","id");
+    input.setAttribute("name", name);
     input.setAttribute("value", value);
 
     return input;
+}
+function createForm(){
+    console.log("createForm");
+    var form = document.createElement("form");
+    document.body.appendChild(form);
+    return form;
 }
