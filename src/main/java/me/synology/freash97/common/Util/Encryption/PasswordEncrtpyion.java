@@ -3,8 +3,17 @@ package me.synology.freash97.Common.Util.Encryption;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+/*
+암호화 복호화가 진행되는 클래스
+*/
+
 @Slf4j
 public class PasswordEncrtpyion implements PasswordEncoder{
+    /*
+    auth : 박치원
+    title : 암호화
+    desc : 특정 문자를 암호화 할 때 사용하는 메소드
+    */
     @Override
     public String encode(CharSequence rawPassword) {
         log.debug("PasswordEncrtpyion 시작");
@@ -21,9 +30,13 @@ public class PasswordEncrtpyion implements PasswordEncoder{
         log.debug("PasswordEncrtpyion 종료");
         return encoding;
     }
-
+    /*
+    auth : 박치원
+    title : 복호화
+    desc : 암호화된 내용을 확인하여 결과를 리턴한다.
+    */
     @Override
-    public boolean matches(CharSequence rawPassword, String encodedPassword) {
+    public boolean decodeMatch(CharSequence rawPassword, String encodedPassword) {
         log.debug("PasswordDecryption 시작");
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(11);
         boolean check;
@@ -35,6 +48,11 @@ public class PasswordEncrtpyion implements PasswordEncoder{
         log.debug("PasswordDecryption 종료");
         return check;
     }
+    /*
+    auth : 박치원
+    title : 암호화 업그레이드
+    desc : 암호화 된 내용을 다시 암호화 하여 보안성을 높힐 용도이나 사용하지 않을 예정이다.
+    */
     @Override
     public boolean upgradeEncoding(String encodedPassword){
         return false;
