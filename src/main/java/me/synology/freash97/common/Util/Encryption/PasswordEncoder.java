@@ -1,4 +1,4 @@
-package me.synology.freash97.Common.Util.Encryption;
+package me.synology.freash97.common.Util.Encryption;
 /*
 암복호화를 사용하기 위한 인터페이스 이다.
 */
