@@ -237,7 +237,11 @@ function Register(){
         submitPostAction(form, "Register", "Register","Register");
     }
 }
-
+/*
+Auth : 박치원
+title : 비어있는 값 점검
+Desc : 계정 생성시 비어있는 칸은 확인하는 용도
+*/
 function registerValueChk(){
     if (!idChk){
         document.getElementById("id").focus();
@@ -261,7 +265,11 @@ function registerValueChk(){
         return true;
     }
 }
-
+/*
+Auth : 박치원
+title : 로그인시 사용하는 용도
+Desc : 로그인시 사용하는 메소드
+*/
 function signIn(){
     debugger;
     console.log("signIn");
@@ -284,7 +292,11 @@ function signIn(){
         submitPostAction(form,"Sign_In.do","signIn","signIn");
     }
 }
-
+/*
+Auth : 박치원
+title : 계정 생성시 사용하는 메소드
+Desc : 계정 생성할 때 사용하는 메소드 이다.
+*/
 function goRegister(){
     console.log("goRegister");
     var form = createForm();

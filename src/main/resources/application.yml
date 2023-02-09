@@ -16,9 +16,12 @@ spring:
   sql:
     init:
       mode: always
+  #spring security 커스텀 보안서비스 제한
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
 #mybatis 파일 경로 설정
-#mybatis:
-#  mapper-locations: mapper/**/*.xml
+mybatis:
+  mapper-locations: mapper/**/*.xml
 
 Dspring:
   profiles:

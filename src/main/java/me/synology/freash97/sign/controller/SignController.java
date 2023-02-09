@@ -1,25 +1,29 @@
 package me.synology.freash97.sign.controller;
 
-import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.http.HttpHeaders;
+import me.synology.freash97.member.entity.MemberEntity;
+import me.synology.freash97.sign.service.SignService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
 import java.util.Map;
 
 
 @Slf4j
 @Controller
-@NoArgsConstructor
+@AllArgsConstructor
 public class SignController {
+    public SignService signService;
     private static final String VALUE = "Sign/";
 
     @GetMapping(VALUE + "Sign_In")
     public String signIn(){
+        List<MemberEntity> test = signService.selectMember();
         log.debug("Sign_In");
+        log.debug(test.toString());
         return VALUE + "Sign_In";
     }
 
