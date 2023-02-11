@@ -1,19 +1,24 @@
 package me.synology.freash97.Notice.Entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
 import java.util.Date;
 
+/**
+ * date: 2023.02.06
+ * name: NoticeEntity.java
+ * desc: 게시글 entity 정의
+ */
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class NoticeEntity {
-    private int NOTICE_SEQ;
-    private int WRITER;
-    private String TITLE;
-    private String DETAIL;
-    private String NOTICE_STTS_CD;
-    private Date CREATE_DATE;
-    private Date UPDATE_DATE;
-    private int OPERATOR;
+    private int noticeSeq;
+    private int writer;
+    private String title;
+    private String content;
+    private NoticeStatusCode noticeSttsCd;
+    private Date createDate;
+    private Date updateDate;
+    private int operator;
 }
