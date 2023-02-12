@@ -1,8 +1,8 @@
-package me.synology.freash97.Notice.Service;
+package me.synology.freash97.notice.service;
 
 import lombok.RequiredArgsConstructor;
-import me.synology.freash97.Notice.Entity.NoticeEntity;
-import me.synology.freash97.Notice.Mapper.NoticeMapperRepository;
+import me.synology.freash97.notice.entity.NoticeEntity;
+import me.synology.freash97.notice.mapper.NoticeMapperRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /***
- * date: 2023.02.11
+ * date: 2023.02.13
  * name: NoticeService.java
  * desc: 게시글 작성, 조회, 수정, 삭제 service
  */
@@ -18,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class NoticeService {
 
-    @Autowired
+    //@Autowired
     private final NoticeMapperRepository noticeMapperRepository;
 
     // 게시글 작성

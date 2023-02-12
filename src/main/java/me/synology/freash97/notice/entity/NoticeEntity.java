@@ -1,11 +1,12 @@
-package me.synology.freash97.Notice.Entity;
+package me.synology.freash97.notice.entity;
 
 import lombok.*;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
- * date: 2023.02.06
+ * date: 2023.02.13
  * name: NoticeEntity.java
  * desc: 게시글 entity 정의
  */
@@ -18,7 +19,7 @@ public class NoticeEntity {
     private String title;
     private String content;
     private NoticeStatusCode noticeSttsCd;
-    private Date createDate;
-    private Date updateDate;
+    private Timestamp createDate;
+    private Timestamp updateDate;
     private int operator;
 }

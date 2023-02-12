@@ -1,4 +1,4 @@
-package me.synology.freash97.Notice.Entity;
+package me.synology.freash97.notice.entity;
 
 /**
  * date: 2023.02.06

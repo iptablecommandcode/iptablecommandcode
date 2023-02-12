@@ -1,6 +1,6 @@
-package me.synology.freash97.Notice.Mapper;
+package me.synology.freash97.notice.mapper;
 
-import me.synology.freash97.Notice.Entity.NoticeEntity;
+import me.synology.freash97.notice.entity.NoticeEntity;
 import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
@@ -12,7 +12,7 @@ import java.util.List;
 @Mapper
 public interface NoticeMapperRepository {
     // 게시글 작성
-    void insertNotice(NoticeEntity noticeEntity);
+    int insertNotice(NoticeEntity noticeEntity);
     // 게시글 전체 조회
     List<NoticeEntity> findAllNotice();
     // 특정 게시글 view
