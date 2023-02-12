@@ -1,12 +1,13 @@
-package me.synology.freash97.sign.controller;
+package me.synology.freash97.Sign.Controller;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import me.synology.freash97.member.entity.MemberEntity;
-import me.synology.freash97.sign.service.SignService;
+import me.synology.freash97.Member.Entity.MemberEntity;
+import me.synology.freash97.Sign.Service.SignService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.Map;
@@ -46,8 +47,16 @@ public class SignController {
         return "redirect:Sign_In";
     }
     @PostMapping(VALUE + "Sign_In.do")
-    public String signInAction(@RequestParam Map<String, Object> param){
-        log.debug("Sign_In.do");
-        return "index";
+    public ModelAndView signInAction(@RequestParam Map<String, Object> param, ModelAndView modelAndView) throws Exception{
+        log.debug("Sign_In.do 시작");
+
+        if (param.isEmpty()){
+            log.debug("param 없음 계정 생성 실패");
+            throw new NullPointerException("계정 생서용 값 내용 없음");
+        } else {
+            signService.createMember(param);
+        }
+
+        return modelAndView;
     }
 }

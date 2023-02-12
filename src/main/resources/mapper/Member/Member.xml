@@ -5,12 +5,39 @@
 <!-- 위 코드가 mapper 설정을 하는 코드 -->
 
 <!-- Mapper를 사용하는 Repository의 전체 경로를 적어줘야함. -->
-<mapper namespace="me.synology.freash97.member.repository.MemberMapperReposiroty">
-    <select id="memberSelect" resultType="me.synology.freash97.member.entity.MemberEntity">
-        SELECT * FROM MEMBER_M
+<mapper namespace="me.synology.freash97.Member.Mapper.MemberMapperReposiroty">
+    <select id="memberSelect" resultType="me.synology.freash97.Member.Entity.MemberEntity">
+        SELECT *
+        FROM MEMBER_M
     </select>
 
-<!--    <insert id="userAdd" parameterType="me.synology.freash97.sign.entity.MemberEntity">-->
+    <!--
+    auth : 박치원
+    title : MEMBER에 대한 SEQUENCE 번호
+    desc : MEMBER에 대한 SEQUENCE 번호 생성
+    -->
+    <select id="createSEQ" resultType="Integer">
+        SELECT nextval('member_seq') FROM DUAL;
+    </select>
 
-<!--    </insert>-->
+    <!--
+    auth : 박치원
+    title : 멤버 SEQ중 중복 확인
+    desc : 멤버 테이블의 SEQ번호중 중복 번호가 있으면 1 없으면 0 처리한다.
+    -->
+    <select id="selectSEQ" parameterType="Integer" resultType="Integer">
+        SELECT COUNT(SEQ) FROM MEMBER_M WHERE SEQ = #{SEQ}
+    </select>
+
+    <!--
+    auth : 박치원
+    title : Register시 멤버를 추가할 쿼리
+    desc : Register시 멤버를 추가할 쿼리 회원가입
+    -->
+    <insert id="memberAdd" parameterType="me.synology.freash97.Member.Entity.MemberEntity">
+        INSERT INTO MEMBER_M(SEQ, ID, PASSWORD, NAME, EMAIL, PHONE, ZIPCODE, ROADADDR, DETAILADDR, CREATE_DATE,
+                             UPDATE_DATE, OPERATOR)
+            VALUE (#{SEQ}, #{ID}, #{PASSWORD}, #{NAME}, #{EMAIL}, #{PHONE}, #{ZIPCODE}, #{ROADADDR}, #{DETAILADDR}, #{CREATE_DATE},
+            #{UPDATE_DATE}, #{OPERATOR});
+    </insert>
 </mapper>
