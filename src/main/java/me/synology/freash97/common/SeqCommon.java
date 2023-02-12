@@ -3,6 +3,7 @@ package me.synology.freash97.Common;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.synology.freash97.Member.Mapper.MemberMapperReposiroty;
+import org.springframework.stereotype.Service;
 
 /*
 Auth : 박치원
@@ -10,9 +11,12 @@ Title : 시퀀스 관리 객체
 Desc : 시퀀스 번호를 관리하는 공통 객체이다.
 */
 @Slf4j
+@Service
+@AllArgsConstructor
 public class SeqCommon {
 
-    private MemberMapperReposiroty member;
+    public MemberMapperReposiroty member;
+
 
     /*
     Auth : 박치원
@@ -41,10 +45,9 @@ public class SeqCommon {
                     loop = false;
                 }
             }
-        } catch (NullPointerException e) {
-            e.getMessage();
-        } finally {
-            log.debug("MemberSEQ 생성 종료");
+        } catch (Exception e) {
+            log.debug("시퀀스 생성 실패");
+            e.toString();
         }
 
         return createSEQ;

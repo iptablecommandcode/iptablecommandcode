@@ -17,8 +17,8 @@ public class MemberEntity {
     private String EMAIL;
     private String PHONE;
     private int ZIPCODE;
-    private String ROADARR;
-    private String DETAILARR;
+    private String ROADADDR;
+    private String DETAILADDR;
     private Date CREATE_DATE;
     private Date UPDATE_DATE;
     private int OPERATOR;

@@ -234,7 +234,7 @@ function Register(){
         form.appendChild(roadAddress);
         form.appendChild(detailAddress);
 
-        submitPostAction(form, "Register", "Register","Register");
+        submitPostAction(form, "Sign_In.do", "Register","Register");
     }
 }
 /*
