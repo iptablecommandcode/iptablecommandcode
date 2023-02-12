@@ -25,41 +25,50 @@ public class Member {
                 log.debug("Map 에 들어온 값이 없습니다.");
                 return memberEntity;
             } else {
-                for (int i = 0; i <= param.size(); i++) {
-                    if (param.containsKey("SEQ")) {
-                        memberEntity.setSEQ((int) param.get("SEQ"));
-                    } else if (param.containsKey("ID")) {
-                        memberEntity.setID((String) param.get("ID"));
-                    } else if (param.containsKey("PASSWORD")) {
-                        memberEntity.setPASSWORD((String) param.get("PASSWORD"));
-                    } else if (param.containsKey("NAME")) {
-                        memberEntity.setNAME((String) param.get("NAME"));
-                    } else if (param.containsKey("EMAIL")) {
-                        memberEntity.setEMAIL((String) param.get("EMAIL"));
-                    } else if (param.containsKey("PHONE")) {
-                        memberEntity.setPHONE((String) param.get("PHONE"));
-                    } else if (param.containsKey("ZIPCODE")) {
-                        memberEntity.setZIPCODE((int) param.get("ZIPCODE"));
-                    } else if (param.containsKey("ROADARR")) {
-                        memberEntity.setROADARR((String) param.get("ROADARR"));
-                    } else if (param.containsKey("DETAILARR")) {
-                        memberEntity.setDETAILARR((String) param.get("DETAILARR"));
-                    } else if (param.containsKey("CREATE_DATE")) {
-                        memberEntity.setCREATE_DATE((Date) param.get("CREATE_DATE"));
-                    } else if (param.containsKey("UPDATE_DATE")) {
-                        memberEntity.setUPDATE_DATE((Date) param.get("UPDATE_DATE"));
-                    } else if (param.containsKey("OPERATOR")) {
-                        memberEntity.setSEQ((int) param.get("OPERATOR"));
-                    }
+                if (param.containsKey("SEQ")) {
+                    memberEntity.setSEQ((int) param.get("SEQ"));
                 }
+                if (param.containsKey("id")) {
+                    memberEntity.setID((String) param.get("id"));
+                }
+                if (param.containsKey("password")) {
+                    memberEntity.setPASSWORD((String) param.get("password"));
+                }
+                if (param.containsKey("name")) {
+                    memberEntity.setNAME((String) param.get("name"));
+                }
+                if (param.containsKey("email")) {
+                    memberEntity.setEMAIL((String) param.get("email"));
+                }
+                if (param.containsKey("phone")) {
+                    memberEntity.setPHONE((String) param.get("phone"));
+                }
+                if (param.containsKey("zipcode")) {
+                    memberEntity.setZIPCODE((int) param.get("zipcode"));
+                }
+                if (param.containsKey("roadarr")) {
+                    memberEntity.setROADADDR((String) param.get("roadarr"));
+                }
+                if (param.containsKey("detailarr")) {
+                    memberEntity.setDETAILADDR((String) param.get("detailarr"));
+                }
+                if (param.containsKey("create_date")) {
+                    memberEntity.setCREATE_DATE((Date) param.get("create_date"));
+                }
+                if (param.containsKey("update_date")) {
+                    memberEntity.setUPDATE_DATE((Date) param.get("update_date"));
+                }
+                if (param.containsKey("operator")) {
+                    memberEntity.setSEQ((int) param.get("operator"));
+                }
+                log.debug(memberEntity.toString());
+                log.debug("Map 에 들어온 값 처리 완료");
             }
         } catch (NullPointerException e) {
             log.error("memberEntity 오류 발생");
             return memberClear(memberEntity);
         }
 
-
-        log.debug("Map 에 들어온 값 처리 완료");
         return memberEntity;
     }
 
@@ -78,8 +87,8 @@ public class Member {
         member.setEMAIL(null);
         member.setPHONE(null);
         member.setZIPCODE(empty);
-        member.setROADARR(null);
-        member.setDETAILARR(null);
+        member.setROADADDR(null);
+        member.setDETAILADDR(null);
         member.setCREATE_DATE(null);
         member.setUPDATE_DATE(null);
         member.setOPERATOR(empty);

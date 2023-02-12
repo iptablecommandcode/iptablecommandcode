@@ -16,6 +16,8 @@ import java.util.List;
 public class SignService {
     public MemberMapperReposiroty memberMapperReposiroty;
 
+    public SeqCommon seqCommon;
+
     /*
     수정 예정
     */
@@ -30,10 +32,9 @@ public class SignService {
     desc : 멤버 생성을 위한 로직이다.
     */
     public MemberEntity createMember(Object obj){
-        MemberEntity memberEntity = null;
+        MemberEntity memberEntity = new MemberEntity();
         Member member = new Member();
-        SeqCommon seqCommon = new SeqCommon();
-        Integer sequenceNumber;
+        Integer sequenceNumber = null;
 
         log.debug("Mmeber 생성 시작");
 
@@ -41,18 +42,18 @@ public class SignService {
             log.debug("Mmeber Sequence 생성");
             sequenceNumber = seqCommon.createMemberSEQ();
 
-            memberEntity.setSEQ(sequenceNumber);
+
 
             log.debug("화면에서 넘겨받은 값 입력");
             memberEntity = member.objToEntity(obj);
 
+            memberEntity.setSEQ((int)sequenceNumber);
             memberMapperReposiroty.memberAdd(memberEntity);
 
 
         } catch (Exception e){
-
-        } finally {
-            log.debug("Member 생성 성공");
+            e.toString();
+            log.debug("Member 생성 실패");
         }
 
 

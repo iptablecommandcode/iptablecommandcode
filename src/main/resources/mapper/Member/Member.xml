@@ -17,7 +17,7 @@
     desc : MEMBER에 대한 SEQUENCE 번호 생성
     -->
     <select id="createSEQ" resultType="Integer">
-        SELECT nextval('member_seq') FROM DUAL;
+        SELECT NEXTVAL('member_seq') FROM DUAL
     </select>
 
     <!--

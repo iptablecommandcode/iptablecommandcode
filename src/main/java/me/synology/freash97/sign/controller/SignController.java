@@ -49,13 +49,16 @@ public class SignController {
     @PostMapping(VALUE + "Sign_In.do")
     public ModelAndView signInAction(@RequestParam Map<String, Object> param, ModelAndView modelAndView) throws Exception{
         log.debug("Sign_In.do 시작");
+        MemberEntity memberEntity;
 
         if (param.isEmpty()){
             log.debug("param 없음 계정 생성 실패");
             throw new NullPointerException("계정 생서용 값 내용 없음");
         } else {
-            signService.createMember(param);
+            memberEntity = signService.createMember(param);
         }
+
+        log.debug("memberEntity 출력 : " + memberEntity.toString());
 
         return modelAndView;
     }
