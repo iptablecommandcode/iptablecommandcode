@@ -11,7 +11,7 @@ public class PagingEntity {
     private int startNoticeNo; // 게시판 시작 번호
     private int endNoticeNo;   // 게시판 끝 번호
 
-    private int choicePageNo;   // 보여줄 페이지 번호
+    private int currentPageNo;   // 보여줄 페이지 번호
     private int startPageNo;    // 페이지 시작 번호
     private int endPageNo;      // 페이지 끝 번호
     private final int PAGE_SIZE = 5;           // 보여줄 페이지 번호 개수
