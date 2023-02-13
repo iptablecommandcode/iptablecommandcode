@@ -3,7 +3,7 @@ package me.synology.freash97.Member.Service;
 import lombok.extern.slf4j.Slf4j;
 import me.synology.freash97.Member.Entity.MemberEntity;
 
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.Map;
 
 /*
@@ -19,6 +19,7 @@ public class Member {
         log.debug("Object로 들어온 Map의 값을 entity에 정렬한다.");
         MemberEntity memberEntity = new MemberEntity();
         Map<String, Object> param = (Map<String, Object>) obj;
+        Integer empty = null;
 
         try {
             if (param.isEmpty()) {
@@ -44,19 +45,25 @@ public class Member {
                     memberEntity.setPHONE((String) param.get("phone"));
                 }
                 if (param.containsKey("zipcode")) {
-                    memberEntity.setZIPCODE((int) param.get("zipcode"));
+                    if (param.get("zipcode").equals("")) {
+                        memberEntity.setZIPCODE(empty);
+                    } else if (param.get("zipcode").getClass().getName().equals("java.lang.String")) {
+                        memberEntity.setZIPCODE(Integer.parseInt(String.valueOf(param.get("zipcode"))));
+                    } else {
+                        memberEntity.setZIPCODE((int) param.get("zipcode"));
+                    }
                 }
-                if (param.containsKey("roadarr")) {
-                    memberEntity.setROADADDR((String) param.get("roadarr"));
+                if (param.containsKey("roadaddr")) {
+                    memberEntity.setROADADDR((String) param.get("roadaddr"));
                 }
-                if (param.containsKey("detailarr")) {
-                    memberEntity.setDETAILADDR((String) param.get("detailarr"));
+                if (param.containsKey("detailaddr")) {
+                    memberEntity.setDETAILADDR((String) param.get("detailaddr"));
                 }
                 if (param.containsKey("create_date")) {
-                    memberEntity.setCREATE_DATE((Date) param.get("create_date"));
+                    memberEntity.setCREATE_DATE((Timestamp) param.get("create_date"));
                 }
                 if (param.containsKey("update_date")) {
-                    memberEntity.setUPDATE_DATE((Date) param.get("update_date"));
+                    memberEntity.setUPDATE_DATE((Timestamp) param.get("update_date"));
                 }
                 if (param.containsKey("operator")) {
                     memberEntity.setSEQ((int) param.get("operator"));
@@ -77,7 +84,7 @@ public class Member {
     title : memberEntity Clear
     desc : memberEntity Clear처리를 하기 위한 로직이다.
     */
-    public MemberEntity memberClear(MemberEntity member){
+    public MemberEntity memberClear(MemberEntity member) {
         Integer empty = null;
 
         member.setSEQ(empty);

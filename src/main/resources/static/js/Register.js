@@ -199,8 +199,8 @@ function execDaumPostcode() {
             var roadAddr = data.roadAddress; // 도로명 주소 변수
 
             // 우편번호와 주소 정보를 해당 필드에 넣는다.
-            document.getElementById('postcode').value = data.zonecode;
-            document.getElementById("roadAddress").value = roadAddr;
+            document.getElementById('zipcode').value = data.zonecode;
+            document.getElementById("roadaddr").value = roadAddr;
         }
     }).open();
 }
@@ -221,9 +221,9 @@ function Register(){
         var name = inputValue("name",document.getElementById("name").value);
         var email = inputEmailValue("email",document.getElementById("email").value);
         var phone = inputValue("phone",document.getElementById("phone").value);
-        var postcode = inputValue("postcode",document.getElementById("postcode").value);
-        var roadAddress = inputValue("roadAddress",document.getElementById("roadAddress").value);
-        var detailAddress = inputValue("detailAddress",document.getElementById("detailAddress").value);
+        var postcode = inputValue("zipcode",document.getElementById("zipcode").value);
+        var roadAddress = inputValue("roadaddr",document.getElementById("roadaddr").value);
+        var detailAddress = inputValue("detailaddr",document.getElementById("detailaddr").value);
 
         form.appendChild(id);
         form.appendChild(password);

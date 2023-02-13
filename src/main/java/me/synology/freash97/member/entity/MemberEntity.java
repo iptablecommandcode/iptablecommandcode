@@ -4,11 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 public class MemberEntity {
     private int SEQ;
     private String ID;
@@ -19,7 +19,7 @@ public class MemberEntity {
     private int ZIPCODE;
     private String ROADADDR;
     private String DETAILADDR;
-    private Date CREATE_DATE;
-    private Date UPDATE_DATE;
+    private Timestamp CREATE_DATE;
+    private Timestamp UPDATE_DATE;
     private int OPERATOR;
 }
