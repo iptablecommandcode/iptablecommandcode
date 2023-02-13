@@ -1,4 +1,4 @@
-package me.synology.freash97.Common.Util.Encryption;
+package me.synology.freash97.common.Util.Encryption;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
