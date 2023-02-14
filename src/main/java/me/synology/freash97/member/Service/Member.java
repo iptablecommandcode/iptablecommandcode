@@ -47,7 +47,7 @@ public class Member {
                 if (param.containsKey("zipcode")) {
                     if (param.get("zipcode").equals("")) {
                         memberEntity.setZIPCODE(empty);
-                    } else if (param.get("zipcode").getClass().getName().equals("java.lang.String")) {
+                    } else if (param.get("zipcode") instanceof String) {
                         memberEntity.setZIPCODE(Integer.parseInt(String.valueOf(param.get("zipcode"))));
                     } else {
                         memberEntity.setZIPCODE((int) param.get("zipcode"));
