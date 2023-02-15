@@ -40,4 +40,12 @@
             VALUE (#{SEQ}, #{ID}, #{PASSWORD}, #{NAME}, #{EMAIL}, #{PHONE}, #{ZIPCODE}, #{ROADADDR}, #{DETAILADDR}, #{CREATE_DATE},
             #{UPDATE_DATE}, #{OPERATOR});
     </insert>
+    <!--
+    auth : 박치원
+    title : Register시 아이디 중복확인을 위한 쿼리
+    desc : Register시 아이디 중복확인을 위한 쿼리문
+    -->
+    <select id="checkId" parameterType="me.synology.freash97.Member.Entity.MemberEntity" resultType="Integer">
+        SELECT COUNT(ID) FROM MEMBER_M WHERE ID = #{ID}
+    </select>
 </mapper>

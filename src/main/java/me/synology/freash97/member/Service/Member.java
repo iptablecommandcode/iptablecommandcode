@@ -15,15 +15,16 @@ desc : member 관련 로직을 처리하기 위한 클래스이다.
 @Slf4j
 public class Member {
 
-    public MemberEntity objToEntity(Object obj) {
-        log.debug("Object로 들어온 Map의 값을 entity에 정렬한다.");
+    public MemberEntity objToEntity(Object obj) throws Exception,NullPointerException{
+        log.debug("objToEntity에서 Object로 들어온 Map의 값을 entity에 정렬한다.");
+        log.debug("objToEntity에서 Object 출력 : "+obj.toString());
         MemberEntity memberEntity = new MemberEntity();
         Map<String, Object> param = (Map<String, Object>) obj;
         Integer empty = null;
 
         try {
             if (param.isEmpty()) {
-                log.debug("Map 에 들어온 값이 없습니다.");
+                log.debug("objToEntity에서 Map 에 들어온 값이 없습니다.");
                 return memberEntity;
             } else {
                 if (param.containsKey("SEQ")) {
@@ -68,11 +69,14 @@ public class Member {
                 if (param.containsKey("operator")) {
                     memberEntity.setSEQ((int) param.get("operator"));
                 }
-                log.debug(memberEntity.toString());
-                log.debug("Map 에 들어온 값 처리 완료");
+                log.debug("objToEntity에서 memberEntity 출력 : "+memberEntity.toString());
+                log.debug("objToEntity에서 Map 에 들어온 값 처리 완료");
             }
         } catch (NullPointerException e) {
-            log.error("memberEntity 오류 발생");
+            log.error("objToEntity에서 memberEntity 오류 발생 NullPointerException");
+            return memberClear(memberEntity);
+        } catch (Exception e){
+            log.error("objToEntity에서 memberEntity 오류 발생 Exception");
             return memberClear(memberEntity);
         }
 
@@ -87,6 +91,7 @@ public class Member {
     public MemberEntity memberClear(MemberEntity member) {
         Integer empty = null;
 
+        log.debug("memberClear 동작");
         member.setSEQ(empty);
         member.setID(null);
         member.setPASSWORD(null);

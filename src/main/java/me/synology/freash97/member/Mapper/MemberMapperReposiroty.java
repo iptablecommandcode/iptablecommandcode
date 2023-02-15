@@ -19,21 +19,23 @@ public interface MemberMapperReposiroty {
     public List<MemberEntity> memberSelect();
 
     /*
-    수정 예정
-    */
-    public MemberEntity memberSignIn(MemberEntity memberEntity);
-
-    /*
     auth : 박치원
-    title : register시 멤버 생성
+    title : register시 멤버 생성 매퍼
     desc : register시 멤버 생성을 위한 매퍼
     */
     public void memberAdd(MemberEntity memberEntity);
 
     /*
     auth : 박치원
-    title : 시퀀스 번호 생성
+    title : 시퀀스 번호 생성 매퍼
     desc : 시퀀스 번호 생성을 위한 매퍼
     */
     public Integer createSEQ();
+
+    /*
+    auth : 박치원
+    title : 아이디 중복확인 매퍼
+    desc : 아이디 중복확인을 위한 매퍼
+    */
+    public Integer checkId(MemberEntity memberEntity);
 }

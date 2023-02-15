@@ -42,7 +42,7 @@ $(function(){
     /*아이디 중복 검색*/
     $('#idCheck').click(function () {
         var data = {}
-        data["Id"] = $('#Id').val();
+        data["id"] = $('#id').val();
 
         $.ajax({
             contentType: 'application/json',
