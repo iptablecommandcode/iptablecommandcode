@@ -1,7 +1,7 @@
-package me.synology.freash97.Member.Service;
+package me.synology.freash97.member.service;
 
 import lombok.extern.slf4j.Slf4j;
-import me.synology.freash97.Member.Entity.MemberEntity;
+import me.synology.freash97.member.entity.MemberEntity;
 
 import java.sql.Timestamp;
 import java.util.Map;

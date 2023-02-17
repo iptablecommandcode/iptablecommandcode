@@ -1,4 +1,4 @@
-package me.synology.freash97.Common;
+package me.synology.freash97.common;
 
 /*
 auth : 박치원

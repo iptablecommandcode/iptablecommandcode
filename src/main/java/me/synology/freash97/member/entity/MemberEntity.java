@@ -1,4 +1,4 @@
-package me.synology.freash97.Member.Entity;
+package me.synology.freash97.member.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

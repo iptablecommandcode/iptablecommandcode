@@ -1,8 +1,8 @@
-package me.synology.freash97.Common;
+package me.synology.freash97.common;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import me.synology.freash97.Member.Mapper.MemberMapperReposiroty;
+import me.synology.freash97.member.mapper.MemberMapperReposiroty;
 import org.springframework.stereotype.Service;
 
 /*

@@ -1,6 +1,6 @@
-package me.synology.freash97.Member.Mapper;
+package me.synology.freash97.member.mapper;
 
-import me.synology.freash97.Member.Entity.MemberEntity;
+import me.synology.freash97.member.entity.MemberEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

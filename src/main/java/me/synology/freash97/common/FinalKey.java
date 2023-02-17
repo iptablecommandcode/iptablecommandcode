@@ -1,4 +1,4 @@
-package me.synology.freash97.Common;
+package me.synology.freash97.common;
 
 public class FinalKey {
     //성공 실패 여부 Boolean
