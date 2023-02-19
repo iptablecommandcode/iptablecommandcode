@@ -5,7 +5,7 @@
 <!-- 위 코드가 mapper 설정을 하는 코드 -->
 
 <!-- Mapper를 사용하는 Repository의 전체 경로를 적어줘야함. -->
-<mapper namespace="me.synology.freash97.Member.Mapper.MemberMapperReposiroty">
+<mapper namespace="me.synology.freash97.member.mapper.MemberMapperReposiroty">
     <select id="memberSelect" resultType="me.synology.freash97.Member.Entity.MemberEntity">
         SELECT *
         FROM MEMBER_M
