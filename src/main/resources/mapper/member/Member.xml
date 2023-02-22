@@ -6,7 +6,7 @@
 
 <!-- Mapper를 사용하는 Repository의 전체 경로를 적어줘야함. -->
 <mapper namespace="me.synology.freash97.member.mapper.MemberMapperReposiroty">
-    <select id="memberSelect" resultType="me.synology.freash97.Member.Entity.MemberEntity">
+    <select id="memberSelect" resultType="me.synology.freash97.member.entity.MemberEntity">
         SELECT *
         FROM MEMBER_M
     </select>
@@ -34,7 +34,7 @@
     title : Register시 멤버를 추가할 쿼리
     desc : Register시 멤버를 추가할 쿼리 회원가입
     -->
-    <insert id="memberAdd" parameterType="me.synology.freash97.Member.Entity.MemberEntity">
+    <insert id="memberAdd" parameterType="me.synology.freash97.member.entity.MemberEntity">
         INSERT INTO MEMBER_M(SEQ, ID, PASSWORD, NAME, EMAIL, PHONE, ZIPCODE, ROADADDR, DETAILADDR, CREATE_DATE,
                              UPDATE_DATE, OPERATOR)
             VALUE (#{SEQ}, #{ID}, #{PASSWORD}, #{NAME}, #{EMAIL}, #{PHONE}, #{ZIPCODE}, #{ROADADDR}, #{DETAILADDR}, #{CREATE_DATE},
@@ -45,7 +45,7 @@
     title : Register시 아이디 중복확인을 위한 쿼리
     desc : Register시 아이디 중복확인을 위한 쿼리문
     -->
-    <select id="checkId" parameterType="me.synology.freash97.Member.Entity.MemberEntity" resultType="Integer">
+    <select id="checkId" parameterType="me.synology.freash97.member.entity.MemberEntity" resultType="Integer">
         SELECT COUNT(ID) FROM MEMBER_M WHERE ID = #{ID}
     </select>
 </mapper>
