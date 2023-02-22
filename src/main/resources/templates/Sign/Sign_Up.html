@@ -2,6 +2,7 @@
 <html xmlns="https://www.thymeleaf.org/" layout:decorator="layout/login">
 <head>
     <meta charset="UTF-8">
+    <title th:text="${@environment.getProperty('project.level')}"></title>
     <!--postcode-->
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <!--jQuery-->
@@ -17,7 +18,7 @@
 </head>
 <body>
     <div class="position-absolute top-50 start-50 translate-middle">
-        <p class="fs-1 text-center">IPTABLECOMMANDCODE</p>
+        <p class="fs-1 text-center" th:text="${@environment.getProperty('project.level')}"></p>
         <input type="hidden" name="login" value="signup">
         <!-- 아이디 -->
         <div class="form-group">

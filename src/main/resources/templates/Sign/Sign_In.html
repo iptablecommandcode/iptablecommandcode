@@ -2,7 +2,7 @@
 <html xmlns="https://www.thymeleaf.org/" layout:decorator="layout/login">
 <head>
     <meta charset="UTF-8">
-    <title>IPTABLECOMMANDCODE</title>
+    <title th:text="${@environment.getProperty('project.level')}"></title>
     <!--jQuery-->
     <script th:src="@{/js/jquery-3.6.3.min.js}"></script>
     <!--JS-->
@@ -17,7 +17,7 @@
 </head>
 <body>
     <div class="position-absolute top-50 start-50 translate-middle">
-        <p class="fs-1">IPTABLECOMMANDCODE</p>
+        <p class="fs-1"><span th:text="${@environment.getProperty('project.level')}"></span></p>
         <!-- 아이디 -->
         <div class="input-group mb-3">
             <span class="input-group-text">

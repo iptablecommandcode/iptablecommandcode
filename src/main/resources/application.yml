@@ -26,3 +26,6 @@ mybatis:
 Dspring:
   profiles:
     active: local
+#
+project:
+  level: IPTABLECOMMANDCODE_LOCAL
