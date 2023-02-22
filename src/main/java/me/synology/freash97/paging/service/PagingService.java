@@ -11,10 +11,9 @@ public class PagingService {
 
     private final PagingRepository pagingRepository;
 
-    public PagingEntity getPageInfoByPageNo(int currentPageNo) {
+    public PagingEntity getPageInfoByPageNo(int currentPageNo, int totalNoticeCount) {
         PagingEntity pageInfo = new PagingEntity();
         int startPageNo;
-        int totalNoticeCount = pagingRepository.getToTalCount();
 
         // 페이지 시작 ~ 끝 번호 체크
         // 선택한 페이지번호가 끝 번호일 경우
@@ -31,7 +30,7 @@ public class PagingService {
         pageInfo.setCurrentPageNo(currentPageNo);
         pageInfo.setStartPageNo(startPageNo);
 
-        setNoticeInfo(currentPageNo, pageInfo);
+        setNoticeInfo(totalNoticeCount, pageInfo);
         setEndPageInfo(totalNoticeCount, pageInfo);
 
         // 이전, 다음버튼 활성화 여부 세팅
@@ -41,10 +40,9 @@ public class PagingService {
 
     }
 
-    public PagingEntity getPageInfoByPrev(int currentPageNo) {
+    public PagingEntity getPageInfoByPrev(int currentPageNo, int totalNoticeCount) {
         PagingEntity pageInfo = new PagingEntity();
         int startPageNo;
-        int totalNoticeCount = pagingRepository.getToTalCount();
 
         // 페이지 시작 ~ 끝 번호 체크
         // 선택한 페이지번호가 끝 번호일 경우
@@ -58,7 +56,7 @@ public class PagingService {
         pageInfo.setCurrentPageNo(currentPageNo);
         pageInfo.setStartPageNo(startPageNo);
 
-        setNoticeInfo(currentPageNo, pageInfo);
+        setNoticeInfo(totalNoticeCount, pageInfo);
         setEndPageInfo(totalNoticeCount, pageInfo);
 
         // 이전, 다음버튼 활성화 여부 세팅
@@ -67,10 +65,9 @@ public class PagingService {
         return pageInfo;
     }
 
-    public PagingEntity getPageInfoByNext(int currentPageNo) {
+    public PagingEntity getPageInfoByNext(int currentPageNo, int totalNoticeCount) {
         PagingEntity pageInfo = new PagingEntity();
         int startPageNo;
-        int totalNoticeCount = pagingRepository.getToTalCount();
 
         if (currentPageNo % pageInfo.getPAGE_SIZE() == 0) {
             startPageNo = currentPageNo + 1 ;
@@ -82,7 +79,7 @@ public class PagingService {
         pageInfo.setCurrentPageNo(currentPageNo);
         pageInfo.setStartPageNo(startPageNo);
 
-        setNoticeInfo(currentPageNo, pageInfo);
+        setNoticeInfo(totalNoticeCount, pageInfo);
         setEndPageInfo(totalNoticeCount, pageInfo);
         setButtonInfo(totalNoticeCount, pageInfo);
 
@@ -98,9 +95,13 @@ public class PagingService {
         }
     }
 
-    private void setNoticeInfo(int pageNo, PagingEntity pageInfo) {
-        int startNoticeNo = pageInfo.getNOTICE_SIZE() * (pageNo - 1) + 1;
-        int endNoticeNo = startNoticeNo + 10;
+    private void setNoticeInfo(int totalNoticeCount, PagingEntity pageInfo) {
+        int startNoticeNo = pageInfo.getNOTICE_SIZE() * (pageInfo.getCurrentPageNo() - 1) + 1;
+        int endNoticeNo = startNoticeNo + 9;
+
+        if (totalNoticeCount < endNoticeNo) {
+            endNoticeNo = totalNoticeCount;
+        }
 
         pageInfo.setStartNoticeNo(startNoticeNo);
         pageInfo.setEndNoticeNo(endNoticeNo);
@@ -113,6 +114,10 @@ public class PagingService {
 
         if (totalNoticeCount > pageInfo.getEndPageNo() * pageInfo.getNOTICE_SIZE()) {
             pageInfo.setNext(true);
+
+            if(totalNoticeCount == pageInfo.getEndNoticeNo()) {
+                pageInfo.setNext(false);
+            }
         }
     }
 
