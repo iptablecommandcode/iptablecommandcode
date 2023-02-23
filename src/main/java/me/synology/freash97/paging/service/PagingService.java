@@ -25,8 +25,6 @@ public class PagingService {
 
         }
 
-
-
         pageInfo.setCurrentPageNo(currentPageNo);
         pageInfo.setStartPageNo(startPageNo);
 
