@@ -7,7 +7,7 @@
 <mapper namespace="me.synology.freash97.paging.mapper.PagingRepository">
 
     <!-- NOTICE.XML에 옮길예정 -->
-    <resultMap type="NoticeEntity" id="NoticeMap">
+    <resultMap type="me.synology.freash97.paging.entity.PagingEnitiy" id="NoticeMap">
         <id column="notice_seq" property="noticeSeq"/>
         <result column="title" property="title"/>
         <result column="content" property="content"/>
@@ -26,7 +26,7 @@
         </association>
     </resultMap>
 
-    <select id="findAllNotice" resultMap="noticeMap">
+    <select id="findAllNotice" resultMap="me.synology.freash97.paging.entity.PagingEnitiy">
         SELECT N.*,
                M.SEQ,
                M.ID,
