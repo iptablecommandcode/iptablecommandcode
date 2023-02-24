@@ -7,7 +7,7 @@
 <mapper namespace="me.synology.freash97.paging.mapper.PagingRepository">
 
     <!-- NOTICE.XML에 옮길예정 -->
-    <resultMap type="me.synology.freash97.notice.entity.NoticeEnitiy" id="NoticeMap">
+    <resultMap type="me.synology.freash97.notice.entity.NoticeEntity" id="NoticeMap">
         <id column="notice_seq" property="noticeSeq"/>
         <result column="title" property="title"/>
         <result column="content" property="content"/>
@@ -15,7 +15,7 @@
         <result column="create_date" property="createDate"/>
         <result column="update_date" property="updateDate"/>
         <result column="operator" property="operator"/>
-
+        <!-- 현재 int타입이라 주석처리
         <association property="writer" javaType="Member">
             <id column="seq" property="seq"/>
             <result column="id" property="id"/>
@@ -24,6 +24,7 @@
             <result column="create_date" property="createDate"/>
             <result column="update_date" property="updateDate"/>
         </association>
+        -->
     </resultMap>
 
     <select id="findAllNotice" resultMap="NoticeMap">
