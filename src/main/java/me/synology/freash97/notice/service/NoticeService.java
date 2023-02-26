@@ -3,6 +3,7 @@ package me.synology.freash97.notice.service;
 import lombok.RequiredArgsConstructor;
 import me.synology.freash97.notice.entity.NoticeEntity;
 import me.synology.freash97.notice.mapper.NoticeMapperRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,9 +40,8 @@ public class NoticeService {
     }
 
     // 게시글 수정
-    public int updateNotice(NoticeEntity noticeEntity) {
-        noticeMapperRepository.updateNotice(noticeEntity);
-        return noticeEntity.getNoticeSeq();
+    public NoticeEntity updateNotice(NoticeEntity noticeEntity) {
+        return noticeMapperRepository.updateNotice(noticeEntity);
     }
 
     // 게시글 삭제
