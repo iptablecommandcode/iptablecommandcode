@@ -18,7 +18,7 @@ public interface NoticeMapperRepository {
     // 특정 게시글 view
     NoticeEntity findByNoticeSeq(int noticeSeq);
     // 게시글 수정
-    NoticeEntity updateNotice(NoticeEntity noticeEntity);
+    int updateNotice(NoticeEntity noticeEntity);
     // 게시글 삭제
     int deleteNotice(int noticeSeq);
 }
