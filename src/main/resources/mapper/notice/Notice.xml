@@ -6,6 +6,26 @@
 <!-- mapper를 사용하는 Repository 의 전체 경로를 적어줘야함. -->
 <mapper namespace="me.synology.freash97.notice.mapper.NoticeMapperRepository">
 
+    <resultMap type="me.synology.freash97.notice.entity.NoticeEntity" id="NoticeMap">
+        <id column="notice_seq" property="noticeSeq"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="notice_stts_cd" property="noticeSttsCd"/>
+        <result column="create_date" property="createDate"/>
+        <result column="update_date" property="updateDate"/>
+        <result column="operator" property="operator"/>
+        <!-- 현재 int타입이라 주석처리
+        <association property="writer" javaType="Member">
+            <id column="seq" property="seq"/>
+            <result column="id" property="id"/>
+            <result column="name" property="name"/>
+            <result column="email" property="email"/>
+            <result column="create_date" property="createDate"/>
+            <result column="update_date" property="updateDate"/>
+        </association>
+        -->
+    </resultMap>
+
     <!-- 게시글 작성 -->
     <insert id="insertNotice" parameterType="me.synology.freash97.notice.entity.NoticeEntity" useGeneratedKeys="true">
         INSERT INTO NOTICE_M(WRITER, TITLE, CONTENT, NOTICE_STTS_CD, CREATE_DATE, UPDATE_DATE, OPERATOR)
@@ -44,5 +64,21 @@
           , UPDATE_DATE = NOW()
         WHERE NOTICE_SEQ = #{noticeSeq}
     </update>
+
+    <!--전체 조회 by 페이징-->
+    <select id="findAllNoticebyPaging" resultMap="NoticeMap">
+        SELECT N.*,
+               M.SEQ,
+               M.ID,
+               M.NAME,
+               M.EMAIL,
+               M.CREATE_DATE,
+               M.UPDATE_DATE
+        FROM NOTICE_M N,
+             MEMBER_M M
+        WHERE NOTICE_STTS_CD = 'A'
+        ORDER BY NOTICE_SEQ DESC
+            LIMIT #{startNoticeNo}, #{endNoticeNo}
+    </select>
 
 </mapper>
