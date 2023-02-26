@@ -1,15 +1,14 @@
 package me.synology.freash97.paging.service;
 
 import lombok.RequiredArgsConstructor;
+import me.synology.freash97.notice.mapper.NoticeMapperRepository;
 import me.synology.freash97.paging.entity.PagingEntity;
-import me.synology.freash97.paging.mapper.PagingRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class PagingService {
-
-    private final PagingRepository pagingRepository;
+    private final NoticeMapperRepository noticeMapperRepository;
 
     public PagingEntity getPageInfoByPageNo(int currentPageNo, int totalNoticeCount) {
         PagingEntity pageInfo = new PagingEntity();
@@ -33,6 +32,8 @@ public class PagingService {
 
         // 이전, 다음버튼 활성화 여부 세팅
         setButtonInfo(totalNoticeCount, pageInfo);
+
+        pageInfo.setNotices(noticeMapperRepository.findAllNoticebyPaging(pageInfo.getStartNoticeNo(),pageInfo.getEndNoticeNo()));
 
         return pageInfo;
 
@@ -60,6 +61,8 @@ public class PagingService {
         // 이전, 다음버튼 활성화 여부 세팅
         setButtonInfo(totalNoticeCount, pageInfo);
 
+        pageInfo.setNotices(noticeMapperRepository.findAllNoticebyPaging(pageInfo.getStartNoticeNo(),pageInfo.getEndNoticeNo()));
+
         return pageInfo;
     }
 
@@ -80,6 +83,8 @@ public class PagingService {
         setNoticeInfo(totalNoticeCount, pageInfo);
         setEndPageInfo(totalNoticeCount, pageInfo);
         setButtonInfo(totalNoticeCount, pageInfo);
+
+        pageInfo.setNotices(noticeMapperRepository.findAllNoticebyPaging(pageInfo.getStartNoticeNo(),pageInfo.getEndNoticeNo()));
 
         return pageInfo;
     }

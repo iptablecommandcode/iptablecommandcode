@@ -2,6 +2,8 @@ package me.synology.freash97.notice.mapper;
 
 import me.synology.freash97.notice.entity.NoticeEntity;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -21,4 +23,5 @@ public interface NoticeMapperRepository {
     NoticeEntity updateNotice(NoticeEntity noticeEntity);
     // 게시글 삭제
     int deleteNotice(int noticeSeq);
+    List<NoticeEntity> findAllNoticebyPaging(@Param("startNoticeNo") int startNoticeNo, @Param("endNoticeNo")int endNoticeNo);
 }
