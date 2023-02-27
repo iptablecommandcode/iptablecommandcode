@@ -10,13 +10,13 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @Data
 public class MemberEntity {
-    private int SEQ;
+    private Integer SEQ;
     private String ID;
     private String PASSWORD;
     private String NAME;
     private String EMAIL;
     private String PHONE;
-    private int ZIPCODE;
+    private Integer ZIPCODE;
     private String ROADADDR;
     private String DETAILADDR;
     private Timestamp CREATE_DATE;
