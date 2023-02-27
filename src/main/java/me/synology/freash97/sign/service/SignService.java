@@ -81,7 +81,7 @@ public class SignService {
         return memberEntity;
     }
 
-    /*
+    /**
     auth : 박치원
     title : 아이디 중복확인 서비스 로직
     desc : 아이디 중복확인을 위한 서비스 호출 로직
@@ -91,7 +91,7 @@ public class SignService {
         MemberEntity memberEntity = new MemberEntity();
         Member member = new Member();
 
-        boolean result = key.BOOLFAIL;
+        boolean result = false;
         Integer idChkResult = 0;
 
         try {
@@ -103,9 +103,9 @@ public class SignService {
 
             //0보다 크면 중복내용 있음
             if (idChkResult.equals(0)) {
-                result = key.BOOLSUCCESS;
+                result = true;
             } else {
-                result = key.BOOLFAIL;
+                result = false;
             }
             log.debug("service result 결과 : " + result);
         } catch (NullPointerException e) {
