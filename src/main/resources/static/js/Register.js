@@ -234,7 +234,7 @@ function Register(){
         form.appendChild(roadAddress);
         form.appendChild(detailAddress);
 
-        submitPostAction(form, "Sign_In.do", "Register","Register");
+        submitPostAction(form, "Sign_Up.do", "Register","Register");
     }
 }
 /*
@@ -294,8 +294,8 @@ function signIn(){
 }
 /*
 Auth : 박치원
-title : 계정 생성시 사용하는 메소드
-Desc : 계정 생성할 때 사용하는 메소드 이다.
+title : 계정 생성페이지로 이동하는 메소드
+Desc : 계정 생성페이지로 이동하는 메소드 이다.
 */
 function goRegister(){
     console.log("goRegister");

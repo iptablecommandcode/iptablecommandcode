@@ -21,27 +21,28 @@ public class SignController {
     public SignService signService;
     private static final String VALUE = "Sign/";
 
+    /**
+    auth : 박치원
+    title : Sign_In 접속
+    desc : Sign_In 접속시 사용하는 로직
+    */
     @GetMapping(VALUE + "Sign_In")
     public String signIn() throws Exception {
-        try {
-            List<MemberEntity> test = signService.selectMember();
-            log.debug("Sign_In");
-            log.debug(test.toString());
-        } catch (Exception e) {
-            log.error("Sign_In 페이지 접속 오류");
-            e.getMessage();
-        }
-
+        log.debug("Sign_In 접속");
         return VALUE + "Sign_In";
     }
 
+    /**
+     * @desc Sign_Up페이지 이동
+     * @return String
+     */
     @GetMapping(VALUE + "Sign_Up")
     public String signUp() {
-        log.debug("Sign_Up");
+        log.debug("Sign_Up 페이지 접속");
         return VALUE + "Sign_Up";
     }
 
-    /*
+    /**
     auth : 박치원
     title : Register 시 ID 중복확인
     desc : Register시 아이디 중복확인을 위한 컨트롤러 이다.
@@ -52,7 +53,7 @@ public class SignController {
         FinalKey Key = new FinalKey();
 
         String result = Key.STRINGFAIL;
-        boolean idcheck = Key.BOOLFAIL;
+        boolean idcheck = false;
 
         log.debug("아이디 중복확인 실행");
         log.debug("아이디 중복확인 param 값 확인" + param.toString());
@@ -78,11 +79,15 @@ public class SignController {
 
         return result;
     }
-    @PostMapping(VALUE + "Register")
-    public String register(@RequestParam Map<String, Object> param) {
-        log.debug("success");
-        return "redirect:Sign_In";
-    }
+
+    /**
+     * @param param
+     * @param modelAndView
+     * @return ModelAndView
+     * @throws Exception
+     * @throws NullPointerException
+     * @desc 로그인시 사용하는 메소드
+     */
     @PostMapping(VALUE + "Sign_In.do")
     public ModelAndView signInAction(@RequestParam Map<String, Object> param, ModelAndView modelAndView) throws Exception, NullPointerException {
         log.debug("Sign_In.do 시작");
@@ -96,6 +101,39 @@ public class SignController {
         }
 
         log.debug("memberEntity 출력 : " + memberEntity.toString());
+
+        return modelAndView;
+    }
+
+    /**
+     * @param param
+     * @param modelAndView
+     * @return ModelAndView
+     * @throws Exception
+     * @throws NullPointerException
+     * @desc 계정 생성시 사용하는 메소드
+     */
+    @PostMapping(VALUE + "Sign_Up.do")
+    public ModelAndView signUpAction(@RequestParam Map<String, Object> param, ModelAndView modelAndView) throws Exception, NullPointerException {
+        log.debug("Sign_Up.do 시작");
+        MemberEntity memberEntity;
+
+        try {
+            if (param.isEmpty()) {
+                log.debug("param 없음 계정 생성 실패");
+                throw new NullPointerException("계정 생성용 값 내용 없음");
+            } else {
+                memberEntity = signService.createMember(param);
+            }
+
+            log.debug("memberEntity 출력 : " + memberEntity.toString());
+
+            modelAndView.setViewName("redirect:Sign_In");
+        } catch (Exception e){
+            log.error("계정생성 오류");
+            throw new RuntimeException(e);
+        }
+
 
         return modelAndView;
     }
