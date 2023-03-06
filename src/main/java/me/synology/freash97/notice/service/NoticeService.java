@@ -3,14 +3,13 @@ package me.synology.freash97.notice.service;
 import lombok.RequiredArgsConstructor;
 import me.synology.freash97.notice.entity.NoticeEntity;
 import me.synology.freash97.notice.mapper.NoticeMapperRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 /***
- * date: 2023.02.13
+ * date: 2023.02.28
  * name: NoticeService.java
  * desc: 게시글 작성, 조회, 수정, 삭제 service
  */
@@ -40,8 +39,9 @@ public class NoticeService {
     }
 
     // 게시글 수정
-    public NoticeEntity updateNotice(NoticeEntity noticeEntity) {
-        return noticeMapperRepository.updateNotice(noticeEntity);
+    public int updateNotice(NoticeEntity noticeEntity) {
+        noticeMapperRepository.updateNotice(noticeEntity);
+        return noticeEntity.getNoticeSeq();
     }
 
     // 게시글 삭제

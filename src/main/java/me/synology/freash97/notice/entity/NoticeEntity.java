@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 /**
- * date: 2023.02.13
+ * date: 2023.02.26
  * name: NoticeEntity.java
  * desc: 게시글 entity 정의
  */
@@ -18,8 +18,13 @@ public class NoticeEntity {
     private int writer;
     private String title;
     private String content;
-    private NoticeStatusCode noticeSttsCd;
+    private char noticeSttsCd;
     private Timestamp createDate;
     private Timestamp updateDate;
     private int operator;
+
+    public NoticeEntity(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 }
