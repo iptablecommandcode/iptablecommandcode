@@ -118,4 +118,42 @@ public class SignService {
 
         return result;
     }
+
+    /**
+     * @desc Sign_In 동작 로그인시 확인한다
+     * @param obj
+     * @return MemberEntity
+     */
+    public MemberEntity sign_In(Object obj) throws Exception {
+        MemberEntity member_Sign_In = new MemberEntity();
+        MemberEntity member_DB = new MemberEntity();
+        Member member = new Member();
+        PasswordEncoder passwordEncoder = new PasswordEncrtpyion();
+
+        try {
+            //데이터 멤버에서 초기화
+            member_Sign_In = member.objToEntity(obj);
+
+            //DB에서 값 가져옴
+            member_DB = memberMapperReposiroty.sign_In_Chk(member_Sign_In.getID());
+
+            //아이디 및 비밀번호 값 확인
+            if (member_Sign_In.getID().equals(member_DB.getID())){
+                log.error("아이디가 일치하지 않습니다.");
+                throw new RuntimeException();
+            } else if(!passwordEncoder.decodeMatch(member_Sign_In.getPASSWORD(),member_DB.getPASSWORD())){
+                log.error("비밀번호가 일치하지 않습니다.");
+                throw new RuntimeException();
+            } else {
+                member_Sign_In.setPASSWORD("true");
+            }
+
+        } catch (Exception e){
+            log.error("로그인 오류");
+            throw new RuntimeException();
+        }
+
+
+        return member_Sign_In;
+    }
 }

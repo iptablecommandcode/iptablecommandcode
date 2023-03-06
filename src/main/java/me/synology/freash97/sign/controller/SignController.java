@@ -97,10 +97,13 @@ public class SignController {
             log.debug("param 없음 계정 생성 실패");
             throw new NullPointerException("계정 생성용 값 내용 없음");
         } else {
-            memberEntity = signService.createMember(param);
+            memberEntity = signService.sign_In(param);
         }
 
         log.debug("memberEntity 출력 : " + memberEntity.toString());
+        if ("true".equals(memberEntity.getPASSWORD())){
+
+        }
 
         return modelAndView;
     }

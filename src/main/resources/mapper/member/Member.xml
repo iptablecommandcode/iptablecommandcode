@@ -48,4 +48,11 @@
     <select id="checkId" parameterType="me.synology.freash97.member.entity.MemberEntity" resultType="Integer">
         SELECT COUNT(ID) FROM MEMBER_M WHERE ID = #{ID}
     </select>
+    <!--
+    auth : 박치원
+    title : Sign_In시 아이디를 이용하여 아이디 및 비밀번호 조회
+    -->
+    <select id="sign_In_Chk" parameterType="String" resultType="me.synology.freash97.member.entity.MemberEntity">
+        SELECT ID, PASSWORD FROM MEMBER_M WHERE ID = #{ID}
+    </select>
 </mapper>
