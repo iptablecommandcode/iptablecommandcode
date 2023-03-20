@@ -42,7 +42,7 @@ java -jar [빌드 생성 후 실행할 배포 파일]./freash97-0.0.1-SNAPSHOT.j
 ![jenkins 빌드 화면](file/jenkins2.png)
 
 ### 정적 코드분석(SonarQube)
-1.SonarQube 접속 url : <https://freash97.synology.me:8030/>
+1.SonarQube 접속 url : <http://freash97.synology.me:8030/>
 
 2.SonarQube 사용 기본 조회용 계정 developer/developer
 
