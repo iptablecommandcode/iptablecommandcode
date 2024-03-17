@@ -91,12 +91,16 @@
             <AppenderRef ref="file" />
         </logger>
 
+        <logger name="me.synology.freash97" level="debug" additivity="false" >
+            <AppenderRef ref="console" />
+            <AppenderRef ref="file" />
+        </logger>
 
         <!-- =================================================================== -->
         <!-- Root(Default) Setting												 -->
         <!-- =================================================================== -->
         <!-- off, fatal, error, warn, info, debug, trace, all -->
-        <Root level="debug" additivity="false">
+        <Root level="info" additivity="false">
             <AppenderRef ref="file"/>
             <AppenderRef ref="console" />
         </Root>
