@@ -6,12 +6,14 @@ spring:
     suffix: .html
     prefix:
       classpath: /templates/
+
 #  mysql 연결
   datasource:
-    url: jdbc:mysql://freash97.synology.me:43306/DEVELOPE?useSSL=false
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: developer
-    password: deve10perUser!
+    url: ENC(boebLBlrW+R3Mmkhg0IPtAmB6mIHlBwerSPrYhcoi3TENRKJzFIbRVU1EBE0iPL/enTkibb9Eb42d4JBfMU76JvOTPKvWL8lum+tkrgn1/jM+qySOEe7BAVeY06koB5v)
+    username: ENC(zsBkU4rwpIDoooR2hWebN3Khc/5Xfz59PdEl7agkKgGR4UM0NBQFtGJoCnz8V2Ne)
+    password: ENC(iWQSy6OnZ21z6Z4156sViLhyA3+x4jCOGnU/iwOE3r7JK4etrRcCGKRmUIOK6Voa+APvZ/uzaJ69KkW05Ev71g==)
+
 #    아래 적용하면 동작시 화면 수정이 적용된다
   sql:
     init:
@@ -19,9 +21,15 @@ spring:
   #spring security 커스텀 보안서비스 제한
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+
 #mybatis 파일 경로 설정
 mybatis:
   mapper-locations: mapper/**/*.xml
+
+# 암복호화 처리를 위한 선언
+jasypt:
+  encryptor:
+    bean: jasyptEncryptorAES
 
 Dspring:
   profiles:
