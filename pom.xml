@@ -66,6 +66,13 @@
             <version>3.0.0</version>
         </dependency>
 
+<!--        암복호화 관련-->
+        <dependency>
+            <groupId>com.github.ulisesbocchio</groupId>
+            <artifactId>jasypt-spring-boot-starter</artifactId>
+            <version>3.0.5</version>
+        </dependency>
+
         <!--로그 추가-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
