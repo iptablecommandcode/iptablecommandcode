@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>게시판</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.min.css}">
+</head>
+<body class="bg-light">
+
+<!-- 네비게이션 바 -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/}">📘 Iptable Command Code</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/sign/signIn}">로그인</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/sign/signUp}">회원가입</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/board/boardList}">게시판</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">📋 게시판</h2>
+
+    <div class="d-flex justify-content-end mb-3">
+        <a th:href="@{/board/new}" class="btn btn-primary">글쓰기</a>
+    </div>
+
+    <table class="table table-hover table-bordered bg-white">
+        <thead class="table-dark">
+        <tr>
+            <th style="width: 10%">번호</th>
+            <th>제목</th>
+            <th style="width: 20%">작성자</th>
+            <th style="width: 20%">작성일</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="post : ${posts}">
+            <td th:text="${post.id}">1</td>
+            <td>
+                <a th:href="@{/board/{id}(id=${post.id})}" th:text="${post.title}">게시글 제목</a>
+            </td>
+            <td th:text="${post.author}">홍길동</td>
+            <td th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}">2025-04-22</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!--<div th:if="${posts.empty}" class="text-center text-muted">게시글이 없습니다.</div>-->
+</div>
+</body>
+</html>
