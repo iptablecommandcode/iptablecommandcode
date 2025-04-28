@@ -1,8 +1,13 @@
 package me.synology.freash97.sign.controller;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import me.synology.freash97.sign.domain.SignDTO;
+import me.synology.freash97.sign.service.SignService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -21,19 +26,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Slf4j
 @Controller
 @RequestMapping("sign")
+@RequiredArgsConstructor
 public class signController {
 
-    @GetMapping("/signIn")
-    public String signIn() {
-        log.debug("signIn Controller Start !!!");
+    private final SignService signService;
 
-        return "sign/signIn";
+    @GetMapping("/login")
+    public String loginForm() {
+        return "login";  // login.html
     }
 
-    @GetMapping("/signUp")
-    public String signUp() {
-        log.debug("signUp Controller Start !!!");
+    @PostMapping("/signUp")
+    public String signUp(@ModelAttribute SignDTO signDTO) throws Exception {
+        log.debug("SignUp Controller Start !!!");
 
-        return "sign/signUp";
+        signService.signUp(signDTO);
+
+        log.info("SignUp Controller End !!!");
+        return "redirect:/login";  // register.html
     }
 }

@@ -31,7 +31,9 @@
     <h2 class="mb-4 text-center">📋 게시판</h2>
 
     <div class="d-flex justify-content-end mb-3">
-        <a th:href="@{/board/new}" class="btn btn-primary">글쓰기</a>
+        <a th:href="@{/board/boardWrite}" class="btn btn-primary">글쓰기</a>
+        <a th:href="@{/board/boardEdit}" class="btn btn-primary">게시글 수정</a>
+        <a th:href="@{/board/boardDetail}" class="btn btn-primary">게시글 상세</a>
     </div>
 
     <table class="table table-hover table-bordered bg-white">
