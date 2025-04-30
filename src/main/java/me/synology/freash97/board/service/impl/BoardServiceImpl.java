@@ -38,7 +38,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public BoardDTO findById(Long boardSq) throws Exception {
+    public BoardDTO findById(Integer boardSq) throws Exception {
         return boardMapper.findById(boardSq);
     }
 
@@ -56,7 +56,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public void delete(Long boardSq) throws Exception {
+    public void delete(Integer boardSq) throws Exception {
         boardMapper.delete(boardSq);
     }
 }

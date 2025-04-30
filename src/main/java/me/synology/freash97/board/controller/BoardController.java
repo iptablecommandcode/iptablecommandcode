@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.synology.freash97.board.service.BoardService;
 import me.synology.freash97.board.domain.BoardDTO;
+import me.synology.freash97.comment.domain.CommentDTO;
+import me.synology.freash97.comment.service.CommentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,48 +32,55 @@ import java.util.List;
 public class BoardController {
 
     private final BoardService boardService;
+    private final CommentService commentService;
 
     @GetMapping("/boardList")
     public String boardList(Model model) throws Exception {
         List<BoardDTO> posts = boardService.findAll();
         model.addAttribute("posts", posts);
-        return "boardList";  // board-list.html
+        return "/board/boardList";  // board-list.html
     }
 
-    @GetMapping("/{id}")
-    public String boardDetail(@PathVariable Long id, Model model) throws Exception {
-        BoardDTO post = boardService.findById(id);
-        model.addAttribute("post", post);
-        return "board-detail";  // board-detail.html
+    @GetMapping("/boardDetail")
+    public String boardDetail(@RequestParam Integer userId, Model model) throws Exception {
+        //상세 이력
+        BoardDTO boardDetail = boardService.findById(userId);
+        List<CommentDTO> commentDTOList = commentService.findByBoardSq(boardDetail.getBoardSq());
+
+        model.addAttribute("boardDetail", boardDetail);
+        model.addAttribute("commentDTOList", commentDTOList);
+        return "board/boardDetail";  // board-detail.html
     }
 
     @GetMapping("/boardWrite")
     public String createForm() {
-        return "boardWrite";  // board-new.html
+        return "/board/boardWrite";  // board-new.html
     }
 
     @PostMapping("/boardWrite")
     public String createBoard(@ModelAttribute BoardDTO board, Principal principal) throws Exception {
         boardService.save(board, principal.getName());
-        return "redirect:/boardWrite";
+        return "redirect:/board/boardWrite";
     }
 
-    @GetMapping("/boardEdit/{id}")
-    public String editForm(@PathVariable Long id, Model model) throws Exception {
-        BoardDTO post = boardService.findById(id);
+    @GetMapping("/boardEdit")
+    public String editForm(@RequestParam Integer userId, Model model) throws Exception {
+        BoardDTO post = boardService.findById(userId);
         model.addAttribute("post", post);
-        return "boardEdit";  // board-edit.html
+        return "/board/boardEdit";  // board-edit.html
     }
 
-    @PostMapping("/boardEdit/{id}")
+    //수정 처리
+    @PostMapping("/boardEdit/{userId}")
     public String editBoard(@ModelAttribute BoardDTO boardDTO) throws Exception {
         boardService.update(boardDTO);
-        return "redirect:/boardEdit/{id}";
+        return "redirect:/board/boardList";
     }
 
+    //삭제처리
     @PostMapping("/boardDelete/{id}")
-    public String deleteBoard(@PathVariable Long id) throws Exception {
+    public String deleteBoard(@RequestParam Integer id) throws Exception {
         boardService.delete(id);
-        return "redirect:/boardList";
+        return "redirect:/board/boardList";
     }
 }

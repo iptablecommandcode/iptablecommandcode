@@ -32,7 +32,7 @@ public class CommentServiceImpl implements CommentService {
     private final SignMapper signMapper;
 
     @Override
-    public List<CommentDTO> findByBoardSq(Long boardSq) throws Exception {
+    public List<CommentDTO> findByBoardSq(Integer boardSq) throws Exception {
         log.debug("findByBoardSq Service Start !!!");
         log.debug("findByBoardSq Service boardSq : " + boardSq);
 

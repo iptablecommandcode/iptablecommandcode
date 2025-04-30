@@ -21,7 +21,7 @@
         ORDER BY board_sq DESC
     </select>
 
-    <select id="findById" parameterType="long" resultMap="boardResultMap">
+    <select id="findById" parameterType="Integer" resultMap="boardResultMap">
         SELECT *
         FROM board
         WHERE board_sq = #{boardSq}

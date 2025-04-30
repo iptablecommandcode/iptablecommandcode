@@ -23,11 +23,11 @@ import java.util.List;
 public interface BoardMapper {
     List<BoardDTO> findAll() throws SQLException;
 
-    BoardDTO findById(Long boardSq) throws SQLException;
+    BoardDTO findById(Integer boardSq) throws SQLException;
 
     void save(BoardDTO boardDTO) throws SQLException;
 
     void update(BoardDTO boardDTO) throws SQLException;
 
-    void delete(Long boardSq) throws SQLException;
+    void delete(Integer boardSq) throws SQLException;
 }

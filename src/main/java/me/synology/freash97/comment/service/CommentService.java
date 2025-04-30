@@ -17,7 +17,7 @@ import java.util.List;
  * 2025-04-28               iptab             최초 생성
  */
 public interface CommentService {
-    List<CommentDTO> findByBoardSq(Long boardSq) throws Exception;
+    List<CommentDTO> findByBoardSq(Integer boardSq) throws Exception;
 
     void save(CommentDTO commentDTO, String username) throws Exception;
 

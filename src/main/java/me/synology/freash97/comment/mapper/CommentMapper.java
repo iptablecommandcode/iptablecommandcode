@@ -20,7 +20,7 @@ import java.util.List;
 @Mapper
 public interface CommentMapper {
 
-    List<CommentDTO> findByBoardSq(Long boardSq);
+    List<CommentDTO> findByBoardSq(Integer boardSq);
 
     void save(CommentDTO commentDTO);
 

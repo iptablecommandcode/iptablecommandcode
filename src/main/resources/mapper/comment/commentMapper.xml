@@ -17,7 +17,7 @@
         <result property="updateDate" column="update_date" />
     </resultMap>
 
-    <select id="findByBoardSq" parameterType="long" resultMap="commentResultMap">
+    <select id="findByBoardSq" parameterType="Integer" resultMap="commentResultMap">
         SELECT * FROM comments WHERE board_sq = #{boardSq} ORDER BY comment_sq ASC
     </select>
 

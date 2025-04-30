@@ -19,11 +19,11 @@ import java.util.List;
 public interface BoardService {
     List<BoardDTO> findAll() throws Exception;
 
-    BoardDTO findById(Long boardSq) throws Exception;
+    BoardDTO findById(Integer boardSq) throws Exception;
 
     void save(BoardDTO boardDTO, String username) throws Exception;
 
     void update(BoardDTO boardDTO) throws Exception;
 
-    void delete(Long boardSq) throws Exception;
+    void delete(Integer boardSq) throws Exception;
 }
