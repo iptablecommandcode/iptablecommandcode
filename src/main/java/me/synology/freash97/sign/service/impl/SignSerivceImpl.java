@@ -38,6 +38,7 @@ public class SignSerivceImpl implements SignService {
             log.debug("SignUp Service End !!!");
         } catch (Exception e) {
             log.error("SignUp Service Fail !!!");
+            e.printStackTrace();
         }
     }
 

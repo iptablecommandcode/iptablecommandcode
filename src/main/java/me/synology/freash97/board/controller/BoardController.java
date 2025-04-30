@@ -3,7 +3,7 @@ package me.synology.freash97.board.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.synology.freash97.board.service.BoardService;
-import me.synology.freash97.board.vo.entity.BoardDTO;
+import me.synology.freash97.board.domain.BoardDTO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -31,11 +31,11 @@ public class BoardController {
 
     private final BoardService boardService;
 
-    @GetMapping
+    @GetMapping("/boardList")
     public String boardList(Model model) throws Exception {
         List<BoardDTO> posts = boardService.findAll();
         model.addAttribute("posts", posts);
-        return "board-list";  // board-list.html
+        return "boardList";  // board-list.html
     }
 
     @GetMapping("/{id}")
@@ -45,33 +45,33 @@ public class BoardController {
         return "board-detail";  // board-detail.html
     }
 
-    @GetMapping("/new")
+    @GetMapping("/boardWrite")
     public String createForm() {
-        return "board-new";  // board-new.html
+        return "boardWrite";  // board-new.html
     }
 
-    @PostMapping("/new")
+    @PostMapping("/boardWrite")
     public String createBoard(@ModelAttribute BoardDTO board, Principal principal) throws Exception {
         boardService.save(board, principal.getName());
-        return "redirect:/board";
+        return "redirect:/boardWrite";
     }
 
-    @GetMapping("/{id}/edit")
+    @GetMapping("/boardEdit/{id}")
     public String editForm(@PathVariable Long id, Model model) throws Exception {
         BoardDTO post = boardService.findById(id);
         model.addAttribute("post", post);
-        return "board-edit";  // board-edit.html
+        return "boardEdit";  // board-edit.html
     }
 
-    @PostMapping("/{id}/edit")
+    @PostMapping("/boardEdit/{id}")
     public String editBoard(@ModelAttribute BoardDTO boardDTO) throws Exception {
         boardService.update(boardDTO);
-        return "redirect:/board/{id}";
+        return "redirect:/boardEdit/{id}";
     }
 
-    @PostMapping("/{id}/delete")
+    @PostMapping("/boardDelete/{id}")
     public String deleteBoard(@PathVariable Long id) throws Exception {
         boardService.delete(id);
-        return "redirect:/board";
+        return "redirect:/boardList";
     }
 }

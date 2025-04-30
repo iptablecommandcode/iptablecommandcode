@@ -31,18 +31,25 @@ public class signController {
 
     private final SignService signService;
 
-    @GetMapping("/login")
-    public String loginForm() {
-        return "login";  // login.html
+    @GetMapping("/signIn")
+    public String signIn() {
+        return "/sign/signIn";  // signIn.html
     }
 
-    @PostMapping("/signUp")
-    public String signUp(@ModelAttribute SignDTO signDTO) throws Exception {
+    //회원 가입 페이지
+    @GetMapping("/signUp")
+    public String signUp() {
+        return "/sign/signUp";
+    }
+
+    //계정 생성
+    @PostMapping("/register")
+    public String register(@ModelAttribute SignDTO signDTO) throws Exception {
         log.debug("SignUp Controller Start !!!");
 
         signService.signUp(signDTO);
 
         log.info("SignUp Controller End !!!");
-        return "redirect:/login";  // register.html
+        return "redirect:/sign/signIn";  // register.html
     }
 }

@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.synology.freash97.board.mapper.BoardMapper;
 import me.synology.freash97.board.service.BoardService;
-import me.synology.freash97.board.vo.entity.BoardDTO;
+import me.synology.freash97.board.domain.BoardDTO;
 import me.synology.freash97.sign.domain.SignDTO;
 import me.synology.freash97.sign.mapper.SignMapper;
 import org.springframework.stereotype.Service;

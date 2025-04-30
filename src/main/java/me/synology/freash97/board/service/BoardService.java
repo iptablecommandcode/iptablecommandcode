@@ -1,6 +1,6 @@
 package me.synology.freash97.board.service;
 
-import me.synology.freash97.board.vo.entity.BoardDTO;
+import me.synology.freash97.board.domain.BoardDTO;
 
 import java.util.List;
 

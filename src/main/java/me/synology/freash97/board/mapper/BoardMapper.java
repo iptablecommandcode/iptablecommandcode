@@ -1,6 +1,6 @@
 package me.synology.freash97.board.mapper;
 
-import me.synology.freash97.board.vo.entity.BoardDTO;
+import me.synology.freash97.board.domain.BoardDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.sql.SQLException;

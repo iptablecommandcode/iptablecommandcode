@@ -1,4 +1,4 @@
-package me.synology.freash97.board.vo.entity;
+package me.synology.freash97.board.domain;
 
 import lombok.Data;
 import me.synology.freash97.common.entity.CommonDTO;

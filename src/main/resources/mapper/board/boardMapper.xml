@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="me.synology.freash97.board.mapper.BoardMapper">
+
+    <resultMap id="boardResultMap" type="me.synology.freash97.board.domain.BoardDTO">
+        <id property="boardSq" column="board_sq"/>
+        <result property="userId" column="user_id"/>
+        <result property="username" column="username"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="createUser" column="create_user"/>
+        <result property="createDate" column="create_date"/>
+        <result property="updateUser" column="update_user"/>
+        <result property="updateDate" column="update_date"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="boardResultMap">
+        SELECT *
+        FROM board
+        ORDER BY board_sq DESC
+    </select>
+
+    <select id="findById" parameterType="long" resultMap="boardResultMap">
+        SELECT *
+        FROM board
+        WHERE board_sq = #{boardSq}
+    </select>
+
+    <insert id="save" parameterType="me.synology.freash97.board.domain.BoardDTO">
+        INSERT INTO board (user_id, username, title, content, create_user, create_date)
+        VALUES (#{userId}, #{username}, #{title}, #{content}, #{createUser}, NOW())
+    </insert>
+
+    <update id="update" parameterType="me.synology.freash97.board.domain.BoardDTO">
+        UPDATE board
+        SET title       = #{title},
+            content     = #{content},
+            update_user = #{updateUser},
+            update_date = NOW()
+        WHERE board_sq = #{boardSq}
+    </update>
+
+    <delete id="delete" parameterType="long">
+        DELETE
+        FROM board
+        WHERE board_sq = #{boardSq}
+    </delete>
+
+</mapper>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="me.synology.freash97.comment.mapper.CommentMapper">
+
+    <resultMap id="commentResultMap" type="me.synology.freash97.comment.domain.CommentDTO">
+        <id property="commentSq" column="comment_sq" />
+        <result property="boardSq" column="board_sq" />
+        <result property="userId" column="user_id" />
+        <result property="username" column="username" />
+        <result property="content" column="content" />
+        <result property="createUser" column="create_user" />
+        <result property="createDate" column="create_date" />
+        <result property="updateUser" column="update_user" />
+        <result property="updateDate" column="update_date" />
+    </resultMap>
+
+    <select id="findByBoardSq" parameterType="long" resultMap="commentResultMap">
+        SELECT * FROM comments WHERE board_sq = #{boardSq} ORDER BY comment_sq ASC
+    </select>
+
+    <insert id="save" parameterType="me.synology.freash97.comment.domain.CommentDTO">
+        INSERT INTO comments (board_sq, user_id, username, content, create_user, create_date)
+        VALUES (#{boardSq}, #{userId}, #{username}, #{content}, #{createUser}, NOW())
+    </insert>
+
+    <delete id="delete" parameterType="long">
+        DELETE FROM comments WHERE comment_sq = #{commentSq}
+    </delete>
+
+</mapper>

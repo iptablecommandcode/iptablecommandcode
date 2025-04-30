@@ -33,7 +33,14 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<CommentDTO> findByBoardSq(Long boardSq) throws Exception {
-        return commentMapper.findByBoardSq(boardSq);
+        log.debug("findByBoardSq Service Start !!!");
+        log.debug("findByBoardSq Service boardSq : " + boardSq);
+
+        List<CommentDTO> commentDTOList = commentMapper.findByBoardSq(boardSq);
+
+        log.debug("findByBoardSq commentDTOList : " + commentDTOList);
+        log.debug("findByBoardSq Service End !!!");
+        return commentDTOList;
     }
 
     @Override

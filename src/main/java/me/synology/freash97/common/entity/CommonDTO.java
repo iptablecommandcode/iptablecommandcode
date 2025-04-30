@@ -1,9 +1,6 @@
 package me.synology.freash97.common.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
@@ -19,13 +16,10 @@ import java.time.LocalDateTime;
  * ----------------------------------------------------
  * 2025-04-26               iptab             최초 생성
  */
-@Getter
-@Setter
-@ToString
-@NoArgsConstructor
+@Data
 public class CommonDTO {
     private String createUser;
-    private LocalDateTime createTime;
+    private LocalDateTime createDate;
     private String updateUser;
-    private LocalDateTime updateTime;
+    private LocalDateTime updateDate;
 }
