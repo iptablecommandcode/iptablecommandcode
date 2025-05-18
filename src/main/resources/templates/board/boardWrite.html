@@ -20,9 +20,21 @@
         <a class="navbar-brand" th:href="@{/}">📘 Iptable Command Code</a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" th:href="@{/sign/signIn}">로그인</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/sign/signUp}">회원가입</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/board/boardList}">게시판</a></li>
+                <li class="nav-item" th:if="${session.loginUser == null}">
+                    <a class="nav-link" th:href="@{/sign/signIn}">로그인</a>
+                </li>
+                <li class="nav-item" th:if="${session.loginUser == null}">
+                    <a class="nav-link" th:href="@{/sign/signUp}">회원가입</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/board/boardList}">게시판</a>
+                </li>
+                <li class="nav-item" th:if="${session.loginUser != null}">
+                    <span class="nav-link" th:text="${session.loginUser.username} + ' 님 로그인 중입니다.'">님 로그인 중 입니다.</span>
+                </li>
+                <li class="nav-item" th:if="${session.loginUser != null}">
+                    <a class="nav-link" th:href="@{/sign/signOut}">로그 아웃</a>
+                </li>
             </ul>
         </div>
     </div>

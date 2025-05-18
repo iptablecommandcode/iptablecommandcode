@@ -22,4 +22,6 @@ public interface SignMapper {
 
     Integer save(SignDTO signDTO);
 
+    SignDTO findByUserAccount(SignDTO signDTO);
+
 }

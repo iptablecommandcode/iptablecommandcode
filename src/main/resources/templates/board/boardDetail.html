@@ -14,14 +14,20 @@
         <a class="navbar-brand" th:href="@{/}">📘 Iptable Command Code</a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
+                <li class="nav-item" th:if="${session.loginUser == null}">
                     <a class="nav-link" th:href="@{/sign/signIn}">로그인</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" th:if="${session.loginUser == null}">
                     <a class="nav-link" th:href="@{/sign/signUp}">회원가입</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/board/boardList}">게시판</a>
+                </li>
+                <li class="nav-item" th:if="${session.loginUser != null}">
+                    <span class="nav-link" th:text="${session.loginUser.username} + ' 님 로그인 중입니다.'">님 로그인 중 입니다.</span>
+                </li>
+                <li class="nav-item" th:if="${session.loginUser != null}">
+                    <a class="nav-link" th:href="@{/sign/signOut}">로그 아웃</a>
                 </li>
             </ul>
         </div>
@@ -44,11 +50,11 @@
 
             <div class="mt-4">
                 <a th:href="@{/board/boardList}" class="btn btn-outline-secondary">목록으로</a>
-                <a th:href="@{/board/boardEdit(boardSq=${boardDetail.boardSq})}" class="btn btn-warning me-1">수정</a>
+                <a th:href="@{/board/boardEdit(boardSq=${boardDetail.boardSq})}" class="btn btn-warning me-1" th:if="${session.loginUser != null}">수정</a>
 
                 <form th:action="@{/board/boardDelete}" method="post" class="d-inline">
                     <input type="hidden" name="boardSq" th:value="${boardDetail.boardSq}" />
-                    <button type="submit" class="btn btn-danger" onclick="return confirm('정말 삭제할까요?')">삭제</button>
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('정말 삭제할까요?')" th:if="${session.loginUser != null}">삭제</button>
                 </form>
             </div>
         </div>
@@ -57,7 +63,7 @@
     <hr class="mt-5" />
     <h5>💬 댓글</h5>
 
-    <form th:action="@{/comment/boardComment}" method="post" class="mt-4">
+    <form th:action="@{/comment/boardComment}" method="post" class="mt-4" th:if="${session.loginUser != null}">
         <div class="mb-3">
             <textarea name="content" class="form-control" rows="3" placeholder="댓글을 작성하세요." required></textarea>
             <input type="hidden" name="boardSq" th:value="${boardDetail.boardSq}" />

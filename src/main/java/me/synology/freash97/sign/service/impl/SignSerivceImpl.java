@@ -58,4 +58,23 @@ public class SignSerivceImpl implements SignService {
 
         return signDTO;
     }
+
+    @Override
+    public SignDTO findByUserAccount(SignDTO signDTO) throws Exception {
+        SignDTO resultSignDTO = new SignDTO();
+
+        try {
+            log.debug("findByUserAccount Service Start !!!");
+            log.debug("findByUserAccount Service signDTO : {}", signDTO);
+
+            resultSignDTO = signMapper.findByUserAccount(signDTO);
+
+            log.debug("findByUserAccount Service resultSignDTO : {}", resultSignDTO);
+            log.debug("findByUserAccount Service End !!!");
+        } catch (Exception e) {
+            log.error("findByUserAccount Service Fail !!!");
+        }
+
+        return resultSignDTO;
+    }
 }

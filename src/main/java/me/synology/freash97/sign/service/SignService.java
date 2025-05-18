@@ -18,4 +18,6 @@ public interface SignService {
     void signUp(SignDTO signDTO) throws Exception;
 
     SignDTO findByUsername(String username) throws Exception;
+
+    SignDTO findByUserAccount(SignDTO signDTO) throws Exception;
 }

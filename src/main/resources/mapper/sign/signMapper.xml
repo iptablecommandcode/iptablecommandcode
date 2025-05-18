@@ -28,4 +28,10 @@
         VALUES (#{username}, #{password}, #{email}, 'N', #{username}, NOW())
     </insert>
 
+    <select id="findByUserAccount" parameterType="me.synology.freash97.sign.domain.SignDTO" resultType="me.synology.freash97.sign.domain.SignDTO">
+        SELECT *
+        FROM users
+        WHERE username = #{username}
+        AND password = #{password}
+    </select>
 </mapper>
