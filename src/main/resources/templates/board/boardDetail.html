@@ -44,9 +44,10 @@
 
             <div class="mt-4">
                 <a th:href="@{/board/boardList}" class="btn btn-outline-secondary">목록으로</a>
+                <a th:href="@{/board/boardEdit(boardSq=${boardDetail.boardSq})}" class="btn btn-warning me-1">수정</a>
 
-                <a th:href="@{'/board/boardEdit/' + ${boardDetail.userId}}" class="btn btn-warning me-1">수정</a>
-                <form th:action="@{'/board/boardDelete/' + ${boardDetail.userId}}" method="post" class="d-inline">
+                <form th:action="@{/board/boardDelete}" method="post" class="d-inline">
+                    <input type="hidden" name="boardSq" th:value="${boardDetail.boardSq}" />
                     <button type="submit" class="btn btn-danger" onclick="return confirm('정말 삭제할까요?')">삭제</button>
                 </form>
             </div>

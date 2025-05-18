@@ -36,15 +36,15 @@ public class BoardController {
 
     @GetMapping("/boardList")
     public String boardList(Model model) throws Exception {
-        List<BoardDTO> posts = boardService.findAll();
-        model.addAttribute("posts", posts);
+        List<BoardDTO> boards = boardService.findAll();
+        model.addAttribute("boards", boards);
         return "/board/boardList";  // board-list.html
     }
 
     @GetMapping("/boardDetail")
-    public String boardDetail(@RequestParam Integer userId, Model model) throws Exception {
+    public String boardDetail(@RequestParam Integer boardSq, Model model) throws Exception {
         //상세 이력
-        BoardDTO boardDetail = boardService.findById(userId);
+        BoardDTO boardDetail = boardService.findById(boardSq);
         List<CommentDTO> commentDTOList = commentService.findByBoardSq(boardDetail.getBoardSq());
 
         model.addAttribute("boardDetail", boardDetail);
@@ -64,23 +64,16 @@ public class BoardController {
     }
 
     @GetMapping("/boardEdit")
-    public String editForm(@RequestParam Integer userId, Model model) throws Exception {
-        BoardDTO post = boardService.findById(userId);
-        model.addAttribute("post", post);
+    public String editForm(@RequestParam Integer boardSq, Model model) throws Exception {
+        BoardDTO board = boardService.findById(boardSq);
+        model.addAttribute("board", board);
         return "/board/boardEdit";  // board-edit.html
     }
 
-    //수정 처리
-    @PostMapping("/boardEdit/{userId}")
-    public String editBoard(@ModelAttribute BoardDTO boardDTO) throws Exception {
-        boardService.update(boardDTO);
-        return "redirect:/board/boardList";
-    }
-
     //삭제처리
-    @PostMapping("/boardDelete/{id}")
-    public String deleteBoard(@RequestParam Integer id) throws Exception {
-        boardService.delete(id);
+    @PostMapping("/boardDelete")
+    public String deleteBoard(@RequestParam("boardSq") int boardSq) throws Exception {
+        boardService.delete(boardSq);
         return "redirect:/board/boardList";
     }
 }

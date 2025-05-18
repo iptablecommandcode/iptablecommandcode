@@ -32,8 +32,6 @@
 
     <div class="d-flex justify-content-end mb-3">
         <a th:href="@{/board/boardWrite}" class="btn btn-primary">글쓰기</a>
-        <a th:href="@{/board/boardEdit}" class="btn btn-primary">게시글 수정</a>
-        <a th:href="@{/board/boardDetail}" class="btn btn-primary">게시글 상세</a>
     </div>
 
     <table class="table table-hover table-bordered bg-white">
@@ -46,13 +44,13 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="post : ${posts}">
-            <td th:text="${post.boardSq}">1</td>
+        <tr th:each="board : ${boards}">
+            <td th:text="${board.boardSq}">1</td>
             <td>
-                <a th:href="@{/board/boardDetail(userId=${post.userId})}" th:text="${post.title}">게시글 제목</a>
+                <a th:href="@{/board/boardDetail(boardSq=${board.boardSq})}" th:text="${board.title}">게시글 제목</a>
             </td>
-            <td th:text="${post.username}">홍길동</td>
-            <td th:text="${#temporals.format(post.createDate, 'yyyy-MM-dd HH:mm')}">2025-04-22</td>
+            <td th:text="${board.username}">홍길동</td>
+            <td th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}">2025-04-22</td>
         </tr>
         </tbody>
     </table>

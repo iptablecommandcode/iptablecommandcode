@@ -41,7 +41,7 @@
         WHERE board_sq = #{boardSq}
     </update>
 
-    <delete id="delete" parameterType="long">
+    <delete id="delete" parameterType="integer">
         DELETE
         FROM board
         WHERE board_sq = #{boardSq}
