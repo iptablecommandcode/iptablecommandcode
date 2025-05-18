@@ -57,9 +57,12 @@
     <hr class="mt-5" />
     <h5>💬 댓글</h5>
 
-    <form th:action="@{/comment/boardComment(boardSq=${boardDetail.boardSq})}" method="post" class="mt-4">
+    <form th:action="@{/comment/boardComment}" method="post" class="mt-4">
         <div class="mb-3">
             <textarea name="content" class="form-control" rows="3" placeholder="댓글을 작성하세요." required></textarea>
+            <input type="hidden" name="boardSq" th:value="${boardDetail.boardSq}" />
+            <input type="hidden" name="userId" th:value="${boardDetail.userId}" />
+            <input type="hidden" name="username" th:value="${boardDetail.username}" />
         </div>
         <div class="d-flex justify-content-end">
             <button type="submit" class="btn btn-primary">댓글 작성</button>

@@ -18,9 +18,9 @@ import me.synology.freash97.common.entity.CommonDTO;
 
 @Data
 public class CommentDTO extends CommonDTO {
-    private Long commentSq;
-    private Long boardSq;
-    private Long userId;
+    private Integer commentSq;
+    private Integer boardSq;
+    private Integer userId;
     private String username;
     private String content;
 }

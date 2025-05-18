@@ -7,6 +7,7 @@ import me.synology.freash97.comment.mapper.CommentMapper;
 import me.synology.freash97.comment.service.CommentService;
 import me.synology.freash97.sign.domain.SignDTO;
 import me.synology.freash97.sign.mapper.SignMapper;
+import me.synology.freash97.sign.service.SignService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,8 +29,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
 
+    private final SignService signService;
+
     private final CommentMapper commentMapper;
-    private final SignMapper signMapper;
 
     @Override
     public List<CommentDTO> findByBoardSq(Integer boardSq) throws Exception {
@@ -45,8 +47,8 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void save(CommentDTO commentDTO, String username) throws Exception {
-        SignDTO signDTO = signMapper.findByUsername(username);
-        commentDTO.setUserId(Long.valueOf(signDTO.getUser_id()));
+        SignDTO signDTO = signService.findByUsername(username);
+        commentDTO.setUserId(signDTO.getUser_id());
         commentDTO.setUsername(username);
         commentMapper.save(commentDTO);
     }

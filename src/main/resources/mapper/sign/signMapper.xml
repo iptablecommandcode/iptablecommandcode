@@ -17,7 +17,7 @@
         <result property="updateDate" column="update_date"/>
     </resultMap>
 
-    <select id="findByUsername" parameterType="string" resultMap="signResultMap">
+    <select id="findByUsername" parameterType="string" resultType="me.synology.freash97.sign.domain.SignDTO">
         SELECT *
         FROM users
         WHERE username = #{username}
