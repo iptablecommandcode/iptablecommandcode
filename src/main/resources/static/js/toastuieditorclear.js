@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    const form = document.getElementById('postForm');
+    const form = document.getElementById('boardForm');
     if (form) {
         form.addEventListener('submit', function () {
             document.getElementById('hiddenContent').value = editor.getHTML();

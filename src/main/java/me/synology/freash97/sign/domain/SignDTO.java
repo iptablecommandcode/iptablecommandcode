@@ -18,7 +18,7 @@ import me.synology.freash97.common.entity.CommonDTO;
 
 @Data
 public class SignDTO extends CommonDTO {
-    private Integer user_id;
+    private Integer userId;
     private String username;
     private String password;
     private String email;

@@ -41,7 +41,7 @@
 </nav>
 <div class="container mt-5">
     <h2 class="mb-4 text-center">✏️ 게시글 수정</h2>
-    <form th:action="@{/board/{id}/edit(id=${board.boardSq})}" method="post" id="editForm">
+    <form th:action="@{/board/boardUpdate}" method="post" id="editForm">
         <div class="mb-3">
             <input type="text" name="title" class="form-control" th:value="${board.title}" required>
         </div>
@@ -49,6 +49,10 @@
         <div id="editor"></div>
         <!--<input type="hidden" name="content" id="hiddenContent" />-->
         <textarea id="hiddenContent" name="content" style="display:none;" th:text="${board.content}"></textarea>
+
+        <input type="hidden" name="boardSq" th:value="${board.boardSq}" />
+        <input type="hidden" name="userId" th:value="${session.loginUser.userId}" />
+        <input type="hidden" name="username" th:value="${session.loginUser.username}" />
 
         <div class="mt-4 d-flex justify-content-end">
             <a th:href="@{/board/boardDetail(boardSq=${board.boardSq})}" class="btn btn-secondary me-2">취소</a>

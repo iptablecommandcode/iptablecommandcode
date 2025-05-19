@@ -45,13 +45,16 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public void save(BoardDTO boardDTO, String username) throws Exception {
         SignDTO signDTO = signMapper.findByUsername(username);
-        boardDTO.setUserId(signDTO.getUser_id());
+        boardDTO.setUserId(signDTO.getUserId());
         boardDTO.setUsername(username);
+        boardDTO.setCreateUser(signDTO.getUsername());
+
         boardMapper.save(boardDTO);
     }
 
     @Override
     public void update(BoardDTO boardDTO) throws Exception {
+        boardDTO.setUpdateUser(boardDTO.getUsername());
         boardMapper.update(boardDTO);
     }
 

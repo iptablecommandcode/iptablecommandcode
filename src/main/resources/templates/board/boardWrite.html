@@ -44,14 +44,14 @@
 <div class="container mt-5">
     <h2 class="mb-4 text-center">✍ 글쓰기</h2>
 
-    <form th:action="@{/board/new}" method="post" id="boardForm">
+    <form th:action="@{/board/boardWrite}" method="post" id="boardForm">
         <div class="mb-3">
             <input type="text" name="title" class="form-control" placeholder="제목을 입력하세요" required>
         </div>
 
         <!-- Toast UI Editor 영역 -->
         <div id="editor"></div>
-        <input type="hidden" name="content" id="hiddenContent">
+        <textarea id="hiddenContent" name="content" style="display:none;"></textarea>
 
         <div class="mt-4 d-flex justify-content-end">
             <a th:href="@{/board/boardList}" class="btn btn-secondary me-2">취소</a>

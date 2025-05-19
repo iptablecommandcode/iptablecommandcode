@@ -48,7 +48,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void save(CommentDTO commentDTO, String username) throws Exception {
         SignDTO signDTO = signService.findByUsername(username);
-        commentDTO.setUserId(signDTO.getUser_id());
+        commentDTO.setUserId(signDTO.getUserId());
         commentDTO.setUsername(username);
         commentMapper.save(commentDTO);
     }

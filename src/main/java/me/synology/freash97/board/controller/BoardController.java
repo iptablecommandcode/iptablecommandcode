@@ -1,16 +1,17 @@
 package me.synology.freash97.board.controller;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.synology.freash97.board.service.BoardService;
 import me.synology.freash97.board.domain.BoardDTO;
 import me.synology.freash97.comment.domain.CommentDTO;
 import me.synology.freash97.comment.service.CommentService;
+import me.synology.freash97.sign.domain.SignDTO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
 
 /**
@@ -58,22 +59,61 @@ public class BoardController {
     }
 
     @PostMapping("/boardWrite")
-    public String createBoard(@ModelAttribute BoardDTO board, Principal principal) throws Exception {
-        boardService.save(board, principal.getName());
-        return "redirect:/board/boardWrite";
+    public String createBoard(@ModelAttribute BoardDTO board, HttpSession session) throws Exception {
+        SignDTO signDTO = (SignDTO) session.getAttribute("loginUser");
+
+        boardService.save(board, signDTO.getUsername());
+        return "redirect:/board/boardList";
     }
 
     @GetMapping("/boardEdit")
-    public String editForm(@RequestParam Integer boardSq, Model model) throws Exception {
+    public String editForm(@RequestParam Integer boardSq, Model model, HttpSession session) throws Exception {
+
+        SignDTO signDTO = (SignDTO) session.getAttribute("loginUser");
         BoardDTO board = boardService.findById(boardSq);
-        model.addAttribute("board", board);
-        return "/board/boardEdit";  // board-edit.html
+
+        //세션 확인 후 수정 가능하도록 처리
+        if (signDTO.getUserId() == board.getUserId()) {
+            model.addAttribute("board", board);
+            return "/board/boardEdit";  // board-edit.html
+        } else {
+            //로그인 없을경우 Detail 페이지 이동
+            BoardDTO boardDetail = boardService.findById(boardSq);
+            List<CommentDTO> commentDTOList = commentService.findByBoardSq(boardDetail.getBoardSq());
+
+            model.addAttribute("boardDetail", boardDetail);
+            model.addAttribute("commentDTOList", commentDTOList);
+            return "/board/boardDetail";  // board-list.html
+        }
+    }
+
+    @PostMapping("/boardUpdate")
+    public String updateBoard(@ModelAttribute BoardDTO board, HttpSession session) throws Exception {
+        //SignDTO signDTO = (SignDTO) session.getAttribute("loginUser");
+
+        boardService.update(board);
+        return "redirect:/board/boardList";
     }
 
     //삭제처리
     @PostMapping("/boardDelete")
-    public String deleteBoard(@RequestParam("boardSq") int boardSq) throws Exception {
-        boardService.delete(boardSq);
-        return "redirect:/board/boardList";
+    public String deleteBoard(@RequestParam("boardSq") int boardSq, HttpSession session, Model model) throws Exception {
+
+        SignDTO signDTO = (SignDTO) session.getAttribute("loginUser");
+        BoardDTO board = boardService.findById(boardSq);
+
+        //세션 확인 후 수정 가능하도록 처리
+        if (signDTO.getUserId() == board.getUserId()) {
+            boardService.delete(boardSq);
+            return "redirect:/board/boardList";
+        } else {
+            //상세 이력
+            BoardDTO boardDetail = boardService.findById(boardSq);
+            List<CommentDTO> commentDTOList = commentService.findByBoardSq(boardDetail.getBoardSq());
+
+            model.addAttribute("boardDetail", boardDetail);
+            model.addAttribute("commentDTOList", commentDTOList);
+            return "board/boardDetail";  // board-detail.html
+        }
     }
 }
