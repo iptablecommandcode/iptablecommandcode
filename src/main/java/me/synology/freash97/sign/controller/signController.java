@@ -42,7 +42,7 @@ public class signController {
 
         SignDTO resultSignDTO = signService.findByUserAccount(signDTO);
 
-        if (resultSignDTO != null) {
+        if (resultSignDTO.getUsername() != null) {
             HttpSession session = request.getSession();
             session.setAttribute("loginUser", resultSignDTO);
             return "redirect:/index";

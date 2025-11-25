@@ -18,16 +18,16 @@
     </resultMap>
 
     <select id="findByBoardSq" parameterType="Integer" resultMap="commentResultMap">
-        SELECT * FROM comments WHERE board_sq = #{boardSq} ORDER BY comment_sq ASC
+        SELECT * FROM COMMENTS WHERE board_sq = #{boardSq} ORDER BY comment_sq ASC
     </select>
 
     <insert id="save" parameterType="me.synology.freash97.comment.domain.CommentDTO">
-        INSERT INTO comments (board_sq, user_id, username, content, create_user, create_date)
+        INSERT INTO COMMENTS (board_sq, user_id, username, content, create_user, create_date)
         VALUES (#{boardSq}, #{userId}, #{username}, #{content}, #{createUser}, NOW())
     </insert>
 
     <delete id="delete" parameterType="int">
-        DELETE FROM comments WHERE comment_sq = #{commentSq}
+        DELETE FROM COMMENTS WHERE comment_sq = #{commentSq}
     </delete>
 
 </mapper>

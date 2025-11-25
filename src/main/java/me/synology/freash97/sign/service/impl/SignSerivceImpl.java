@@ -54,6 +54,7 @@ public class SignSerivceImpl implements SignService {
             log.debug("findByUsername Service End !!!");
         } catch (Exception e) {
             log.error("findByUsername Service Fail !!!");
+            e.printStackTrace();
         }
 
         return signDTO;
@@ -73,6 +74,7 @@ public class SignSerivceImpl implements SignService {
             log.debug("findByUserAccount Service End !!!");
         } catch (Exception e) {
             log.error("findByUserAccount Service Fail !!!");
+            throw new Exception("findByUserAccount Service Fail !!!", e);
         }
 
         return resultSignDTO;

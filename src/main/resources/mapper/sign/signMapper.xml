@@ -19,18 +19,18 @@
 
     <select id="findByUsername" parameterType="string" resultType="me.synology.freash97.sign.domain.SignDTO">
         SELECT *
-        FROM users
+        FROM USERS
         WHERE username = #{username}
     </select>
 
     <insert id="save" parameterType="me.synology.freash97.sign.domain.SignDTO">
-        INSERT INTO users (username, password, email, admin, create_user, create_date)
+        INSERT INTO USERS (username, password, email, admin, create_user, create_date)
         VALUES (#{username}, #{password}, #{email}, 'N', #{username}, NOW())
     </insert>
 
     <select id="findByUserAccount" parameterType="me.synology.freash97.sign.domain.SignDTO" resultType="me.synology.freash97.sign.domain.SignDTO">
         SELECT *
-        FROM users
+        FROM USERS
         WHERE username = #{username}
         AND password = #{password}
     </select>

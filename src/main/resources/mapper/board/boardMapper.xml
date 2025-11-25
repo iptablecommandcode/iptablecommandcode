@@ -17,13 +17,13 @@
 
     <select id="findAll" resultMap="boardResultMap">
         SELECT *
-        FROM board
+        FROM BOARD
         ORDER BY board_sq DESC
     </select>
 
     <select id="findById" parameterType="Integer" resultMap="boardResultMap">
         SELECT *
-        FROM board
+        FROM BOARD
         WHERE board_sq = #{boardSq}
     </select>
 
@@ -43,7 +43,7 @@
 
     <delete id="delete" parameterType="integer">
         DELETE
-        FROM board
+        FROM BOARD
         WHERE board_sq = #{boardSq}
     </delete>
 

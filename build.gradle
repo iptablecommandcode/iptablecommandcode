@@ -23,6 +23,17 @@ repositories {
 	mavenCentral()
 }
 
+//BOM 설정 추가
+ext {
+    set('springCloudVersion', "2024.0.2")
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
 dependencies {
 //	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
@@ -36,7 +47,6 @@ dependencies {
 
 	//lombok & DB
 	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
 
@@ -47,6 +57,9 @@ dependencies {
 	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.4'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    implementation 'org.springframework.cloud:spring-cloud-starter-config'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 }
 
 tasks.named('test') {
