@@ -28,12 +28,12 @@
     </select>
 
     <insert id="save" parameterType="me.synology.freash97.board.domain.BoardDTO">
-        INSERT INTO board (user_id, username, title, content, create_user, create_date)
+        INSERT INTO BOARD (user_id, username, title, content, create_user, create_date)
         VALUES (#{userId}, #{username}, #{title}, #{content}, #{createUser}, NOW())
     </insert>
 
     <update id="update" parameterType="me.synology.freash97.board.domain.BoardDTO">
-        UPDATE board
+        UPDATE BOARD
         SET title       = #{title},
             content     = #{content},
             update_user = #{updateUser},
