@@ -39,7 +39,7 @@ public class BoardController {
     public String boardList(Model model) throws Exception {
         List<BoardDTO> boards = boardService.findAll();
         model.addAttribute("boards", boards);
-        return "/board/boardList";  // board-list.html
+        return "board/boardList";  // board-list.html
     }
 
     @GetMapping("/boardDetail")
@@ -55,7 +55,7 @@ public class BoardController {
 
     @GetMapping("/boardWrite")
     public String createForm() {
-        return "/board/boardWrite";  // board-new.html
+        return "board/boardWrite";  // board-new.html
     }
 
     @PostMapping("/boardWrite")
@@ -63,7 +63,7 @@ public class BoardController {
         SignDTO signDTO = (SignDTO) session.getAttribute("loginUser");
 
         boardService.save(board, signDTO.getUsername());
-        return "redirect:/board/boardList";
+        return "redirect:board/boardList";
     }
 
     @GetMapping("/boardEdit")
@@ -75,7 +75,7 @@ public class BoardController {
         //세션 확인 후 수정 가능하도록 처리
         if (signDTO.getUserId() == board.getUserId()) {
             model.addAttribute("board", board);
-            return "/board/boardEdit";  // board-edit.html
+            return "board/boardEdit";  // board-edit.html
         } else {
             //로그인 없을경우 Detail 페이지 이동
             BoardDTO boardDetail = boardService.findById(boardSq);
@@ -83,7 +83,7 @@ public class BoardController {
 
             model.addAttribute("boardDetail", boardDetail);
             model.addAttribute("commentDTOList", commentDTOList);
-            return "/board/boardDetail";  // board-list.html
+            return "board/boardDetail";  // board-list.html
         }
     }
 
@@ -92,7 +92,7 @@ public class BoardController {
         //SignDTO signDTO = (SignDTO) session.getAttribute("loginUser");
 
         boardService.update(board);
-        return "redirect:/board/boardList";
+        return "redirect:board/boardList";
     }
 
     //삭제처리
@@ -105,7 +105,7 @@ public class BoardController {
         //세션 확인 후 수정 가능하도록 처리
         if (signDTO.getUserId() == board.getUserId()) {
             boardService.delete(boardSq);
-            return "redirect:/board/boardList";
+            return "redirect:board/boardList";
         } else {
             //상세 이력
             BoardDTO boardDetail = boardService.findById(boardSq);

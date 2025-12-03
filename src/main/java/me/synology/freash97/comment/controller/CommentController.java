@@ -45,12 +45,12 @@ public class CommentController {
         model.addAttribute("boardDetail", boardDetail);
         model.addAttribute("commentDTOList", commentDTOList);
 
-        return "redirect:/board/boardDetail?boardSq=" + commentDTO.getBoardSq();
+        return "redirect:board/boardDetail?boardSq=" + commentDTO.getBoardSq();
     }
 
     @PostMapping("/{commentId}/delete")
     public String deleteComment(@PathVariable Long commentId) throws Exception {
         commentService.delete(commentId);
-        return "redirect:/board/{boardId}";
+        return "redirect:board/{boardId}";
     }
 }

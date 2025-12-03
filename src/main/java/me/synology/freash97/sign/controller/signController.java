@@ -33,7 +33,7 @@ public class signController {
     //로그인 페이지 실행
     @GetMapping("/signIn")
     public String signIn() {
-        return "/sign/signIn";  // signIn.html
+        return "sign/signIn";  // signIn.html
     }
 
     //로그인 처리 이후 메인 index 페이지로 이동
@@ -45,16 +45,16 @@ public class signController {
         if (resultSignDTO.getUsername() != null) {
             HttpSession session = request.getSession();
             session.setAttribute("loginUser", resultSignDTO);
-            return "redirect:/index";
+            return "redirect:index";
         } else {
-            return "redirect:/sign/signIn";
+            return "redirect:sign/signIn";
         }
     }
 
     //회원 가입 페이지
     @GetMapping("/signUp")
     public String signUp() {
-        return "/sign/signUp";
+        return "sign/signUp";
     }
 
     //계정 생성
@@ -65,12 +65,12 @@ public class signController {
         signService.signUp(signDTO);
 
         log.info("SignUp Controller End !!!");
-        return "redirect:/sign/signIn";  // register.html
+        return "redirect:sign/signIn";  // register.html
     }
 
     @GetMapping("/signOut")
     public String signOut(HttpSession session) throws Exception {
         session.invalidate();
-        return "redirect:/index";
+        return "redirect:index";
     }
 }
