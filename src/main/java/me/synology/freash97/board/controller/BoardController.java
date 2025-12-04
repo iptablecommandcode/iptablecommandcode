@@ -83,6 +83,7 @@ public class BoardController {
 
             model.addAttribute("boardDetail", boardDetail);
             model.addAttribute("commentDTOList", commentDTOList);
+            model.addAttribute("regMsg", "작성자가 아닐경우 글을 수정할 수 없습니다.");
             return "board/boardDetail";  // board-list.html
         }
     }
@@ -113,6 +114,7 @@ public class BoardController {
 
             model.addAttribute("boardDetail", boardDetail);
             model.addAttribute("commentDTOList", commentDTOList);
+            model.addAttribute("regMsg", "작성자가 아닐경우 글을 삭제할 수 없습니다.");
             return "board/boardDetail";  // board-detail.html
         }
     }
