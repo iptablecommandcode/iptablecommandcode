@@ -42,12 +42,13 @@ public class signController {
 
         SignDTO resultSignDTO = signService.findByUserAccount(signDTO);
 
-        if (resultSignDTO.getUsername() != null) {
+        if (resultSignDTO != null) {
             HttpSession session = request.getSession();
             session.setAttribute("loginUser", resultSignDTO);
             return "redirect:/index";
         } else {
-            return "redirect:/sign/signIn";
+            request.setAttribute("error", "아이디 또는 비밀번호가 맞지 않습니다.");
+            return "sign/signIn";
         }
     }
 

@@ -57,6 +57,7 @@
                     <button type="submit" class="btn btn-danger" onclick="return confirm('정말 삭제할까요?')" th:if="${session.loginUser != null}">삭제</button>
                 </form>
             </div>
+            <div th:if="${regMsg}" class="alert alert-danger mt-3" th:text="${regMsg}" />
         </div>
     </div>
 
