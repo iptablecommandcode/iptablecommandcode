@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
     <Properties>
-        <Property name="layoutPattern">[%d] %-5level [%thread] %C{100} %M - %msg%n</Property>
+        <Property name="LOG_LEVEL_PATTERN">{%5p}{FATAL=red blink, ERROR=red bold, WARN=yellow bold, INFO=green bold, DEBUG=blue bold, TRACE=blue}</Property>
     </Properties>
 
     <!-- 콘솔, 파일에 찍을 때 형식 및 설정 셋팅-->
     <Appenders>
         <Console name="console" target="SYSTEM_OUT">
-            <PatternLayout pattern="[%d{yyyy:MM:dd HH:mm:ss.SSS}] %-5level [%thread] %C{100} %M - %msg%n" />
+            <PatternLayout disableAnsi="false" pattern="%style{%d{yyyy:MM:dd HH:mm:ss.SSS}}{magenta} %highlight${LOG_LEVEL_PATTERN} [%thread] %style{[%C{100}]}{cyan} %M - %msg%n" />
         </Console>
     </Appenders>
 
@@ -15,9 +15,9 @@
         <!-- =================================================================== -->
         <!-- TESTPROJECT specific Logger setting								 -->
         <!-- =================================================================== -->
-        <logger name="com.test.project" level="debug" additivity="false">
-            <AppenderRef ref="console" /> <!-- 콘솔에 로그 찍겠단 뜻 -->
-	    </logger>
+<!--        <logger name="com.test.project" level="debug" additivity="false">-->
+<!--            <AppenderRef ref="console" /> &lt;!&ndash; 콘솔에 로그 찍겠단 뜻 &ndash;&gt;-->
+<!--	    </logger>-->
 
 
 		<!-- =================================================================== -->
