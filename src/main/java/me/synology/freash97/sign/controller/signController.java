@@ -45,9 +45,9 @@ public class signController {
         if (resultSignDTO.getUsername() != null) {
             HttpSession session = request.getSession();
             session.setAttribute("loginUser", resultSignDTO);
-            return "redirect:index";
+            return "redirect:/index";
         } else {
-            return "redirect:sign/signIn";
+            return "redirect:/sign/signIn";
         }
     }
 
@@ -65,12 +65,12 @@ public class signController {
         signService.signUp(signDTO);
 
         log.info("SignUp Controller End !!!");
-        return "redirect:sign/signIn";  // register.html
+        return "redirect:/sign/signIn";  // register.html
     }
 
     @GetMapping("/signOut")
     public String signOut(HttpSession session) throws Exception {
         session.invalidate();
-        return "redirect:index";
+        return "redirect:/index";
     }
 }

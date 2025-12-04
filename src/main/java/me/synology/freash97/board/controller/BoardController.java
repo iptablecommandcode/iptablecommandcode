@@ -63,7 +63,7 @@ public class BoardController {
         SignDTO signDTO = (SignDTO) session.getAttribute("loginUser");
 
         boardService.save(board, signDTO.getUsername());
-        return "redirect:board/boardList";
+        return "redirect:/board/boardList";
     }
 
     @GetMapping("/boardEdit")
@@ -92,7 +92,7 @@ public class BoardController {
         //SignDTO signDTO = (SignDTO) session.getAttribute("loginUser");
 
         boardService.update(board);
-        return "redirect:board/boardList";
+        return "redirect:/board/boardList";
     }
 
     //삭제처리
@@ -105,7 +105,7 @@ public class BoardController {
         //세션 확인 후 수정 가능하도록 처리
         if (signDTO.getUserId() == board.getUserId()) {
             boardService.delete(boardSq);
-            return "redirect:board/boardList";
+            return "redirect:/board/boardList";
         } else {
             //상세 이력
             BoardDTO boardDetail = boardService.findById(boardSq);
