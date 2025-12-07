@@ -23,7 +23,7 @@
 		<!-- =================================================================== -->
         <!-- SPRING																 -->
         <!-- =================================================================== -->
-        <logger name="org.springframework" level="error" additivity="false" >
+        <logger name="org.springframework" level="info" additivity="false" >
             <AppenderRef ref="console" />
         </logger>
         <!-- =================================================================== -->
