@@ -16,15 +16,16 @@ import java.util.List;
 
 /**
  * packageName   : me.synology.freash97.board.controller
- * fileName      : boardController
+ * fileName      : BoardController
  * author        : iptable
  * date          : 2025-04-23
- * time          : 오후 10:38
- * description   :
  * ====================================================
  * DATE                  AUTHOR              NOTE
  * ----------------------------------------------------
- * 2025-04-23               iptab             최초 생성
+ * 2025-04-23            iptab               최초 생성
+ * 2025-12-07            iptab               버그 수정
+ *   - Integer 비교 == → equals() 변경
+ *   - 세션 null 체크 추가 (미로그인 시 로그인 페이지 리다이렉트)
  */
 @Slf4j
 @Controller
@@ -39,28 +40,35 @@ public class BoardController {
     public String boardList(Model model) throws Exception {
         List<BoardDTO> boards = boardService.findAll();
         model.addAttribute("boards", boards);
-        return "board/boardList";  // board-list.html
+        return "board/boardList";
     }
 
     @GetMapping("/boardDetail")
     public String boardDetail(@RequestParam Integer boardSq, Model model) throws Exception {
-        //상세 이력
         BoardDTO boardDetail = boardService.findById(boardSq);
         List<CommentDTO> commentDTOList = commentService.findByBoardSq(boardDetail.getBoardSq());
 
         model.addAttribute("boardDetail", boardDetail);
         model.addAttribute("commentDTOList", commentDTOList);
-        return "board/boardDetail";  // board-detail.html
+        return "board/boardDetail";
     }
 
     @GetMapping("/boardWrite")
-    public String createForm() {
-        return "board/boardWrite";  // board-new.html
+    public String createForm(HttpSession session) {
+        // [수정] 세션 null 체크 - 미로그인 시 로그인 페이지로
+        if (session.getAttribute("loginUser") == null) {
+            return "redirect:/sign/signIn";
+        }
+        return "board/boardWrite";
     }
 
     @PostMapping("/boardWrite")
     public String createBoard(@ModelAttribute BoardDTO board, HttpSession session) throws Exception {
+        // [수정] 세션 null 체크
         SignDTO signDTO = (SignDTO) session.getAttribute("loginUser");
+        if (signDTO == null) {
+            return "redirect:/sign/signIn";
+        }
 
         boardService.save(board, signDTO.getUsername());
         return "redirect:/board/boardList";
@@ -68,54 +76,59 @@ public class BoardController {
 
     @GetMapping("/boardEdit")
     public String editForm(@RequestParam Integer boardSq, Model model, HttpSession session) throws Exception {
-
+        // [수정] 세션 null 체크
         SignDTO signDTO = (SignDTO) session.getAttribute("loginUser");
+        if (signDTO == null) {
+            return "redirect:/sign/signIn";
+        }
+
         BoardDTO board = boardService.findById(boardSq);
 
-        //세션 확인 후 수정 가능하도록 처리
-        if (signDTO.getUserId() == board.getUserId()) {
+        // [수정] Integer 비교 == → equals()
+        if (signDTO.getUserId().equals(board.getUserId())) {
             model.addAttribute("board", board);
-            return "board/boardEdit";  // board-edit.html
+            return "board/boardEdit";
         } else {
-            //로그인 없을경우 Detail 페이지 이동
-            BoardDTO boardDetail = boardService.findById(boardSq);
-            List<CommentDTO> commentDTOList = commentService.findByBoardSq(boardDetail.getBoardSq());
-
-            model.addAttribute("boardDetail", boardDetail);
+            List<CommentDTO> commentDTOList = commentService.findByBoardSq(board.getBoardSq());
+            model.addAttribute("boardDetail", board);
             model.addAttribute("commentDTOList", commentDTOList);
             model.addAttribute("regMsg", "작성자가 아닐경우 글을 수정할 수 없습니다.");
-            return "board/boardDetail";  // board-list.html
+            return "board/boardDetail";
         }
     }
 
     @PostMapping("/boardUpdate")
     public String updateBoard(@ModelAttribute BoardDTO board, HttpSession session) throws Exception {
-        //SignDTO signDTO = (SignDTO) session.getAttribute("loginUser");
+        // [수정] 세션 null 체크
+        SignDTO signDTO = (SignDTO) session.getAttribute("loginUser");
+        if (signDTO == null) {
+            return "redirect:/sign/signIn";
+        }
 
         boardService.update(board);
         return "redirect:/board/boardList";
     }
 
-    //삭제처리
     @PostMapping("/boardDelete")
     public String deleteBoard(@RequestParam("boardSq") int boardSq, HttpSession session, Model model) throws Exception {
-
+        // [수정] 세션 null 체크
         SignDTO signDTO = (SignDTO) session.getAttribute("loginUser");
+        if (signDTO == null) {
+            return "redirect:/sign/signIn";
+        }
+
         BoardDTO board = boardService.findById(boardSq);
 
-        //세션 확인 후 수정 가능하도록 처리
-        if (signDTO.getUserId() == board.getUserId()) {
+        // [수정] Integer 비교 == → equals()
+        if (signDTO.getUserId().equals(board.getUserId())) {
             boardService.delete(boardSq);
             return "redirect:/board/boardList";
         } else {
-            //상세 이력
-            BoardDTO boardDetail = boardService.findById(boardSq);
-            List<CommentDTO> commentDTOList = commentService.findByBoardSq(boardDetail.getBoardSq());
-
-            model.addAttribute("boardDetail", boardDetail);
+            List<CommentDTO> commentDTOList = commentService.findByBoardSq(board.getBoardSq());
+            model.addAttribute("boardDetail", board);
             model.addAttribute("commentDTOList", commentDTOList);
             model.addAttribute("regMsg", "작성자가 아닐경우 글을 삭제할 수 없습니다.");
-            return "board/boardDetail";  // board-detail.html
+            return "board/boardDetail";
         }
     }
 }

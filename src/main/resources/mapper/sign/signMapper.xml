@@ -3,6 +3,17 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+<!--
+    ====================================================
+    DATE                  AUTHOR              NOTE
+    ----------------------------------------------------
+    2025-04-28            iptab               최초 생성
+    2025-12-07            iptab               버그 수정
+      - findByUsername resultType → resultMap 변경
+        (snake_case 컬럼 camelCase 매핑 누락 방지)
+      - findByUserAccount resultType → resultMap 변경
+    ====================================================
+-->
 <mapper namespace="me.synology.freash97.sign.mapper.SignMapper">
 
     <resultMap id="signResultMap" type="me.synology.freash97.sign.domain.SignDTO">
@@ -17,7 +28,8 @@
         <result property="updateDate" column="update_date"/>
     </resultMap>
 
-    <select id="findByUsername" parameterType="string" resultType="me.synology.freash97.sign.domain.SignDTO">
+    <!-- [수정] resultType → resultMap (snake_case 매핑 보장) -->
+    <select id="findByUsername" parameterType="string" resultMap="signResultMap">
         SELECT *
         FROM USERS
         WHERE username = #{username}
@@ -28,10 +40,12 @@
         VALUES (#{username}, #{password}, #{email}, 'N', #{username}, NOW())
     </insert>
 
-    <select id="findByUserAccount" parameterType="me.synology.freash97.sign.domain.SignDTO" resultType="me.synology.freash97.sign.domain.SignDTO">
+    <!-- [수정] resultType → resultMap (snake_case 매핑 보장) -->
+    <select id="findByUserAccount" parameterType="me.synology.freash97.sign.domain.SignDTO" resultMap="signResultMap">
         SELECT *
         FROM USERS
         WHERE username = #{username}
         AND password = #{password}
     </select>
+
 </mapper>
