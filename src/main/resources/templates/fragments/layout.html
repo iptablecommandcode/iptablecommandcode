@@ -3,7 +3,7 @@
 <head th:fragment="head(title)">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title th:text="${title} + ' | iptablecommandcode'">iptablecommandcode</title>
+    <title th:text="${title} + 'iptablecommandcode | ' + ${@environment.getProperty('project.level')}">iptablecommandcode</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.min.css}">
     <style>
         :root { --brand: #0d6efd; --brand-dark: #0a58ca; --sidebar-w: 260px; }
@@ -92,7 +92,7 @@
 <!-- 네비게이션 fragment -->
 <nav th:fragment="nav" class="blog-nav">
     <div class="container-fluid px-4 d-flex align-items-center justify-content-between" style="height:54px;">
-        <a class="brand" th:href="@{/}">iptablecommandcode</a>
+        <a class="brand" th:href="@{/}" th:text="'iptablecommandcode | ' + ${@environment.getProperty('project.level')} + ' SERVER'">iptablecommandcode</a>
         <div class="d-flex align-items-center gap-3">
             <a class="nav-link" th:href="@{/board/boardList}">포스트</a>
             <th:block th:if="${session.loginUser == null}">

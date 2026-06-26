@@ -68,7 +68,7 @@
 <nav th:fragment="adminNav(current)" class="adm-nav">
     <div class="adm-nav-brand">
         <span class="logo">iT</span>
-        <span>관리자</span>
+        <span th:text="'관리자 | ' + ${@environment.getProperty('project.level')}">관리자</span>
     </div>
     <div class="nav-section">콘텐츠</div>
     <a th:href="@{/admin/dashboard}"     th:classappend="${current == 'dashboard'} ? 'on'">대시보드</a>
