@@ -5,7 +5,7 @@ WORKDIR /app
 
 # Jenkins에서 미리 ./gradlew clean build 한 뒤,
 # build/libs 안에 생성된 jar 파일을 이미지 안으로 복사
-ARG JAR_FILE=build/libs/*.jar
+ARG JAR_FILE=build/libs/*-SNAPSHOT.jar
 COPY ${JAR_FILE} app.jar
 
 EXPOSE 8080
