@@ -2,22 +2,16 @@ package me.synology.freash97.sign.service;
 
 import me.synology.freash97.sign.domain.SignDTO;
 
-/**
- * packageName   : me.synology.freash97.sign.service
- * fileName      : SignService
- * author        : iptab
- * date          : 2025-04-28
- * time          : 오후 10:56
- * description   :
- * ====================================================
- * DATE                  AUTHOR              NOTE
- * ----------------------------------------------------
- * 2025-04-28               iptab             최초 생성
- */
+import java.util.List;
+
 public interface SignService {
-    void signUp(SignDTO signDTO) throws Exception;
-
-    SignDTO findByUsername(String username) throws Exception;
-
-    SignDTO findByUserAccount(SignDTO signDTO) throws Exception;
+    SignDTO findByUsername(String username);
+    SignDTO findByUserAccount(SignDTO signDTO);
+    void save(SignDTO signDTO);
+    void signUp(SignDTO signDTO);
+    boolean checkUsername(String username);
+    List<SignDTO> findAll();
+    void updateAdmin(int userId, String adminYn);
+    int countAll();
+    void deleteUser(int userId);
 }

@@ -1,65 +1,77 @@
 package me.synology.freash97.board.service.impl;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import me.synology.freash97.board.domain.BoardDTO;
 import me.synology.freash97.board.mapper.BoardMapper;
 import me.synology.freash97.board.service.BoardService;
-import me.synology.freash97.board.domain.BoardDTO;
-import me.synology.freash97.sign.domain.SignDTO;
-import me.synology.freash97.sign.mapper.SignMapper;
+import me.synology.freash97.tag.mapper.TagMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
- * packageName   : me.synology.freash97.board.service.impl
- * fileName      : boardServiceImpl
- * author        : iptab
- * date          : 2025-04-25
- * time          : 오후 11:47
- * description   :
- * ====================================================
- * DATE                  AUTHOR              NOTE
- * ----------------------------------------------------
- * 2025-04-25               iptab             최초 생성
- */
-
-@Slf4j
 @Service
-@RequiredArgsConstructor
 public class BoardServiceImpl implements BoardService {
 
-    private final BoardMapper boardMapper;
-    private final SignMapper signMapper;
+    @Autowired
+    private BoardMapper boardMapper;
+
+    @Autowired
+    private TagMapper tagMapper;
 
     @Override
-    public List<BoardDTO> findAll() throws Exception {
+    public List<BoardDTO> findAll() {
         return boardMapper.findAll();
     }
 
     @Override
-    public BoardDTO findById(Integer boardSq) throws Exception {
+    public List<BoardDTO> findByCategory(int categorySq) {
+        return boardMapper.findByCategory(categorySq);
+    }
+
+    @Override
+    public List<BoardDTO> findByTag(int tagSq) {
+        return boardMapper.findByTag(tagSq);
+    }
+
+    @Override
+    public BoardDTO findById(int boardSq) {
         return boardMapper.findById(boardSq);
     }
 
     @Override
-    public void save(BoardDTO boardDTO, String username) throws Exception {
-        SignDTO signDTO = signMapper.findByUsername(username);
-        boardDTO.setUserId(signDTO.getUserId());
-        boardDTO.setUsername(username);
-        boardDTO.setCreateUser(signDTO.getUsername());
+    public void increaseViewCount(int boardSq) {
+        boardMapper.increaseViewCount(boardSq);
+    }
 
+    @Override
+    public void save(BoardDTO boardDTO, String username) {
+        boardDTO.setCreateUser(username);
         boardMapper.save(boardDTO);
     }
 
     @Override
-    public void update(BoardDTO boardDTO) throws Exception {
-        boardDTO.setUpdateUser(boardDTO.getUsername());
+    public void update(BoardDTO boardDTO, String username) {
+        boardDTO.setUpdateUser(username);
         boardMapper.update(boardDTO);
     }
 
     @Override
-    public void delete(Integer boardSq) throws Exception {
+    public void delete(int boardSq) {
         boardMapper.delete(boardSq);
+    }
+
+    @Override
+    public void updateNotice(BoardDTO boardDTO) {
+        boardMapper.updateNotice(boardDTO);
+    }
+
+    @Override
+    public List<BoardDTO> findAllForAdmin() {
+        return boardMapper.findAllForAdmin();
+    }
+
+    @Override
+    public int countAll() {
+        return boardMapper.countAll();
     }
 }

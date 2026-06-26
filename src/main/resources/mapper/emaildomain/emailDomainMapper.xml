@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.synology.freash97.emaildomain.mapper.EmailDomainMapper">
+
+    <resultMap id="emailDomainResultMap" type="me.synology.freash97.emaildomain.domain.EmailDomainDTO">
+        <id     property="domainSq"   column="domain_sq"/>
+        <result property="domainName" column="domain_name"/>
+        <result property="useYn"      column="use_yn"/>
+        <result property="createUser" column="create_user"/>
+        <result property="createDate" column="create_date"/>
+        <result property="updateUser" column="update_user"/>
+        <result property="updateDate" column="update_date"/>
+    </resultMap>
+
+    <select id="findAllActive" resultMap="emailDomainResultMap">
+        SELECT * FROM EMAIL_DOMAIN WHERE use_yn = 'Y' ORDER BY domain_sq ASC
+    </select>
+
+    <select id="findAll" resultMap="emailDomainResultMap">
+        SELECT * FROM EMAIL_DOMAIN ORDER BY domain_sq ASC
+    </select>
+
+    <insert id="save" parameterType="me.synology.freash97.emaildomain.domain.EmailDomainDTO">
+        INSERT INTO EMAIL_DOMAIN (domain_name, use_yn, create_user, create_date)
+        VALUES (#{domainName}, 'Y', #{createUser}, NOW())
+    </insert>
+
+    <update id="updateUseYn">
+        UPDATE EMAIL_DOMAIN SET use_yn = #{useYn}, update_date = NOW() WHERE domain_sq = #{domainSq}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM EMAIL_DOMAIN WHERE domain_sq = #{domainSq}
+    </delete>
+
+</mapper>

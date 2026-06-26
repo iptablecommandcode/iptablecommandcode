@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.synology.freash97.tag.mapper.TagMapper">
+
+    <resultMap id="tagResultMap" type="me.synology.freash97.tag.domain.TagDTO">
+        <id     property="tagSq"    column="tag_sq"/>
+        <result property="tagName"  column="tag_name"/>
+        <result property="useYn"    column="use_yn"/>
+        <result property="createDate" column="create_date"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="tagResultMap">
+        SELECT * FROM TAG ORDER BY tag_sq ASC
+    </select>
+
+    <select id="findAllActive" resultMap="tagResultMap">
+        SELECT * FROM TAG WHERE use_yn = 'Y' ORDER BY tag_name ASC
+    </select>
+
+    <select id="findByBoardSq" parameterType="int" resultMap="tagResultMap">
+        SELECT t.* FROM TAG t
+        INNER JOIN BOARD_TAG bt ON t.tag_sq = bt.tag_sq
+        WHERE bt.board_sq = #{boardSq}
+        ORDER BY t.tag_name ASC
+    </select>
+
+    <select id="findByName" parameterType="string" resultMap="tagResultMap">
+        SELECT * FROM TAG WHERE tag_name = #{tagName}
+    </select>
+
+    <insert id="save" parameterType="me.synology.freash97.tag.domain.TagDTO" useGeneratedKeys="true" keyProperty="tagSq">
+        INSERT IGNORE INTO TAG (tag_name, use_yn, create_user, create_date)
+        VALUES (#{tagName}, 'Y', #{createUser}, NOW())
+    </insert>
+
+    <insert id="saveBoard_Tag">
+        INSERT IGNORE INTO BOARD_TAG (board_sq, tag_sq) VALUES (#{boardSq}, #{tagSq})
+    </insert>
+
+    <delete id="deleteByBoardSq" parameterType="int">
+        DELETE FROM BOARD_TAG WHERE board_sq = #{boardSq}
+    </delete>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM TAG WHERE tag_sq = #{tagSq}
+    </delete>
+
+</mapper>

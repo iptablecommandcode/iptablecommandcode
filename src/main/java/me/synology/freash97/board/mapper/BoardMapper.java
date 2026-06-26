@@ -2,32 +2,21 @@ package me.synology.freash97.board.mapper;
 
 import me.synology.freash97.board.domain.BoardDTO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
-import java.sql.SQLException;
 import java.util.List;
-
-/**
- * packageName   : me.synology.freash97.board.mapper
- * fileName      : BoardMapper
- * author        : iptable
- * date          : 2025-04-26
- * time          : 오전 12:08
- * description   :
- * ====================================================
- * DATE                  AUTHOR              NOTE
- * ----------------------------------------------------
- * 2025-04-26               iptab             최초 생성
- */
 
 @Mapper
 public interface BoardMapper {
-    List<BoardDTO> findAll() throws SQLException;
-
-    BoardDTO findById(Integer boardSq) throws SQLException;
-
-    void save(BoardDTO boardDTO) throws SQLException;
-
-    void update(BoardDTO boardDTO) throws SQLException;
-
-    void delete(Integer boardSq) throws SQLException;
+    List<BoardDTO> findAll();
+    List<BoardDTO> findByCategory(int categorySq);
+    List<BoardDTO> findByTag(int tagSq);
+    BoardDTO findById(int boardSq);
+    void increaseViewCount(int boardSq);
+    void save(BoardDTO boardDTO);
+    void update(BoardDTO boardDTO);
+    void delete(int boardSq);
+    void updateNotice(BoardDTO boardDTO);
+    List<BoardDTO> findAllForAdmin();
+    int countAll();
 }

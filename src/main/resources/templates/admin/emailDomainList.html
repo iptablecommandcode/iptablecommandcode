@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('이메일 도메인 관리')}"></head>
+<body>
+<th:block th:replace="~{fragments/adminLayout :: adminStyles}"></th:block>
+<div class="adm-wrap">
+    <nav th:replace="~{fragments/adminLayout :: adminNav('emailDomains')}"></nav>
+    <main class="adm-main">
+        <div class="adm-header"><h4>이메일 도메인 관리</h4></div>
+        <div class="add-box">
+            <div class="add-title">도메인 추가</div>
+            <div style="display:flex;gap:10px;">
+                <input id="newDomain" type="text" class="form-control" placeholder="예: company.co.kr" style="max-width:240px;">
+                <button class="btn-primary-sm" onclick="addDomain()">추가</button>
+            </div>
+        </div>
+        <div class="list-box">
+            <div th:each="d : ${domains}" class="domain-item">
+                <span style="font-size:.9rem;" th:text="${d.domainName}"></span>
+                <div style="display:flex;gap:8px;align-items:center;">
+                    <span th:if="${d.useYn == 'Y'}" class="badge-on">사용</span>
+                    <span th:if="${d.useYn != 'Y'}" class="badge-off">비활성</span>
+                    <button th:if="${d.useYn == 'Y'}" class="btn-toggle btn-toggle-off"
+                            th:onclick="|toggleDomain(${d.domainSq},'N')|">비활성화</button>
+                    <button th:if="${d.useYn != 'Y'}" class="btn-toggle btn-toggle-on"
+                            style="background:#2e7d32;"
+                            th:onclick="|toggleDomain(${d.domainSq},'Y')|">활성화</button>
+                    <button class="btn-del" th:onclick="|deleteDomain(${d.domainSq})|">삭제</button>
+                </div>
+            </div>
+            <div th:if="${#lists.isEmpty(domains)}" class="empty-state">등록된 도메인이 없습니다.</div>
+        </div>
+    </main>
+</div>
+<script>
+function addDomain() {
+    var name = document.getElementById('newDomain').value.trim();
+    if (!name) return;
+    fetch('/admin/email-domains/save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({domainName:name})})
+        .then(function(){location.reload();});
+}
+function toggleDomain(sq, useYn) {
+    fetch('/admin/email-domains/'+sq+'/toggle?useYn='+useYn,{method:'POST'}).then(function(){location.reload();});
+}
+function deleteDomain(sq) {
+    if (!confirm('삭제할까요?')) return;
+    fetch('/admin/email-domains/'+sq+'/delete',{method:'POST'}).then(function(){location.reload();});
+}
+</script>
+</body>
+</html>

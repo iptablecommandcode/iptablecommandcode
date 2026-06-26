@@ -1,26 +1,18 @@
 package me.synology.freash97.comment.domain;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import me.synology.freash97.common.entity.CommonDTO;
-
-/**
- * packageName   : me.synology.freash97.comment.domain
- * fileName      : CommentDTO
- * author        : iptab
- * date          : 2025-04-28
- * time          : 오후 10:52
- * description   :
- * ====================================================
- * DATE                  AUTHOR              NOTE
- * ----------------------------------------------------
- * 2025-04-28               iptab             최초 생성
- */
+import java.util.List;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class CommentDTO extends CommonDTO {
-    private Integer commentSq;
-    private Integer boardSq;
-    private Integer userId;
-    private String username;
-    private String content;
+    private Integer          commentSq;
+    private Integer          boardSq;
+    private Integer          userId;
+    private Integer          parentCommentSq;   // 대댓글용
+    private String           username;
+    private String           content;
+    private List<CommentDTO> replies;            // 대댓글 목록
 }

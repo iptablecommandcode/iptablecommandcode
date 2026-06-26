@@ -1,68 +1,52 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>글쓰기</title>
-    <meta charset="UTF-8">
-    <!-- Bootstrap -->
-    <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.min.css}">
-    <!-- Quill CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
-    <!-- Quill 초기화 -->
-    <script th:src="@{/js/quilleditor.js}" defer></script>
-    <style>
-        #editor { height: 400px; background: #fff; }
-        .ql-toolbar { border-radius: 0.375rem 0.375rem 0 0; }
-        .ql-container { border-radius: 0 0 0.375rem 0.375rem; font-size: 1rem; }
-    </style>
-</head>
-<body class="bg-light">
-
-<!-- 네비게이션 바 -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" th:href="@{/}">📘 Iptable Command Code</a>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item" th:if="${session.loginUser == null}">
-                    <a class="nav-link" th:href="@{/sign/signIn}">로그인</a>
-                </li>
-                <li class="nav-item" th:if="${session.loginUser == null}">
-                    <a class="nav-link" th:href="@{/sign/signUp}">회원가입</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/board/boardList}">게시판</a>
-                </li>
-                <li class="nav-item" th:if="${session.loginUser != null}">
-                    <span class="nav-link" th:text="${session.loginUser.username} + ' 님 로그인 중입니다.'">님 로그인 중 입니다.</span>
-                </li>
-                <li class="nav-item" th:if="${session.loginUser != null}">
-                    <a class="nav-link" th:href="@{/sign/signOut}">로그 아웃</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
-<!-- 본문 -->
-<div class="container mt-5">
-    <h2 class="mb-4 text-center">✍ 글쓰기</h2>
-
+<head th:replace="~{fragments/layout :: head('글쓰기')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: nav}"></nav>
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
+<div class="write-wrap">
+    <h2 style="font-weight:800;margin-bottom:24px;">✏ 새 포스트 작성</h2>
     <form th:action="@{/board/boardWrite}" method="post" id="boardForm">
         <div class="mb-3">
-            <input type="text" name="title" class="form-control" placeholder="제목을 입력하세요" required>
+            <select name="categorySq" class="form-select" style="max-width:200px;">
+                <option value="">카테고리 선택</option>
+                <option th:each="cat : ${categories}" th:value="${cat.categorySq}" th:text="${cat.categoryName}"></option>
+            </select>
         </div>
-
-        <!-- Quill 에디터 영역 -->
+        <input type="text" name="title" class="form-control write-title" placeholder="제목을 입력하세요" required>
         <div id="editor"></div>
-        <!-- 폼 submit 시 Quill HTML이 여기에 채워짐 -->
         <textarea id="hiddenContent" name="content" style="display:none;"></textarea>
-
-        <div class="mt-4 d-flex justify-content-end">
-            <a th:href="@{/board/boardList}" class="btn btn-secondary me-2">취소</a>
-            <button type="submit" class="btn btn-primary">작성 완료</button>
+        <div class="mt-3">
+            <input type="text" name="tagNames" class="form-control"
+                   placeholder="태그 입력 (쉼표로 구분, 예: Java,SpringBoot)"
+                   style="border-radius:8px;font-size:.9rem;">
+            <div style="margin-top:8px;" th:if="${allTags != null}">
+                <span style="font-size:.78rem;color:#aaa;">빠른 태그: </span>
+                <a th:each="tag : ${allTags}" href="#"
+                   th:text="'#' + ${tag.tagName}"
+                   onclick="addTag(this.textContent.substring(1));return false;"
+                   style="font-size:.78rem;color:#0d6efd;margin-right:6px;text-decoration:none;"></a>
+            </div>
+        </div>
+        <div class="mt-3">
+            <input type="text" name="thumbnailUrl" class="form-control"
+                   placeholder="썸네일 이미지 URL (선택사항)"
+                   style="border-radius:8px;font-size:.9rem;">
+        </div>
+        <div class="mt-4 d-flex justify-content-end gap-2">
+            <a th:href="@{/board/boardList}" style="background:#f0f0f0;color:#555;border-radius:8px;padding:9px 20px;text-decoration:none;">취소</a>
+            <button type="submit" style="background:#0d6efd;color:#fff;border:none;border-radius:8px;padding:9px 24px;font-weight:600;">발행하기</button>
         </div>
     </form>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+<script th:src="@{/js/quilleditor.js}"></script>
+<script>
+function addTag(tagName) {
+    var input = document.querySelector('input[name="tagNames"]');
+    var tags  = input.value.trim() ? input.value.trim().split(',').map(t=>t.trim()) : [];
+    if (!tags.includes(tagName)) { tags.push(tagName); input.value = tags.join(','); }
+}
+</script>
 </body>
 </html>

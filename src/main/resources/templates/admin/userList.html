@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('회원 관리')}"></head>
+<body>
+<th:block th:replace="~{fragments/adminLayout :: adminStyles}"></th:block>
+<div class="adm-wrap">
+    <nav th:replace="~{fragments/adminLayout :: adminNav('users')}"></nav>
+    <main class="adm-main">
+        <div class="adm-header"><h4>회원 관리</h4></div>
+        <table class="adm-table">
+            <thead><tr><th>번호</th><th>아이디</th><th>이메일</th><th>권한</th><th>가입일</th><th>권한 변경</th><th>관리</th></tr></thead>
+            <tbody>
+                <tr th:each="u : ${users}">
+                    <td th:text="${u.userId}"></td>
+                    <td th:text="${u.username}"></td>
+                    <td th:text="${u.email ?: '-'}"></td>
+                    <td>
+                        <span th:if="${u.admin == 'Y'}" class="badge-admin">관리자</span>
+                        <span th:if="${u.admin != 'Y'}" class="badge-user">일반</span>
+                    </td>
+                    <td th:text="${#temporals.format(u.createDate,'yyyy-MM-dd')}"></td>
+                    <td>
+                        <button th:if="${u.admin != 'Y'}" class="btn-toggle btn-toggle-on"
+                                th:onclick="|toggleAdmin(${u.userId},'Y')|">관리자 부여</button>
+                        <button th:if="${u.admin == 'Y'}" class="btn-toggle btn-toggle-off"
+                                th:onclick="|toggleAdmin(${u.userId},'N')|">권한 해제</button>
+                    </td>
+                    <td>
+                        <button class="btn-del" th:onclick="|deleteUser(${u.userId})|">삭제</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div th:if="${#lists.isEmpty(users)}" class="empty-state">등록된 회원이 없습니다.</div>
+    </main>
+</div>
+<script>
+function toggleAdmin(userId, adminYn) {
+    fetch('/admin/users/'+userId+'/toggleAdmin?adminYn='+adminYn, {method:'POST'})
+        .then(function(){location.reload();});
+}
+function deleteUser(userId) {
+    if (!confirm('이 회원을 삭제하시겠습니까? 작성한 게시글과 댓글도 함께 처리됩니다.')) return;
+    fetch('/admin/users/'+userId+'/delete', {method:'POST'})
+        .then(function(){location.reload();});
+}
+</script>
+</body>
+</html>

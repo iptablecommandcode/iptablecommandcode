@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('게시글 관리')}"></head>
+<body>
+<th:block th:replace="~{fragments/adminLayout :: adminStyles}"></th:block>
+<div class="adm-wrap">
+    <nav th:replace="~{fragments/adminLayout :: adminNav('boards')}"></nav>
+    <main class="adm-main">
+        <div class="adm-header"><h4>게시글 관리</h4></div>
+        <table class="adm-table">
+            <thead><tr><th>번호</th><th>카테고리</th><th>제목</th><th>작성자</th><th>조회</th><th>사용</th><th>공지</th><th>작성일</th><th>관리</th></tr></thead>
+            <tbody>
+                <tr th:each="b : ${boards}">
+                    <td th:text="${b.boardSq}"></td>
+                    <td><span class="badge-cat" th:text="${b.categoryName ?: '미분류'}"></span></td>
+                    <td style="max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                        <a th:href="@{/board/boardDetail(boardSq=${b.boardSq})}" th:text="${b.title}" style="color:#333;text-decoration:none;"></a>
+                    </td>
+                    <td th:text="${b.username}"></td>
+                    <td th:text="${b.viewCount}"></td>
+                    <td><span th:classappend="${b.useYn == 'Y'} ? 'badge-on' : 'badge-off'" th:text="${b.useYn}"></span></td>
+                    <td>
+                        <button class="btn-toggle"
+                                th:classappend="${b.noticeYn == 'Y'} ? 'btn-toggle-off' : 'btn-toggle-on'"
+                                th:text="${b.noticeYn == 'Y'} ? '공지 해제' : '공지 설정'"
+                                th:onclick="|toggleNotice(${b.boardSq}, '${b.noticeYn == 'Y' ? 'N' : 'Y'}', this)|"></button>
+                    </td>
+                    <td th:text="${#temporals.format(b.createDate,'yyyy-MM-dd')}"></td>
+                    <td>
+                        <button class="btn-del" th:onclick="|deleteBoard(${b.boardSq})|">삭제</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div th:if="${#lists.isEmpty(boards)}" class="empty-state">게시글이 없습니다.</div>
+    </main>
+</div>
+<script>
+function deleteBoard(boardSq) {
+    if (!confirm('정말 삭제할까요?')) return;
+    fetch('/admin/boards/' + boardSq + '/delete', { method:'POST' }).then(function(){location.reload();});
+}
+function toggleNotice(boardSq, noticeYn, btn) {
+    fetch('/admin/boards/' + boardSq + '/notice?noticeYn=' + noticeYn, { method:'POST' })
+        .then(function(){location.reload();});
+}
+</script>
+</body>
+</html>

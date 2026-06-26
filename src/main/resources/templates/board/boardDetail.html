@@ -1,115 +1,78 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>게시글 상세</title>
-    <meta charset="UTF-8">
-    <!-- Bootstrap -->
-    <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.min.css}">
-    <!-- Quill CDN (렌더링용 CSS만) -->
-    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
-    <style>
-        /* 상세보기에서 툴바 없이 Quill 스타일만 적용 */
-        .ql-editor-view {
-            padding: 12px 0;
-            font-size: 1rem;
-            line-height: 1.7;
-        }
-        .ql-editor-view p { margin-bottom: 0.5rem; }
-        .ql-editor-view h1, .ql-editor-view h2, .ql-editor-view h3 { margin-top: 1rem; margin-bottom: 0.5rem; }
-        .ql-editor-view blockquote {
-            border-left: 4px solid #dee2e6;
-            padding-left: 1rem;
-            color: #6c757d;
-        }
-        .ql-editor-view pre {
-            background: #f8f9fa;
-            padding: 0.75rem 1rem;
-            border-radius: 0.375rem;
-            font-size: 0.875rem;
-        }
-    </style>
-</head>
-<body class="bg-light">
+<head th:replace="~{fragments/layout :: head(${boardDetail.title})}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: nav}"></nav>
+<div class="blog-wrap">
+<main class="blog-main">
 
-<!-- 네비게이션 바 -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" th:href="@{/}">📘 Iptable Command Code</a>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item" th:if="${session.loginUser == null}">
-                    <a class="nav-link" th:href="@{/sign/signIn}">로그인</a>
-                </li>
-                <li class="nav-item" th:if="${session.loginUser == null}">
-                    <a class="nav-link" th:href="@{/sign/signUp}">회원가입</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/board/boardList}">게시판</a>
-                </li>
-                <li class="nav-item" th:if="${session.loginUser != null}">
-                    <span class="nav-link" th:text="${session.loginUser.username} + ' 님 로그인 중입니다.'">님 로그인 중 입니다.</span>
-                </li>
-                <li class="nav-item" th:if="${session.loginUser != null}">
-                    <a class="nav-link" th:href="@{/sign/signOut}">로그 아웃</a>
-                </li>
-            </ul>
+    <!-- 포스트 헤더 -->
+    <div class="post-header">
+        <div style="font-size:.8rem;color:#0d6efd;font-weight:600;margin-bottom:8px;" th:text="${boardDetail.categoryName ?: '미분류'}"></div>
+        <h1 th:text="${boardDetail.title}"></h1>
+        <div class="post-meta">
+            <span th:text="${boardDetail.username}"></span> ·
+            <span th:text="${#temporals.format(boardDetail.createDate,'yyyy년 MM월 dd일')}"></span> ·
+            <span>조회 <span th:text="${boardDetail.viewCount}"></span></span>
+        </div>
+        <!-- 태그 -->
+        <div class="post-tags mt-2" th:if="${not #lists.isEmpty(boardDetail.tags)}">
+            <a th:each="tag : ${boardDetail.tags}"
+               th:href="@{/board/boardList(tagSq=${tag.tagSq})}"
+               th:text="'#' + ${tag.tagName}"></a>
         </div>
     </div>
-</nav>
 
-<div class="container mt-5">
-    <h2 class="mb-4 text-center">📄 게시글 상세</h2>
+    <!-- 본문 -->
+    <div class="post-content ql-editor-view" th:utext="${boardDetail.content}"></div>
 
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <h4 class="card-title" th:text="${boardDetail.title}">제목</h4>
-            <p class="card-subtitle mb-2 text-muted">
-                작성자: <span th:text="${boardDetail.username}">홍길동</span> |
-                작성일: <span th:text="${#temporals.format(boardDetail.createDate, 'yyyy-MM-dd HH:mm')}">2025-04-22</span>
-            </p>
-            <hr>
-            <!--
-                [수정] th:text → th:utext
-                Quill이 저장한 HTML 태그(<p>, <strong> 등)가 그대로 렌더링되도록 변경
-                기존 th:text 는 태그를 문자열로 출력해서 내용이 깨져 보임
-            -->
-            <div class="ql-editor-view" th:utext="${boardDetail.content}">게시글 내용</div>
+    <!-- 작성자 액션 -->
+    <div th:if="${session.loginUser != null and session.loginUser.userId == boardDetail.userId}"
+         style="display:flex;gap:8px;justify-content:flex-end;margin-bottom:20px;">
+        <a th:href="@{/board/boardEdit(boardSq=${boardDetail.boardSq})}"
+           style="background:#f3f3f3;color:#555;border-radius:8px;padding:7px 16px;text-decoration:none;font-size:.88rem;">수정</a>
+        <form th:action="@{/board/boardDelete}" method="post" style="display:inline;">
+            <input type="hidden" name="boardSq" th:value="${boardDetail.boardSq}">
+            <button type="submit" onclick="return confirm('정말 삭제할까요?')"
+                    style="background:#ff4757;color:#fff;border:none;border-radius:8px;padding:7px 16px;font-size:.88rem;">삭제</button>
+        </form>
+    </div>
 
-            <div class="mt-4">
-                <a th:href="@{/board/boardList}" class="btn btn-outline-secondary">목록으로</a>
-                <a th:href="@{/board/boardEdit(boardSq=${boardDetail.boardSq})}" class="btn btn-warning me-1" th:if="${session.loginUser != null}">수정</a>
+    <!-- 댓글 -->
+    <div class="comment-wrap">
+        <div style="font-weight:700;font-size:1rem;margin-bottom:16px;">💬 댓글 <span th:text="${#lists.size(commentDTOList)}" style="color:#0d6efd;"></span></div>
 
-                <form th:action="@{/board/boardDelete}" method="post" class="d-inline">
-                    <input type="hidden" name="boardSq" th:value="${boardDetail.boardSq}" />
-                    <button type="submit" class="btn btn-danger" onclick="return confirm('정말 삭제할까요?')" th:if="${session.loginUser != null}">삭제</button>
+        <!-- 댓글 작성 -->
+        <form th:if="${session.loginUser != null}" th:action="@{/comment/boardComment}" method="post" class="comment-form mb-4">
+            <textarea name="content" class="form-control mb-2" rows="3" placeholder="댓글을 작성하세요." required></textarea>
+            <input type="hidden" name="boardSq"          th:value="${boardDetail.boardSq}">
+            <input type="hidden" name="userId"           th:value="${session.loginUser.userId}">
+            <input type="hidden" name="username"         th:value="${session.loginUser.username}">
+            <input type="hidden" name="parentCommentSq" value="">
+            <div class="text-end"><button type="submit" class="btn-comment">댓글 작성</button></div>
+        </form>
+        <div th:if="${session.loginUser == null}" style="text-align:center;padding:20px;color:#aaa;font-size:.9rem;">
+            <a th:href="@{/sign/signIn}" style="color:#0d6efd;">로그인</a> 후 댓글을 작성할 수 있습니다.
+        </div>
+
+        <!-- 댓글 목록 -->
+        <div th:each="comment : ${commentDTOList}" class="comment-item">
+            <div>
+                <span class="comment-author" th:text="${comment.username}"></span>
+                <span class="comment-date" th:text="${#temporals.format(comment.createDate,'yyyy.MM.dd HH:mm')}"></span>
+                <form th:if="${session.loginUser != null and session.loginUser.userId == comment.userId}"
+                      th:action="@{'/comment/' + ${comment.commentSq} + '/delete'}" method="post" style="display:inline;float:right;">
+                    <input type="hidden" name="boardSq" th:value="${boardDetail.boardSq}">
+                    <button type="submit" style="background:none;border:none;color:#ccc;font-size:.78rem;cursor:pointer;">삭제</button>
                 </form>
             </div>
-            <div th:if="${regMsg}" class="alert alert-danger mt-3" th:text="${regMsg}" />
+            <div class="comment-text" th:text="${comment.content}"></div>
         </div>
+
+        <div th:if="${#lists.isEmpty(commentDTOList)}" style="text-align:center;padding:30px;color:#ccc;font-size:.9rem;">첫 번째 댓글을 작성해보세요!</div>
     </div>
-
-    <hr class="mt-5" />
-    <h5>💬 댓글</h5>
-
-    <form th:action="@{/comment/boardComment}" method="post" class="mt-4" th:if="${session.loginUser != null}">
-        <div class="mb-3">
-            <textarea name="content" class="form-control" rows="3" placeholder="댓글을 작성하세요." required></textarea>
-            <input type="hidden" name="boardSq" th:value="${boardDetail.boardSq}" />
-            <input type="hidden" name="userId" th:value="${session.loginUser.userId}" />
-            <input type="hidden" name="username" th:value="${session.loginUser.username}" />
-        </div>
-        <div class="d-flex justify-content-end">
-            <button type="submit" class="btn btn-primary">댓글 작성</button>
-        </div>
-    </form>
-
-    <ul class="list-group mt-3">
-        <li class="list-group-item" th:each="commentDTOList : ${commentDTOList}">
-            <strong th:text="${commentDTOList.username}">작성자</strong>
-            <small class="text-muted ms-2" th:text="${#temporals.format(commentDTOList.createDate, 'yyyy-MM-dd HH:mm')}"></small>
-            <p th:text="${commentDTOList.content}" class="mb-1 mt-1"></p>
-        </li>
-    </ul>
+</main>
+<aside th:replace="~{fragments/layout :: sidebar}"></aside>
 </div>
 </body>
 </html>

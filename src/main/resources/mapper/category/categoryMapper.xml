@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.synology.freash97.category.mapper.CategoryMapper">
+
+    <resultMap id="categoryResultMap" type="me.synology.freash97.category.domain.CategoryDTO">
+        <id     property="categorySq"   column="category_sq"/>
+        <result property="categoryName" column="category_name"/>
+        <result property="description"  column="description"/>
+        <result property="sortOrder"    column="sort_order"/>
+        <result property="useYn"        column="use_yn"/>
+        <result property="createUser"   column="create_user"/>
+        <result property="createDate"   column="create_date"/>
+        <result property="updateUser"   column="update_user"/>
+        <result property="updateDate"   column="update_date"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="categoryResultMap">
+        SELECT * FROM CATEGORY ORDER BY sort_order ASC
+    </select>
+
+    <select id="findAllActive" resultMap="categoryResultMap">
+        SELECT * FROM CATEGORY WHERE use_yn = 'Y' ORDER BY sort_order ASC
+    </select>
+
+    <select id="findById" parameterType="int" resultMap="categoryResultMap">
+        SELECT * FROM CATEGORY WHERE category_sq = #{categorySq}
+    </select>
+
+    <insert id="save" parameterType="me.synology.freash97.category.domain.CategoryDTO">
+        INSERT INTO CATEGORY (category_name, description, sort_order, use_yn, create_user, create_date)
+        VALUES (#{categoryName}, #{description}, #{sortOrder}, 'Y', #{createUser}, NOW())
+    </insert>
+
+    <update id="update" parameterType="me.synology.freash97.category.domain.CategoryDTO">
+        UPDATE CATEGORY
+        SET category_name = #{categoryName},
+            description   = #{description},
+            sort_order    = #{sortOrder},
+            use_yn        = #{useYn},
+            update_user   = #{updateUser},
+            update_date   = NOW()
+        WHERE category_sq = #{categorySq}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM CATEGORY WHERE category_sq = #{categorySq}
+    </delete>
+
+</mapper>

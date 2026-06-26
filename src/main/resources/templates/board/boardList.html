@@ -1,67 +1,56 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>게시판</title>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.min.css}">
-</head>
-<body class="bg-light">
-
-<!-- 네비게이션 바 -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" th:href="@{/}">📘 Iptable Command Code</a>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item" th:if="${session.loginUser == null}">
-                    <a class="nav-link" th:href="@{/sign/signIn}">로그인</a>
-                </li>
-                <li class="nav-item" th:if="${session.loginUser == null}">
-                    <a class="nav-link" th:href="@{/sign/signUp}">회원가입</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/board/boardList}">게시판</a>
-                </li>
-                <li class="nav-item" th:if="${session.loginUser != null}">
-                    <span class="nav-link" th:text="${session.loginUser.username} + ' 님 로그인 중입니다.'">님 로그인 중 입니다.</span>
-                </li>
-                <li class="nav-item" th:if="${session.loginUser != null}">
-                    <a class="nav-link" th:href="@{/sign/signOut}">로그 아웃</a>
-                </li>
-            </ul>
+<head th:replace="~{fragments/layout :: head('포스트 목록')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: nav}"></nav>
+<div class="blog-wrap">
+    <main class="blog-main">
+        <!-- 필터 탭 -->
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;align-items:center;">
+            <a th:href="@{/board/boardList}"
+               th:classappend="${categorySq == null and tagSq == null} ? 'active' : ''"
+               style="padding:5px 14px;border-radius:20px;font-size:.85rem;text-decoration:none;"
+               th:style="${categorySq == null and tagSq == null} ? 'background:#0d6efd;color:#fff;' : 'background:#f0f0f0;color:#555;'">전체</a>
+            <th:block th:each="cat : ${categories}">
+                <a th:href="@{/board/boardList(categorySq=${cat.categorySq})}"
+                   th:text="${cat.categoryName}"
+                   th:style="${categorySq != null and categorySq == cat.categorySq} ? 'background:#0d6efd;color:#fff;padding:5px 14px;border-radius:20px;font-size:.85rem;text-decoration:none;' : 'background:#f0f0f0;color:#555;padding:5px 14px;border-radius:20px;font-size:.85rem;text-decoration:none;'"></a>
+            </th:block>
         </div>
-    </div>
-</nav>
 
-<div class="container mt-5">
-    <h2 class="mb-4 text-center">📋 게시판</h2>
+        <!-- 태그 필터 표시 -->
+        <div th:if="${tagSq != null}" style="margin-bottom:16px;font-size:.9rem;color:#0d6efd;">
+            🏷 태그 필터 적용 중 — <a th:href="@{/board/boardList}" style="color:#aaa;font-size:.82rem;">해제</a>
+        </div>
 
-    <div class="d-flex justify-content-end mb-3" th:if="${session.loginUser != null}">
-        <a th:href="@{/board/boardWrite}" class="btn btn-primary">글쓰기</a>
-    </div>
+        <!-- 글쓰기 버튼 -->
+        <div th:if="${session.loginUser != null}" class="text-end mb-3">
+            <a th:href="@{/board/boardWrite}" class="btn-write" style="background:#0d6efd;color:#fff;border:none;border-radius:20px;padding:7px 18px;font-size:.85rem;text-decoration:none;">✏ 글쓰기</a>
+        </div>
 
-    <table class="table table-hover table-bordered bg-white">
-        <thead class="table-dark">
-        <tr>
-            <th style="width: 10%">번호</th>
-            <th>제목</th>
-            <th style="width: 20%">작성자</th>
-            <th style="width: 20%">작성일</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="board : ${boards}">
-            <td th:text="${board.boardSq}">1</td>
-            <td>
-                <a th:href="@{/board/boardDetail(boardSq=${board.boardSq})}" th:text="${board.title}">게시글 제목</a>
-            </td>
-            <td th:text="${board.username}">홍길동</td>
-            <td th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}">2025-04-22</td>
-        </tr>
-        </tbody>
-    </table>
-
-    <!--<div th:if="${posts.empty}" class="text-center text-muted">게시글이 없습니다.</div>-->
+        <!-- 포스트 카드 목록 -->
+        <th:block th:each="board : ${boards}">
+            <div class="post-card">
+                <div class="post-card-thumb-placeholder" th:if="${board.thumbnailUrl == null}">📄</div>
+                <img class="post-card-thumb" th:if="${board.thumbnailUrl != null}" th:src="${board.thumbnailUrl}" alt="">
+                <div class="post-card-body">
+                    <div class="post-card-cat" th:text="${board.categoryName ?: '미분류'}"></div>
+                    <a class="post-card-title" th:href="@{/board/boardDetail(boardSq=${board.boardSq})}">
+                        <span th:if="${board.noticeYn == 'Y'}" class="badge-notice">공지</span>
+                        <span th:text="${board.title}"></span>
+                    </a>
+                    <div class="post-card-summary" th:text="${board.summary}"></div>
+                    <div class="post-card-meta">
+                        <span th:text="${board.username}"></span>
+                        <span th:text="${#temporals.format(board.createDate,'yyyy.MM.dd')}"></span>
+                        <span>👁 <span th:text="${board.viewCount}"></span></span>
+                    </div>
+                </div>
+            </div>
+        </th:block>
+        <div th:if="${#lists.isEmpty(boards)}" style="text-align:center;padding:80px;color:#aaa;background:#fff;border-radius:10px;">아직 포스트가 없습니다.</div>
+    </main>
+    <aside th:replace="~{fragments/layout :: sidebar}"></aside>
 </div>
 </body>
 </html>

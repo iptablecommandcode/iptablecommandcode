@@ -1,38 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
-<!--
-    ====================================================
-    DATE                  AUTHOR              NOTE
-    ----------------------------------------------------
-    2025-04-28            iptab               최초 생성
-    2025-12-07            iptab               버그 수정
-      - findByUsername resultType → resultMap 변경
-        (snake_case 컬럼 camelCase 매핑 누락 방지)
-      - findByUserAccount resultType → resultMap 변경
-    ====================================================
--->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="me.synology.freash97.sign.mapper.SignMapper">
 
     <resultMap id="signResultMap" type="me.synology.freash97.sign.domain.SignDTO">
-        <id property="userId" column="user_id"/>
-        <result property="username" column="username"/>
-        <result property="password" column="password"/>
-        <result property="email" column="email"/>
-        <result property="admin" column="admin"/>
+        <id     property="userId"     column="user_id"/>
+        <result property="username"   column="username"/>
+        <result property="password"   column="password"/>
+        <result property="email"      column="email"/>
+        <result property="admin"      column="admin"/>
         <result property="createUser" column="create_user"/>
         <result property="createDate" column="create_date"/>
         <result property="updateUser" column="update_user"/>
         <result property="updateDate" column="update_date"/>
     </resultMap>
 
-    <!-- [수정] resultType → resultMap (snake_case 매핑 보장) -->
     <select id="findByUsername" parameterType="string" resultMap="signResultMap">
-        SELECT *
-        FROM USERS
-        WHERE username = #{username}
+        SELECT * FROM USERS WHERE username = #{username}
+    </select>
+
+    <select id="findByUserAccount" parameterType="me.synology.freash97.sign.domain.SignDTO" resultMap="signResultMap">
+        SELECT * FROM USERS WHERE username = #{username} AND password = #{password}
     </select>
 
     <insert id="save" parameterType="me.synology.freash97.sign.domain.SignDTO">
@@ -40,12 +27,26 @@
         VALUES (#{username}, #{password}, #{email}, 'N', #{username}, NOW())
     </insert>
 
-    <!-- [수정] resultType → resultMap (snake_case 매핑 보장) -->
-    <select id="findByUserAccount" parameterType="me.synology.freash97.sign.domain.SignDTO" resultMap="signResultMap">
-        SELECT *
-        FROM USERS
-        WHERE username = #{username}
-        AND password = #{password}
+    <select id="checkUsername" parameterType="string" resultType="int">
+        SELECT COUNT(*) FROM USERS WHERE username = #{username}
     </select>
+
+    <select id="findAll" resultMap="signResultMap">
+        SELECT * FROM USERS ORDER BY user_id ASC
+    </select>
+
+    <update id="updateAdmin">
+        UPDATE USERS SET admin = #{adminYn}, update_date = NOW() WHERE user_id = #{userId}
+    </update>
+
+    <!-- 관리자용: 전체 회원 수 -->
+    <select id="countAll" resultType="int">
+        SELECT COUNT(*) FROM USERS
+    </select>
+
+    <!-- 관리자용: 회원 삭제 -->
+    <delete id="deleteUser" parameterType="int">
+        DELETE FROM USERS WHERE user_id = #{userId}
+    </delete>
 
 </mapper>

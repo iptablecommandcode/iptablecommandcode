@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- 관리자 공통 스타일 fragment (body 안에서 사용) -->
+<th:block th:fragment="adminStyles">
+<style>
+    .adm-wrap{display:flex;min-height:100vh;background:#f4f4f8;}
+    .adm-nav{background:#1a1a2e;width:230px;flex-shrink:0;padding:20px 0;position:sticky;top:0;height:100vh;overflow-y:auto;}
+    .adm-nav-brand{color:#fff;font-weight:700;font-size:1rem;padding:0 20px 20px;border-bottom:1px solid #2d2d4e;display:flex;align-items:center;gap:8px;}
+    .adm-nav-brand .logo{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:linear-gradient(135deg,#0d6efd,#0a58ca);border-radius:8px;font-size:.8rem;color:#fff;font-weight:800;}
+    .adm-nav a{display:block;padding:11px 20px;color:#8a8aaa;text-decoration:none;font-size:.88rem;transition:all .15s;}
+    .adm-nav a:hover{color:#fff;background:#2d2d4e;}
+    .adm-nav a.on{color:#fff;background:#2d2d4e;border-left:3px solid #0d6efd;padding-left:17px;}
+    .adm-nav .nav-section{font-size:.7rem;color:#555;text-transform:uppercase;letter-spacing:.1em;padding:16px 20px 6px;font-weight:600;}
+    .adm-nav .nav-bottom{border-top:1px solid #2d2d4e;margin-top:auto;padding-top:10px;}
+    .adm-nav .nav-bottom a{color:#666;font-size:.82rem;}
+
+    .adm-main{flex:1;padding:32px 36px;min-width:0;}
+    .adm-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
+    .adm-header h4{font-weight:700;margin:0;font-size:1.15rem;color:#1a1a2e;}
+
+    .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:28px;}
+    .stat-box{background:#fff;border-radius:12px;padding:22px 24px;box-shadow:0 1px 6px rgba(0,0,0,.07);transition:transform .15s;}
+    .stat-box:hover{transform:translateY(-2px);}
+    .stat-label{font-size:.78rem;color:#999;margin-bottom:6px;font-weight:500;}
+    .stat-value{font-size:2rem;font-weight:800;color:#1a1a2e;}
+    .stat-value.primary{color:#0d6efd;}
+
+    .adm-table{width:100%;border-collapse:collapse;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06);}
+    .adm-table th{background:#1a1a2e;color:#fff;padding:11px 14px;font-size:.82rem;font-weight:500;text-align:left;}
+    .adm-table td{padding:10px 14px;font-size:.85rem;border-bottom:1px solid #f0f0f0;vertical-align:middle;}
+    .adm-table tr:last-child td{border-bottom:none;}
+    .adm-table tr:hover td{background:#fafafa;}
+
+    .badge-on{background:#e8f5e9;color:#2e7d32;border-radius:4px;padding:2px 8px;font-size:.75rem;font-weight:500;}
+    .badge-off{background:#fce4ec;color:#c62828;border-radius:4px;padding:2px 8px;font-size:.75rem;font-weight:500;}
+    .badge-admin{background:#e3f2fd;color:#1565c0;border-radius:4px;padding:2px 8px;font-size:.75rem;font-weight:500;}
+    .badge-user{background:#f0f0f0;color:#888;border-radius:4px;padding:2px 8px;font-size:.75rem;font-weight:500;}
+    .badge-cat{background:#f0f0f0;border-radius:4px;padding:2px 7px;font-size:.75rem;}
+
+    .add-box{background:#fff;border-radius:10px;padding:20px;box-shadow:0 1px 4px rgba(0,0,0,.06);margin-bottom:20px;}
+    .add-box .add-title{font-size:.88rem;font-weight:600;margin-bottom:12px;color:#333;}
+
+    .btn-primary-sm{background:#0d6efd;color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:.88rem;cursor:pointer;transition:background .15s;}
+    .btn-primary-sm:hover{background:#0a58ca;}
+    .btn-save{background:#1a1a2e;color:#fff;border:none;border-radius:6px;padding:4px 12px;font-size:.78rem;cursor:pointer;}
+    .btn-save:hover{background:#2d2d4e;}
+    .btn-del{background:#ff4757;color:#fff;border:none;border-radius:6px;padding:3px 10px;font-size:.78rem;cursor:pointer;}
+    .btn-del:hover{background:#e8384f;}
+    .btn-toggle{border:none;border-radius:6px;padding:3px 10px;font-size:.78rem;cursor:pointer;transition:background .15s;}
+    .btn-toggle-on{background:#1a1a2e;color:#fff;}
+    .btn-toggle-off{background:#aaa;color:#fff;}
+    .btn-toggle:hover{opacity:.85;}
+
+    .tag-item{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid #eee;border-radius:20px;padding:6px 14px;margin:4px;font-size:.88rem;box-shadow:0 1px 3px rgba(0,0,0,.05);}
+    .tag-del{background:none;border:none;color:#ccc;cursor:pointer;font-size:.9rem;}
+    .tag-del:hover{color:#ff4757;}
+
+    .domain-item{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid #f0f0f0;}
+    .domain-item:last-child{border-bottom:none;}
+    .list-box{background:#fff;border-radius:10px;box-shadow:0 1px 4px rgba(0,0,0,.06);overflow:hidden;}
+
+    .empty-state{text-align:center;padding:60px;color:#aaa;font-size:.9rem;}
+</style>
+</th:block>
+
+<!-- 관리자 사이드바 fragment -->
+<nav th:fragment="adminNav(current)" class="adm-nav">
+    <div class="adm-nav-brand">
+        <span class="logo">iT</span>
+        <span>관리자</span>
+    </div>
+    <div class="nav-section">콘텐츠</div>
+    <a th:href="@{/admin/dashboard}"     th:classappend="${current == 'dashboard'} ? 'on'">대시보드</a>
+    <a th:href="@{/admin/boards}"        th:classappend="${current == 'boards'} ? 'on'">게시글 관리</a>
+    <a th:href="@{/admin/comments}"      th:classappend="${current == 'comments'} ? 'on'">댓글 관리</a>
+    <div class="nav-section">분류</div>
+    <a th:href="@{/admin/categories}"    th:classappend="${current == 'categories'} ? 'on'">카테고리</a>
+    <a th:href="@{/admin/tags}"          th:classappend="${current == 'tags'} ? 'on'">태그</a>
+    <div class="nav-section">회원</div>
+    <a th:href="@{/admin/users}"         th:classappend="${current == 'users'} ? 'on'">회원 관리</a>
+    <a th:href="@{/admin/email-domains}" th:classappend="${current == 'emailDomains'} ? 'on'">이메일 도메인</a>
+    <div class="nav-bottom">
+        <a th:href="@{/board/boardList}">사이트로 돌아가기</a>
+        <a th:href="@{/sign/signOut}">로그아웃</a>
+    </div>
+</nav>
+</html>

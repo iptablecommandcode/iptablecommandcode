@@ -6,22 +6,23 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.synology.freash97.sign.domain.SignDTO;
 import me.synology.freash97.sign.service.SignService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /**
  * packageName   : me.synology.freash97.sign.controller
  * fileName      : signController
  * author        : iptable
  * date          : 2025-04-22
- * time          : 오후 11:49
- * description   : 계정 관련
  * ====================================================
  * DATE                  AUTHOR              NOTE
  * ----------------------------------------------------
- * 2025-04-22               iptab             최초 생성
+ * 2025-04-22            iptab               최초 생성
+ * 2025-12-07            iptab               checkUsername API 추가 (아이디 중복 체크)
  */
-
 @Slf4j
 @Controller
 @RequestMapping("sign")
@@ -30,18 +31,14 @@ public class signController {
 
     private final SignService signService;
 
-    //로그인 페이지 실행
     @GetMapping("/signIn")
     public String signIn() {
-        return "sign/signIn";  // signIn.html
+        return "sign/signIn";
     }
 
-    //로그인 처리 이후 메인 index 페이지로 이동
     @PostMapping("/signIn.do")
     public String signIn(@ModelAttribute SignDTO signDTO, HttpServletRequest request) throws Exception {
-
         SignDTO resultSignDTO = signService.findByUserAccount(signDTO);
-
         if (resultSignDTO != null) {
             HttpSession session = request.getSession();
             session.setAttribute("loginUser", resultSignDTO);
@@ -52,21 +49,17 @@ public class signController {
         }
     }
 
-    //회원 가입 페이지
     @GetMapping("/signUp")
     public String signUp() {
         return "sign/signUp";
     }
 
-    //계정 생성
     @PostMapping("/register")
     public String register(@ModelAttribute SignDTO signDTO) throws Exception {
         log.debug("SignUp Controller Start !!!");
-
         signService.signUp(signDTO);
-
         log.info("SignUp Controller End !!!");
-        return "redirect:/sign/signIn";  // register.html
+        return "redirect:/sign/signIn";
     }
 
     @GetMapping("/signOut")
@@ -74,4 +67,15 @@ public class signController {
         session.invalidate();
         return "redirect:/index";
     }
+
+    // 아이디 중복 체크 API (AJAX 호출용)
+    // 사용 가능: { "available": true }
+    // 중복:     { "available": false }
+    @GetMapping("/checkUsername")
+    @ResponseBody
+    public ResponseEntity<Map<String, Boolean>> checkUsername(@RequestParam String username) {
+        boolean available = signService.checkUsername(username);
+        return ResponseEntity.ok(Map.of("available", available));
+    }
+
 }

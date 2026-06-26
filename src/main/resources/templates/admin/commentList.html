@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('댓글 관리')}"></head>
+<body>
+<th:block th:replace="~{fragments/adminLayout :: adminStyles}"></th:block>
+<div class="adm-wrap">
+    <nav th:replace="~{fragments/adminLayout :: adminNav('comments')}"></nav>
+    <main class="adm-main">
+        <div class="adm-header"><h4>댓글 관리</h4></div>
+        <table class="adm-table">
+            <thead><tr><th>번호</th><th>게시글</th><th>작성자</th><th>내용</th><th>유형</th><th>작성일</th><th>관리</th></tr></thead>
+            <tbody>
+                <tr th:each="c : ${comments}">
+                    <td th:text="${c.commentSq}"></td>
+                    <td>
+                        <a th:href="@{/board/boardDetail(boardSq=${c.boardSq})}"
+                           th:text="'#' + ${c.boardSq}"
+                           style="color:#0d6efd;text-decoration:none;font-size:.82rem;"></a>
+                    </td>
+                    <td th:text="${c.username}"></td>
+                    <td style="max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"
+                        th:text="${c.content}"></td>
+                    <td>
+                        <span th:if="${c.parentCommentSq == null}" class="badge-on">댓글</span>
+                        <span th:if="${c.parentCommentSq != null}" class="badge-user">대댓글</span>
+                    </td>
+                    <td th:text="${#temporals.format(c.createDate,'yyyy-MM-dd HH:mm')}"></td>
+                    <td>
+                        <button class="btn-del" th:onclick="|deleteComment(${c.commentSq})|">삭제</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div th:if="${#lists.isEmpty(comments)}" class="empty-state">댓글이 없습니다.</div>
+    </main>
+</div>
+<script>
+function deleteComment(commentSq) {
+    if (!confirm('이 댓글을 삭제하시겠습니까?')) return;
+    fetch('/admin/comments/'+commentSq+'/delete', {method:'POST'})
+        .then(function(){location.reload();});
+}
+</script>
+</body>
+</html>

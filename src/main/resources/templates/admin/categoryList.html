@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('카테고리 관리')}"></head>
+<body>
+<th:block th:replace="~{fragments/adminLayout :: adminStyles}"></th:block>
+<div class="adm-wrap">
+    <nav th:replace="~{fragments/adminLayout :: adminNav('categories')}"></nav>
+    <main class="adm-main">
+        <div class="adm-header"><h4>카테고리 관리</h4></div>
+        <div class="add-box">
+            <div class="add-title">카테고리 추가</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                <input id="newCatName" type="text" class="form-control" placeholder="카테고리명" style="max-width:180px;">
+                <input id="newCatDesc" type="text" class="form-control" placeholder="설명" style="max-width:220px;">
+                <input id="newCatOrder" type="number" class="form-control" placeholder="순서" style="max-width:80px;" value="0">
+                <button class="btn-primary-sm" onclick="addCategory()">추가</button>
+            </div>
+        </div>
+        <table class="adm-table">
+            <thead><tr><th>번호</th><th>카테고리명</th><th>설명</th><th>순서</th><th>사용</th><th>관리</th></tr></thead>
+            <tbody>
+                <tr th:each="c : ${categories}">
+                    <td th:text="${c.categorySq}"></td>
+                    <td><input type="text" th:value="${c.categoryName}" th:id="'name_'+${c.categorySq}" class="form-control form-control-sm" style="max-width:150px;"></td>
+                    <td><input type="text" th:value="${c.description}" th:id="'desc_'+${c.categorySq}" class="form-control form-control-sm" style="max-width:200px;"></td>
+                    <td><input type="number" th:value="${c.sortOrder}" th:id="'ord_'+${c.categorySq}" class="form-control form-control-sm" style="max-width:70px;"></td>
+                    <td>
+                        <select th:id="'use_'+${c.categorySq}" class="form-select form-select-sm" style="max-width:80px;">
+                            <option value="Y" th:selected="${c.useYn=='Y'}">Y</option>
+                            <option value="N" th:selected="${c.useYn=='N'}">N</option>
+                        </select>
+                    </td>
+                    <td style="white-space:nowrap;">
+                        <button class="btn-save" th:onclick="|updateCat(${c.categorySq})|">저장</button>
+                        <button class="btn-del" th:onclick="|deleteCat(${c.categorySq})|">삭제</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</div>
+<script>
+function addCategory() {
+    var data = { categoryName: document.getElementById('newCatName').value,
+                 description:  document.getElementById('newCatDesc').value,
+                 sortOrder:    parseInt(document.getElementById('newCatOrder').value)||0 };
+    fetch('/admin/categories/save', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)})
+        .then(function(){location.reload();});
+}
+function updateCat(sq) {
+    var data = { categorySq: sq,
+                 categoryName: document.getElementById('name_'+sq).value,
+                 description:  document.getElementById('desc_'+sq).value,
+                 sortOrder:    parseInt(document.getElementById('ord_'+sq).value)||0,
+                 useYn:        document.getElementById('use_'+sq).value };
+    fetch('/admin/categories/update', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)})
+        .then(function(){alert('저장 완료');});
+}
+function deleteCat(sq) {
+    if (!confirm('삭제할까요?')) return;
+    fetch('/admin/categories/'+sq+'/delete',{method:'POST'}).then(function(){location.reload();});
+}
+</script>
+</body>
+</html>

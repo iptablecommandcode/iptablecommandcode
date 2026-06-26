@@ -2,26 +2,18 @@ package me.synology.freash97.sign.mapper;
 
 import me.synology.freash97.sign.domain.SignDTO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
-/**
- * packageName   : me.synology.freash97.sign.mapper
- * fileName      : SignMapper
- * author        : iptab
- * date          : 2025-04-28
- * time          : 오후 10:55
- * description   :
- * ====================================================
- * DATE                  AUTHOR              NOTE
- * ----------------------------------------------------
- * 2025-04-28               iptab             최초 생성
- */
+import java.util.List;
+
 @Mapper
 public interface SignMapper {
-
     SignDTO findByUsername(String username);
-
-    Integer save(SignDTO signDTO);
-
     SignDTO findByUserAccount(SignDTO signDTO);
-
+    void save(SignDTO signDTO);
+    int checkUsername(String username);
+    List<SignDTO> findAll();
+    void updateAdmin(@Param("userId") int userId, @Param("adminYn") String adminYn);
+    int countAll();
+    void deleteUser(int userId);
 }

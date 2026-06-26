@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('태그 관리')}"></head>
+<body>
+<th:block th:replace="~{fragments/adminLayout :: adminStyles}"></th:block>
+<div class="adm-wrap">
+    <nav th:replace="~{fragments/adminLayout :: adminNav('tags')}"></nav>
+    <main class="adm-main">
+        <div class="adm-header"><h4>태그 관리</h4></div>
+        <div class="add-box">
+            <div class="add-title">태그 추가</div>
+            <div style="display:flex;gap:10px;">
+                <input id="newTag" type="text" class="form-control" placeholder="태그명" style="max-width:200px;">
+                <button class="btn-primary-sm" onclick="addTag()">추가</button>
+            </div>
+        </div>
+        <div class="list-box" style="padding:20px;">
+            <div style="font-size:.82rem;color:#aaa;margin-bottom:12px;">등록된 태그 <span th:text="${#lists.size(tags)}"></span>개</div>
+            <div>
+                <span th:each="tag : ${tags}" class="tag-item">
+                    <span th:text="'#' + ${tag.tagName}"></span>
+                    <button class="tag-del" th:onclick="|deleteTag(${tag.tagSq})|">&#10005;</button>
+                </span>
+            </div>
+            <div th:if="${#lists.isEmpty(tags)}" class="empty-state">등록된 태그가 없습니다.</div>
+        </div>
+    </main>
+</div>
+<script>
+function addTag() {
+    var name = document.getElementById('newTag').value.trim();
+    if (!name) return;
+    fetch('/admin/tags/save', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({tagName:name})})
+        .then(function(){location.reload();});
+}
+function deleteTag(sq) {
+    if (!confirm('태그를 삭제할까요?')) return;
+    fetch('/admin/tags/'+sq+'/delete',{method:'POST'}).then(function(){location.reload();});
+}
+</script>
+</body>
+</html>

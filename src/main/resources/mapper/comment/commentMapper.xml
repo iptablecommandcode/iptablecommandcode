@@ -1,33 +1,51 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="me.synology.freash97.comment.mapper.CommentMapper">
 
     <resultMap id="commentResultMap" type="me.synology.freash97.comment.domain.CommentDTO">
-        <id property="commentSq" column="comment_sq" />
-        <result property="boardSq" column="board_sq" />
-        <result property="userId" column="user_id" />
-        <result property="username" column="username" />
-        <result property="content" column="content" />
-        <result property="createUser" column="create_user" />
-        <result property="createDate" column="create_date" />
-        <result property="updateUser" column="update_user" />
-        <result property="updateDate" column="update_date" />
+        <id     property="commentSq"       column="comment_sq"/>
+        <result property="boardSq"         column="board_sq"/>
+        <result property="userId"          column="user_id"/>
+        <result property="parentCommentSq" column="parent_comment_sq"/>
+        <result property="username"        column="username"/>
+        <result property="content"         column="content"/>
+        <result property="createUser"      column="create_user"/>
+        <result property="createDate"      column="create_date"/>
+        <result property="updateUser"      column="update_user"/>
+        <result property="updateDate"      column="update_date"/>
     </resultMap>
 
-    <select id="findByBoardSq" parameterType="Integer" resultMap="commentResultMap">
-        SELECT * FROM COMMENTS WHERE board_sq = #{boardSq} ORDER BY comment_sq ASC
+    <!-- 최상위 댓글만 조회 (parent_comment_sq IS NULL) -->
+    <select id="findByBoardSq" parameterType="int" resultMap="commentResultMap">
+        SELECT * FROM COMMENTS
+        WHERE board_sq = #{boardSq} AND parent_comment_sq IS NULL
+        ORDER BY comment_sq ASC
+    </select>
+
+    <!-- 대댓글 조회 -->
+    <select id="findReplies" parameterType="int" resultMap="commentResultMap">
+        SELECT * FROM COMMENTS
+        WHERE parent_comment_sq = #{parentCommentSq}
+        ORDER BY comment_sq ASC
     </select>
 
     <insert id="save" parameterType="me.synology.freash97.comment.domain.CommentDTO">
-        INSERT INTO COMMENTS (board_sq, user_id, username, content, create_user, create_date)
-        VALUES (#{boardSq}, #{userId}, #{username}, #{content}, #{createUser}, NOW())
+        INSERT INTO COMMENTS (board_sq, user_id, parent_comment_sq, username, content, create_user, create_date)
+        VALUES (#{boardSq}, #{userId}, #{parentCommentSq}, #{username}, #{content}, #{createUser}, NOW())
     </insert>
 
-    <delete id="delete" parameterType="int">
+    <delete id="delete" parameterType="long">
         DELETE FROM COMMENTS WHERE comment_sq = #{commentSq}
     </delete>
+
+    <!-- 관리자용: 전체 댓글 조회 -->
+    <select id="findAllForAdmin" resultMap="commentResultMap">
+        SELECT * FROM COMMENTS ORDER BY comment_sq DESC
+    </select>
+
+    <!-- 관리자용: 전체 댓글 수 -->
+    <select id="countAll" resultType="int">
+        SELECT COUNT(*) FROM COMMENTS
+    </select>
 
 </mapper>

@@ -1,50 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="me.synology.freash97.board.mapper.BoardMapper">
 
     <resultMap id="boardResultMap" type="me.synology.freash97.board.domain.BoardDTO">
-        <id property="boardSq" column="board_sq"/>
-        <result property="userId" column="user_id"/>
-        <result property="username" column="username"/>
-        <result property="title" column="title"/>
-        <result property="content" column="content"/>
-        <result property="createUser" column="create_user"/>
-        <result property="createDate" column="create_date"/>
-        <result property="updateUser" column="update_user"/>
-        <result property="updateDate" column="update_date"/>
+        <id     property="boardSq"      column="board_sq"/>
+        <result property="userId"       column="user_id"/>
+        <result property="categorySq"   column="category_sq"/>
+        <result property="categoryName" column="category_name"/>
+        <result property="username"     column="username"/>
+        <result property="title"        column="title"/>
+        <result property="content"      column="content"/>
+        <result property="summary"      column="summary"/>
+        <result property="thumbnailUrl" column="thumbnail_url"/>
+        <result property="viewCount"    column="view_count"/>
+        <result property="noticeYn"     column="notice_yn"/>
+        <result property="useYn"        column="use_yn"/>
+        <result property="createUser"   column="create_user"/>
+        <result property="createDate"   column="create_date"/>
+        <result property="updateUser"   column="update_user"/>
+        <result property="updateDate"   column="update_date"/>
     </resultMap>
 
     <select id="findAll" resultMap="boardResultMap">
-        SELECT *
-        FROM BOARD
-        ORDER BY board_sq DESC
+        SELECT b.*, c.category_name
+        FROM BOARD b LEFT JOIN CATEGORY c ON b.category_sq = c.category_sq
+        WHERE b.use_yn = 'Y'
+        ORDER BY b.notice_yn DESC, b.board_sq DESC
     </select>
 
-    <select id="findById" parameterType="Integer" resultMap="boardResultMap">
-        SELECT *
-        FROM BOARD
-        WHERE board_sq = #{boardSq}
+    <select id="findByCategory" parameterType="int" resultMap="boardResultMap">
+        SELECT b.*, c.category_name
+        FROM BOARD b LEFT JOIN CATEGORY c ON b.category_sq = c.category_sq
+        WHERE b.use_yn = 'Y' AND b.category_sq = #{categorySq}
+        ORDER BY b.notice_yn DESC, b.board_sq DESC
     </select>
 
-    <insert id="save" parameterType="me.synology.freash97.board.domain.BoardDTO">
-        INSERT INTO BOARD (user_id, username, title, content, create_user, create_date)
-        VALUES (#{userId}, #{username}, #{title}, #{content}, #{createUser}, NOW())
+    <select id="findByTag" parameterType="int" resultMap="boardResultMap">
+        SELECT b.*, c.category_name
+        FROM BOARD b
+        LEFT JOIN CATEGORY c ON b.category_sq = c.category_sq
+        INNER JOIN BOARD_TAG bt ON b.board_sq = bt.board_sq
+        WHERE b.use_yn = 'Y' AND bt.tag_sq = #{tagSq}
+        ORDER BY b.board_sq DESC
+    </select>
+
+    <select id="findById" parameterType="int" resultMap="boardResultMap">
+        SELECT b.*, c.category_name
+        FROM BOARD b LEFT JOIN CATEGORY c ON b.category_sq = c.category_sq
+        WHERE b.board_sq = #{boardSq}
+    </select>
+
+    <update id="increaseViewCount" parameterType="int">
+        UPDATE BOARD SET view_count = view_count + 1 WHERE board_sq = #{boardSq}
+    </update>
+
+    <insert id="save" parameterType="me.synology.freash97.board.domain.BoardDTO" useGeneratedKeys="true" keyProperty="boardSq">
+        INSERT INTO BOARD (user_id, category_sq, username, title, content, summary, thumbnail_url, view_count, notice_yn, use_yn, create_user, create_date)
+        VALUES (#{userId}, #{categorySq}, #{username}, #{title}, #{content}, #{summary}, #{thumbnailUrl}, 0, 'N', 'Y', #{createUser}, NOW())
     </insert>
 
     <update id="update" parameterType="me.synology.freash97.board.domain.BoardDTO">
         UPDATE BOARD
-        SET title       = #{title},
-            content     = #{content},
-            update_user = #{updateUser},
-            update_date = NOW()
+        SET category_sq   = #{categorySq},
+            title         = #{title},
+            content       = #{content},
+            summary       = #{summary},
+            thumbnail_url = #{thumbnailUrl},
+            update_user   = #{updateUser},
+            update_date   = NOW()
         WHERE board_sq = #{boardSq}
     </update>
 
-    <delete id="delete" parameterType="integer">
-        DELETE
-        FROM BOARD
+    <update id="delete" parameterType="int">
+        UPDATE BOARD SET use_yn = 'N', update_date = NOW() WHERE board_sq = #{boardSq}
+    </update>
+
+    <update id="updateNotice" parameterType="me.synology.freash97.board.domain.BoardDTO">
+        UPDATE BOARD SET notice_yn = #{noticeYn}, update_user = #{updateUser}, update_date = NOW()
         WHERE board_sq = #{boardSq}
-    </delete>
+    </update>
+
+    <select id="findAllForAdmin" resultMap="boardResultMap">
+        SELECT b.*, c.category_name
+        FROM BOARD b LEFT JOIN CATEGORY c ON b.category_sq = c.category_sq
+        ORDER BY b.board_sq DESC
+    </select>
+
+    <!-- 관리자용: 전체 게시글 수 -->
+    <select id="countAll" resultType="int">
+        SELECT COUNT(*) FROM BOARD
+    </select>
 
 </mapper>

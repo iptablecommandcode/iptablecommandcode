@@ -1,37 +1,26 @@
 package me.synology.freash97.index.controller;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.RequiredArgsConstructor;
+import me.synology.freash97.board.service.BoardService;
+import me.synology.freash97.category.service.CategoryService;
+import me.synology.freash97.tag.service.TagService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-/**
- * packageName   : me.synology.freash97.index.controller
- * fileName      : indexController
- * author        : iptab
- * date          : 2025-04-23
- * time          : 오후 10:53
- * description   :
- * ====================================================
- * DATE                  AUTHOR              NOTE
- * ----------------------------------------------------
- * 2025-04-23               iptab             최초 생성
- */
-@Slf4j
 @Controller
+@RequiredArgsConstructor
 public class indexController {
 
-    @GetMapping("/")
-    public String main(){
-        log.debug("main Controller Start !!!");
+    private final BoardService    boardService;
+    private final CategoryService categoryService;
+    private final TagService      tagService;
 
+    @GetMapping({"/", "/index"})
+    public String index(Model model) throws Exception {
+        model.addAttribute("recentBoards", boardService.findAll().stream().limit(6).toList());
+        model.addAttribute("categories",   categoryService.findAllActive());
+        model.addAttribute("allTags",      tagService.findAllActive());
         return "index";
     }
-
-    @GetMapping("/index")
-    public String index(){
-        log.debug("index Controller Start !!!");
-
-        return "index";
-    }
-
 }
