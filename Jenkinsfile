@@ -22,7 +22,7 @@ pipeline {
         stage('Git Checkout') {
             steps {
                 echo '▶ GitHub에서 소스 코드를 가져옵니다...'
-                git branch: 'main',
+                git branch: 'develope',
                     url: 'https://github.com/iptablecommandcode/iptablecommandcode.git',
                     credentialsId: 'github-credentials'
             }
