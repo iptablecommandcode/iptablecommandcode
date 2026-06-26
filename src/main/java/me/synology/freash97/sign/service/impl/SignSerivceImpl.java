@@ -36,7 +36,7 @@ public class SignSerivceImpl implements SignService {
 
     @Override
     public boolean checkUsername(String username) {
-        return signMapper.checkUsername(username) > 0;
+        return signMapper.checkUsername(username) == 0;
     }
 
     @Override
