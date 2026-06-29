@@ -6,11 +6,11 @@ spring:
   #   개인 서버 배포 시 : dev
   #   로컬 개발 시      : local
   profiles:
-    active: local
+    active: ${SPRING_PROFILES_ACTIVE:local}
   config:
     # [수정 2] optional: 제거 → Config Server 연결 실패 시 명확한 오류 출력
     #   optional: 이 있으면 연결 실패해도 조용히 넘어가서 DataSource 오류가 원인 파악이 어려움
-    import: "configserver:http://127.0.0.1:8888"
+    import: "${SPRING_CONFIG_IMPORT:configserver:http://127.0.0.1:8888}"
 
 management:
   endpoints:
