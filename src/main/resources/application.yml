@@ -1,9 +1,16 @@
 spring:
   application:
     name: iptablecommandcode-service
+  # [수정 1] profiles.active 추가
+  #   Config Server가 iptablecommandcode-service-{profile}.yml 파일을 찾음
+  #   개인 서버 배포 시 : dev
+  #   로컬 개발 시      : local
+  profiles:
+    active: local
   config:
-    import: "optional:configserver:http://192.168.117.210:8888"
-#    로컬 개발시 import: "optional:configserver:http://127.0.0.1:8888" 처리 요망
+    # [수정 2] optional: 제거 → Config Server 연결 실패 시 명확한 오류 출력
+    #   optional: 이 있으면 연결 실패해도 조용히 넘어가서 DataSource 오류가 원인 파악이 어려움
+    import: "configserver:http://127.0.0.1:8888"
 
 management:
   endpoints:
