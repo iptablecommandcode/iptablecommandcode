@@ -100,6 +100,7 @@
                 <a class="nav-link" th:href="@{/sign/signUp}">회원가입</a>
             </th:block>
             <th:block th:if="${session.loginUser != null}">
+                <a class="nav-link" th:href="@{/board/myCategories}">내 메뉴</a>
                 <a class="btn-write" th:href="@{/board/boardWrite}">✏ 글쓰기</a>
                 <th:block th:if="${session.loginUser.admin == 'Y'}">
                     <a class="nav-link" th:href="@{/admin/dashboard}">⚙ 관리</a>
@@ -121,7 +122,11 @@
         <a class="side-cat-item"
            th:each="cat : ${categories}"
            th:href="@{/board/boardList(categorySq=${cat.categorySq})}">
-            <span th:text="${cat.categoryName}">카테고리</span>
+            <span>
+                <span th:text="${cat.categoryName}">카테고리</span>
+                <small th:if="${cat.commonYn == 'Y'}" style="color:#aaa;margin-left:4px;">공통</small>
+                <small th:if="${cat.commonYn != 'Y'}" style="color:#aaa;margin-left:4px;">개인</small>
+            </span>
         </a>
     </div>
     <!-- 태그 클라우드 -->

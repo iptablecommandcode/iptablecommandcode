@@ -10,10 +10,10 @@
             <a th:href="@{/board/boardList}"
                th:classappend="${categorySq == null and tagSq == null} ? 'active' : ''"
                style="padding:5px 14px;border-radius:20px;font-size:.85rem;text-decoration:none;"
-               th:style="${categorySq == null and tagSq == null} ? 'background:#0d6efd;color:#fff;' : 'background:#f0f0f0;color:#555;'">전체</a>
+               th:style="${categorySq == null and tagSq == null} ? 'background:#f0f0f0;color:#555;padding:5px 14px;border-radius:20px;font-size:.85rem;text-decoration:none;' : 'background:#f0f0f0;color:#555;'">전체</a>
             <th:block th:each="cat : ${categories}">
                 <a th:href="@{/board/boardList(categorySq=${cat.categorySq})}"
-                   th:text="${cat.categoryName}"
+                   th:text="${cat.categoryName + (cat.commonYn == 'Y' ? ' · 공통' : ' · 개인')}"
                    th:style="${categorySq != null and categorySq == cat.categorySq} ? 'background:#0d6efd;color:#fff;padding:5px 14px;border-radius:20px;font-size:.85rem;text-decoration:none;' : 'background:#f0f0f0;color:#555;padding:5px 14px;border-radius:20px;font-size:.85rem;text-decoration:none;'"></a>
             </th:block>
         </div>

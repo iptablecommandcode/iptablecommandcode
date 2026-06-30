@@ -7,6 +7,8 @@
         <result property="userId"       column="user_id"/>
         <result property="categorySq"   column="category_sq"/>
         <result property="categoryName" column="category_name"/>
+        <result property="categoryUserId" column="category_user_id"/>
+        <result property="categoryCommonYn" column="category_common_yn"/>
         <result property="username"     column="username"/>
         <result property="title"        column="title"/>
         <result property="content"      column="content"/>
@@ -21,33 +23,102 @@
         <result property="updateDate"   column="update_date"/>
     </resultMap>
 
+    <sql id="boardSelectColumns">
+        b.*,
+        c.category_name,
+        c.user_id AS category_user_id,
+        c.common_yn AS category_common_yn
+    </sql>
+
+    <sql id="visibleCategoryCondition">
+        (
+            #{adminYn} = 'Y'
+            OR b.category_sq IS NULL
+            OR (
+                c.use_yn = 'Y'
+                AND (
+                    c.common_yn = 'Y'
+                    OR c.user_id = #{userId}
+                )
+            )
+        )
+    </sql>
+
     <select id="findAll" resultMap="boardResultMap">
-        SELECT b.*, c.category_name
+        SELECT <include refid="boardSelectColumns"/>
         FROM BOARD b LEFT JOIN CATEGORY c ON b.category_sq = c.category_sq
         WHERE b.use_yn = 'Y'
+          AND (
+              b.category_sq IS NULL
+              OR (c.use_yn = 'Y' AND c.common_yn = 'Y')
+          )
+        ORDER BY b.notice_yn DESC, b.board_sq DESC
+    </select>
+
+    <select id="findVisible" resultMap="boardResultMap">
+        SELECT <include refid="boardSelectColumns"/>
+        FROM BOARD b LEFT JOIN CATEGORY c ON b.category_sq = c.category_sq
+        WHERE b.use_yn = 'Y'
+          AND <include refid="visibleCategoryCondition"/>
         ORDER BY b.notice_yn DESC, b.board_sq DESC
     </select>
 
     <select id="findByCategory" parameterType="int" resultMap="boardResultMap">
-        SELECT b.*, c.category_name
+        SELECT <include refid="boardSelectColumns"/>
         FROM BOARD b LEFT JOIN CATEGORY c ON b.category_sq = c.category_sq
-        WHERE b.use_yn = 'Y' AND b.category_sq = #{categorySq}
+        WHERE b.use_yn = 'Y'
+          AND b.category_sq = #{categorySq}
+          AND c.use_yn = 'Y'
+          AND c.common_yn = 'Y'
+        ORDER BY b.notice_yn DESC, b.board_sq DESC
+    </select>
+
+    <select id="findVisibleByCategory" resultMap="boardResultMap">
+        SELECT <include refid="boardSelectColumns"/>
+        FROM BOARD b LEFT JOIN CATEGORY c ON b.category_sq = c.category_sq
+        WHERE b.use_yn = 'Y'
+          AND b.category_sq = #{categorySq}
+          AND <include refid="visibleCategoryCondition"/>
         ORDER BY b.notice_yn DESC, b.board_sq DESC
     </select>
 
     <select id="findByTag" parameterType="int" resultMap="boardResultMap">
-        SELECT b.*, c.category_name
+        SELECT <include refid="boardSelectColumns"/>
         FROM BOARD b
         LEFT JOIN CATEGORY c ON b.category_sq = c.category_sq
         INNER JOIN BOARD_TAG bt ON b.board_sq = bt.board_sq
-        WHERE b.use_yn = 'Y' AND bt.tag_sq = #{tagSq}
+        WHERE b.use_yn = 'Y'
+          AND bt.tag_sq = #{tagSq}
+          AND (
+              b.category_sq IS NULL
+              OR (c.use_yn = 'Y' AND c.common_yn = 'Y')
+          )
+        ORDER BY b.board_sq DESC
+    </select>
+
+    <select id="findVisibleByTag" resultMap="boardResultMap">
+        SELECT <include refid="boardSelectColumns"/>
+        FROM BOARD b
+        LEFT JOIN CATEGORY c ON b.category_sq = c.category_sq
+        INNER JOIN BOARD_TAG bt ON b.board_sq = bt.board_sq
+        WHERE b.use_yn = 'Y'
+          AND bt.tag_sq = #{tagSq}
+          AND <include refid="visibleCategoryCondition"/>
         ORDER BY b.board_sq DESC
     </select>
 
     <select id="findById" parameterType="int" resultMap="boardResultMap">
-        SELECT b.*, c.category_name
+        SELECT <include refid="boardSelectColumns"/>
         FROM BOARD b LEFT JOIN CATEGORY c ON b.category_sq = c.category_sq
         WHERE b.board_sq = #{boardSq}
+    </select>
+
+    <select id="findVisibleById" resultMap="boardResultMap">
+        SELECT <include refid="boardSelectColumns"/>
+        FROM BOARD b LEFT JOIN CATEGORY c ON b.category_sq = c.category_sq
+        WHERE b.board_sq = #{boardSq}
+          AND b.use_yn = 'Y'
+          AND <include refid="visibleCategoryCondition"/>
     </select>
 
     <update id="increaseViewCount" parameterType="int">
@@ -81,7 +152,7 @@
     </update>
 
     <select id="findAllForAdmin" resultMap="boardResultMap">
-        SELECT b.*, c.category_name
+        SELECT <include refid="boardSelectColumns"/>
         FROM BOARD b LEFT JOIN CATEGORY c ON b.category_sq = c.category_sq
         ORDER BY b.board_sq DESC
     </select>

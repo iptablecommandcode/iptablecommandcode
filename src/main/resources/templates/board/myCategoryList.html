@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('내 메뉴 관리')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: nav}"></nav>
+<div class="blog-wrap">
+    <main class="blog-main">
+        <div class="write-wrap" style="max-width:none;margin:0 0 20px;padding:28px;">
+            <h2 style="font-weight:800;margin-bottom:20px;">내 메뉴 관리</h2>
+            <form th:action="@{/board/categories/save}" method="post" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+                <input type="text" name="categoryName" class="form-control" placeholder="메뉴명" required style="max-width:180px;">
+                <input type="text" name="description" class="form-control" placeholder="설명" style="max-width:240px;">
+                <input type="number" name="sortOrder" class="form-control" placeholder="순서" value="0" style="max-width:90px;">
+                <select name="commonYn" class="form-select" style="max-width:130px;">
+                    <option value="N">내 메뉴</option>
+                    <option value="Y">공통</option>
+                </select>
+                <input type="hidden" name="useYn" value="Y">
+                <button type="submit" style="background:#0d6efd;color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:.88rem;">추가</button>
+            </form>
+        </div>
+
+        <div class="side-section" style="padding:0;overflow:hidden;">
+            <div style="padding:16px 18px;border-bottom:1px solid #f0f0f0;font-weight:700;">내가 만든 메뉴</div>
+            <table style="width:100%;border-collapse:collapse;">
+                <thead>
+                    <tr style="background:#fafafa;color:#777;font-size:.82rem;">
+                        <th style="padding:10px;text-align:left;">메뉴명</th>
+                        <th style="padding:10px;text-align:left;">설명</th>
+                        <th style="padding:10px;text-align:left;">공개</th>
+                        <th style="padding:10px;text-align:left;">순서</th>
+                        <th style="padding:10px;text-align:left;">사용</th>
+                        <th style="padding:10px;text-align:left;">관리</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="c : ${myCategories}" style="border-top:1px solid #f3f3f3;">
+                        <td style="padding:10px;">
+                            <input type="text" th:id="'name_'+${c.categorySq}" th:value="${c.categoryName}" class="form-control form-control-sm">
+                        </td>
+                        <td style="padding:10px;">
+                            <input type="text" th:id="'desc_'+${c.categorySq}" th:value="${c.description}" class="form-control form-control-sm">
+                        </td>
+                        <td style="padding:10px;">
+                            <select th:id="'common_'+${c.categorySq}" class="form-select form-select-sm">
+                                <option value="N" th:selected="${c.commonYn != 'Y'}">내 메뉴</option>
+                                <option value="Y" th:selected="${c.commonYn == 'Y'}">공통</option>
+                            </select>
+                        </td>
+                        <td style="padding:10px;">
+                            <input type="number" th:id="'ord_'+${c.categorySq}" th:value="${c.sortOrder}" class="form-control form-control-sm" style="max-width:80px;">
+                        </td>
+                        <td style="padding:10px;">
+                            <select th:id="'use_'+${c.categorySq}" class="form-select form-select-sm" style="max-width:80px;">
+                                <option value="Y" th:selected="${c.useYn == 'Y'}">Y</option>
+                                <option value="N" th:selected="${c.useYn == 'N'}">N</option>
+                            </select>
+                        </td>
+                        <td style="padding:10px;white-space:nowrap;">
+                            <button type="button" th:onclick="|updateMyCat(${c.categorySq})|" style="background:#1a1a2e;color:#fff;border:none;border-radius:6px;padding:4px 10px;font-size:.78rem;">저장</button>
+                            <button type="button" th:onclick="|deleteMyCat(${c.categorySq})|" style="background:#ff4757;color:#fff;border:none;border-radius:6px;padding:4px 10px;font-size:.78rem;">비활성</button>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(myCategories)}">
+                        <td colspan="6" style="text-align:center;padding:34px;color:#aaa;">아직 만든 메뉴가 없습니다.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="side-section">
+            <div class="side-title">공통 메뉴</div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <a th:each="cat : ${commonCategories}"
+                   th:href="@{/board/boardList(categorySq=${cat.categorySq})}"
+                   th:text="${cat.categoryName}"
+                   style="background:#f3f3f3;color:#555;border-radius:20px;padding:5px 12px;text-decoration:none;font-size:.82rem;"></a>
+            </div>
+        </div>
+    </main>
+    <aside th:replace="~{fragments/layout :: sidebar}"></aside>
+</div>
+<script>
+function postForm(url, data) {
+    return fetch(url, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: new URLSearchParams(data).toString()
+    });
+}
+
+function updateMyCat(sq) {
+    postForm('/board/categories/update', {
+        categorySq: sq,
+        categoryName: document.getElementById('name_' + sq).value,
+        description: document.getElementById('desc_' + sq).value,
+        commonYn: document.getElementById('common_' + sq).value,
+        sortOrder: parseInt(document.getElementById('ord_' + sq).value) || 0,
+        useYn: document.getElementById('use_' + sq).value
+    }).then(function() { location.reload(); });
+}
+
+function deleteMyCat(sq) {
+    if (!confirm('이 메뉴를 비활성화할까요?')) return;
+    postForm('/board/categories/delete', {categorySq: sq})
+        .then(function() { location.reload(); });
+}
+</script>
+</body>
+</html>

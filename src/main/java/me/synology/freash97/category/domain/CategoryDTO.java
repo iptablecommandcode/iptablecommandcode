@@ -18,8 +18,11 @@ import me.synology.freash97.common.entity.CommonDTO;
 @EqualsAndHashCode(callSuper = false)
 public class CategoryDTO extends CommonDTO {
     private Integer categorySq;
+    private Integer userId;
+    private String  ownerUsername;
     private String  categoryName;
     private String  description;
     private Integer sortOrder;
+    private String  commonYn;
     private String  useYn;
 }

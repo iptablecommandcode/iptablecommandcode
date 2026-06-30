@@ -13,16 +13,39 @@
                 <input id="newCatName" type="text" class="form-control" placeholder="카테고리명" style="max-width:180px;">
                 <input id="newCatDesc" type="text" class="form-control" placeholder="설명" style="max-width:220px;">
                 <input id="newCatOrder" type="number" class="form-control" placeholder="순서" style="max-width:80px;" value="0">
+                <select id="newCatCommon" class="form-select" style="max-width:120px;">
+                    <option value="Y">공통</option>
+                    <option value="N">개인</option>
+                </select>
+                <select id="newCatUser" class="form-select" style="max-width:160px;">
+                    <option value="">소유자 없음</option>
+                    <option th:each="u : ${users}" th:value="${u.userId}" th:text="${u.username}"></option>
+                </select>
                 <button class="btn-primary-sm" onclick="addCategory()">추가</button>
             </div>
         </div>
         <table class="adm-table">
-            <thead><tr><th>번호</th><th>카테고리명</th><th>설명</th><th>순서</th><th>사용</th><th>관리</th></tr></thead>
+            <thead><tr><th>번호</th><th>카테고리명</th><th>설명</th><th>공개</th><th>소유자</th><th>순서</th><th>사용</th><th>관리</th></tr></thead>
             <tbody>
                 <tr th:each="c : ${categories}">
                     <td th:text="${c.categorySq}"></td>
                     <td><input type="text" th:value="${c.categoryName}" th:id="'name_'+${c.categorySq}" class="form-control form-control-sm" style="max-width:150px;"></td>
                     <td><input type="text" th:value="${c.description}" th:id="'desc_'+${c.categorySq}" class="form-control form-control-sm" style="max-width:200px;"></td>
+                    <td>
+                        <select th:id="'common_'+${c.categorySq}" class="form-select form-select-sm" style="max-width:90px;">
+                            <option value="Y" th:selected="${c.commonYn=='Y'}">공통</option>
+                            <option value="N" th:selected="${c.commonYn!='Y'}">개인</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select th:id="'user_'+${c.categorySq}" class="form-select form-select-sm" style="max-width:150px;">
+                            <option value="" th:selected="${c.userId == null}">소유자 없음</option>
+                            <option th:each="u : ${users}"
+                                    th:value="${u.userId}"
+                                    th:text="${u.username}"
+                                    th:selected="${c.userId != null and c.userId == u.userId}"></option>
+                        </select>
+                    </td>
                     <td><input type="number" th:value="${c.sortOrder}" th:id="'ord_'+${c.categorySq}" class="form-control form-control-sm" style="max-width:70px;"></td>
                     <td>
                         <select th:id="'use_'+${c.categorySq}" class="form-select form-select-sm" style="max-width:80px;">
@@ -32,7 +55,7 @@
                     </td>
                     <td style="white-space:nowrap;">
                         <button class="btn-save" th:onclick="|updateCat(${c.categorySq})|">저장</button>
-                        <button class="btn-del" th:onclick="|deleteCat(${c.categorySq})|">삭제</button>
+                        <button class="btn-del" th:onclick="|deleteCat(${c.categorySq})|">비활성</button>
                     </td>
                 </tr>
             </tbody>
@@ -41,23 +64,38 @@
 </div>
 <script>
 function addCategory() {
+    var userId = document.getElementById('newCatUser').value;
     var data = { categoryName: document.getElementById('newCatName').value,
                  description:  document.getElementById('newCatDesc').value,
-                 sortOrder:    parseInt(document.getElementById('newCatOrder').value)||0 };
+                 sortOrder:    parseInt(document.getElementById('newCatOrder').value)||0,
+                 commonYn:     document.getElementById('newCatCommon').value,
+                 userId:       userId ? parseInt(userId) : null,
+                 useYn:        'Y' };
+    if (data.commonYn !== 'Y' && data.userId == null) {
+        alert('개인 메뉴는 소유자를 선택하세요.');
+        return;
+    }
     fetch('/admin/categories/save', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)})
         .then(function(){location.reload();});
 }
 function updateCat(sq) {
+    var userId = document.getElementById('user_'+sq).value;
     var data = { categorySq: sq,
                  categoryName: document.getElementById('name_'+sq).value,
                  description:  document.getElementById('desc_'+sq).value,
+                 commonYn:     document.getElementById('common_'+sq).value,
+                 userId:       userId ? parseInt(userId) : null,
                  sortOrder:    parseInt(document.getElementById('ord_'+sq).value)||0,
                  useYn:        document.getElementById('use_'+sq).value };
+    if (data.commonYn !== 'Y' && data.userId == null) {
+        alert('개인 메뉴는 소유자를 선택하세요.');
+        return;
+    }
     fetch('/admin/categories/update', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)})
         .then(function(){alert('저장 완료');});
 }
 function deleteCat(sq) {
-    if (!confirm('삭제할까요?')) return;
+    if (!confirm('비활성화할까요?')) return;
     fetch('/admin/categories/'+sq+'/delete',{method:'POST'}).then(function(){location.reload();});
 }
 </script>

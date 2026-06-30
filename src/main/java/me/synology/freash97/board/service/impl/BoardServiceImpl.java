@@ -24,8 +24,18 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    public List<BoardDTO> findVisible(Integer userId, boolean admin) {
+        return boardMapper.findVisible(userId, admin ? "Y" : "N");
+    }
+
+    @Override
     public List<BoardDTO> findByCategory(int categorySq) {
         return boardMapper.findByCategory(categorySq);
+    }
+
+    @Override
+    public List<BoardDTO> findVisibleByCategory(int categorySq, Integer userId, boolean admin) {
+        return boardMapper.findVisibleByCategory(categorySq, userId, admin ? "Y" : "N");
     }
 
     @Override
@@ -34,8 +44,18 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    public List<BoardDTO> findVisibleByTag(int tagSq, Integer userId, boolean admin) {
+        return boardMapper.findVisibleByTag(tagSq, userId, admin ? "Y" : "N");
+    }
+
+    @Override
     public BoardDTO findById(int boardSq) {
         return boardMapper.findById(boardSq);
+    }
+
+    @Override
+    public BoardDTO findVisibleById(int boardSq, Integer userId, boolean admin) {
+        return boardMapper.findVisibleById(boardSq, userId, admin ? "Y" : "N");
     }
 
     @Override

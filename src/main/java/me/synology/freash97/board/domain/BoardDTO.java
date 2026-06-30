@@ -13,6 +13,8 @@ public class BoardDTO extends CommonDTO {
     private Integer      userId;
     private Integer      categorySq;
     private String       categoryName;
+    private Integer      categoryUserId;
+    private String       categoryCommonYn;
     private String       username;
     private String       title;
     private String       content;
