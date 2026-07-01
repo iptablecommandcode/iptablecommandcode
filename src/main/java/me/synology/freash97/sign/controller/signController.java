@@ -69,8 +69,8 @@ public class signController {
     }
 
     // 아이디 중복 체크 API (AJAX 호출용)
-    // 사용 가능: { "available": true }
-    // 중복:     { "available": false }
+    // 사용 가능: true
+    // 중복:     false
     @GetMapping("/checkUsername")
     @ResponseBody
     public ResponseEntity<Map<String, Boolean>> checkUsername(@RequestParam String username) {
