@@ -28,6 +28,16 @@ public class BoardController {
     private final CategoryService categoryService;
     private final TagService      tagService;
 
+    //url 상수 지정
+    private static final String BOARD_DETAIL_URL = "board/boardDetail";
+    private static final String REDIRECT_BOARD_LIST_URL = "redirect:/board/boardList";
+    private static final String REDIRECT_SIGN_IN_URL = "redirect:/sign/signIn";
+    private static final String REDIRECT_MYCATAGORIS_URL = "redirect:/board/myCategories";
+
+    //value 상수 지정
+    private static final String BOARD_DETAIL = "boardDetail";
+    private static final String COMMENT_DTO_LIST = "commentDTOList";
+
     private SignDTO getLoginUser(HttpSession session) {
         return (SignDTO) session.getAttribute("loginUser");
     }
@@ -71,18 +81,18 @@ public class BoardController {
         SignDTO loginUser = getLoginUser(session);
         BoardDTO board = boardService.findVisibleById(boardSq, getUserId(loginUser), isAdmin(loginUser));
         if (board == null) {
-            return "redirect:/board/boardList";
+            return REDIRECT_BOARD_LIST_URL;
         }
         board.setTags(tagService.findByBoardSq(boardSq));
         List<CommentDTO> comments = commentService.findByBoardSq(boardSq);
-        model.addAttribute("boardDetail",    board);
-        model.addAttribute("commentDTOList", comments);
-        return "board/boardDetail";
+        model.addAttribute(BOARD_DETAIL,    board);
+        model.addAttribute(COMMENT_DTO_LIST, comments);
+        return BOARD_DETAIL_URL;
     }
 
     @GetMapping("/boardWrite")
     public String createForm(HttpSession session, Model model) throws Exception {
-        if (session.getAttribute("loginUser") == null) return "redirect:/sign/signIn";
+        if (session.getAttribute("loginUser") == null) return REDIRECT_SIGN_IN_URL;
         addCommonModel(model, session);
         return "board/boardWrite";
     }
@@ -90,23 +100,23 @@ public class BoardController {
     @PostMapping("/boardWrite")
     public String createBoard(@ModelAttribute BoardDTO board, HttpSession session) throws Exception {
         SignDTO signDTO = getLoginUser(session);
-        if (signDTO == null) return "redirect:/sign/signIn";
+        if (signDTO == null) return REDIRECT_SIGN_IN_URL;
         if (!categoryService.canUseCategory(board.getCategorySq(), signDTO.getUserId(), isAdmin(signDTO))) {
             return "redirect:/board/boardWrite?categoryError=true";
         }
         board.setUserId(signDTO.getUserId());
         board.setUsername(signDTO.getUsername());
         boardService.save(board, signDTO.getUsername());
-        return "redirect:/board/boardList";
+        return REDIRECT_BOARD_LIST_URL;
     }
 
     @GetMapping("/boardEdit")
     public String editForm(@RequestParam Integer boardSq, Model model, HttpSession session) throws Exception {
         SignDTO signDTO = getLoginUser(session);
-        if (signDTO == null) return "redirect:/sign/signIn";
+        if (signDTO == null) return REDIRECT_SIGN_IN_URL;
         BoardDTO board = boardService.findById(boardSq);
         if (board == null) {
-            return "redirect:/board/boardList";
+            return REDIRECT_BOARD_LIST_URL;
         }
         if (signDTO.getUserId().equals(board.getUserId())) {
             addCommonModel(model, session);
@@ -119,22 +129,22 @@ public class BoardController {
         }
         board = boardService.findVisibleById(boardSq, signDTO.getUserId(), isAdmin(signDTO));
         if (board == null) {
-            return "redirect:/board/boardList";
+            return REDIRECT_BOARD_LIST_URL;
         }
         addCommonModel(model, session);
-        model.addAttribute("boardDetail",    board);
-        model.addAttribute("commentDTOList", commentService.findByBoardSq(boardSq));
+        model.addAttribute(BOARD_DETAIL,    board);
+        model.addAttribute(COMMENT_DTO_LIST, commentService.findByBoardSq(boardSq));
         model.addAttribute("regMsg", "작성자만 수정할 수 있습니다.");
-        return "board/boardDetail";
+        return BOARD_DETAIL_URL;
     }
 
     @PostMapping("/boardUpdate")
     public String updateBoard(@ModelAttribute BoardDTO board, HttpSession session) throws Exception {
         SignDTO signDTO = getLoginUser(session);
-        if (signDTO == null) return "redirect:/sign/signIn";
+        if (signDTO == null) return REDIRECT_SIGN_IN_URL;
         BoardDTO savedBoard = boardService.findById(board.getBoardSq());
         if (savedBoard == null) {
-            return "redirect:/board/boardList";
+            return REDIRECT_BOARD_LIST_URL;
         }
         if (!signDTO.getUserId().equals(savedBoard.getUserId())) {
             return "redirect:/board/boardDetail?boardSq=" + board.getBoardSq();
@@ -149,30 +159,30 @@ public class BoardController {
     @PostMapping("/boardDelete")
     public String deleteBoard(@RequestParam int boardSq, HttpSession session, Model model) throws Exception {
         SignDTO signDTO = getLoginUser(session);
-        if (signDTO == null) return "redirect:/sign/signIn";
+        if (signDTO == null) return REDIRECT_SIGN_IN_URL;
         BoardDTO board = boardService.findById(boardSq);
         if (board == null) {
-            return "redirect:/board/boardList";
+            return REDIRECT_BOARD_LIST_URL;
         }
         if (signDTO.getUserId().equals(board.getUserId())) {
             boardService.delete(boardSq);
-            return "redirect:/board/boardList";
+            return REDIRECT_BOARD_LIST_URL;
         }
         board = boardService.findVisibleById(boardSq, signDTO.getUserId(), isAdmin(signDTO));
         if (board == null) {
-            return "redirect:/board/boardList";
+            return REDIRECT_BOARD_LIST_URL;
         }
         addCommonModel(model, session);
-        model.addAttribute("boardDetail",    board);
-        model.addAttribute("commentDTOList", commentService.findByBoardSq(boardSq));
+        model.addAttribute(BOARD_DETAIL,    board);
+        model.addAttribute(COMMENT_DTO_LIST, commentService.findByBoardSq(boardSq));
         model.addAttribute("regMsg", "작성자만 삭제할 수 있습니다.");
-        return "board/boardDetail";
+        return BOARD_DETAIL_URL;
     }
 
     @GetMapping("/myCategories")
     public String myCategories(HttpSession session, Model model) throws Exception {
         SignDTO signDTO = getLoginUser(session);
-        if (signDTO == null) return "redirect:/sign/signIn";
+        if (signDTO == null) return REDIRECT_SIGN_IN_URL;
         addCommonModel(model, session);
         model.addAttribute("myCategories", categoryService.findByOwner(signDTO.getUserId()));
         model.addAttribute("commonCategories", categoryService.findCommonActive());
@@ -182,31 +192,31 @@ public class BoardController {
     @PostMapping("/categories/save")
     public String saveMyCategory(@ModelAttribute CategoryDTO category, HttpSession session) throws Exception {
         SignDTO signDTO = getLoginUser(session);
-        if (signDTO == null) return "redirect:/sign/signIn";
+        if (signDTO == null) return REDIRECT_SIGN_IN_URL;
         category.setUserId(signDTO.getUserId());
         categoryService.save(category, signDTO.getUsername());
-        return "redirect:/board/myCategories";
+        return REDIRECT_MYCATAGORIS_URL;
     }
 
     @PostMapping("/categories/update")
     public String updateMyCategory(@ModelAttribute CategoryDTO category, HttpSession session) throws Exception {
         SignDTO signDTO = getLoginUser(session);
-        if (signDTO == null) return "redirect:/sign/signIn";
+        if (signDTO == null) return REDIRECT_SIGN_IN_URL;
         if (!categoryService.canManageCategory(category.getCategorySq(), signDTO.getUserId(), isAdmin(signDTO))) {
-            return "redirect:/board/myCategories";
+            return REDIRECT_MYCATAGORIS_URL;
         }
         category.setUserId(signDTO.getUserId());
         categoryService.update(category, signDTO.getUsername());
-        return "redirect:/board/myCategories";
+        return REDIRECT_MYCATAGORIS_URL;
     }
 
     @PostMapping("/categories/delete")
     public String deleteMyCategory(@RequestParam int categorySq, HttpSession session) throws Exception {
         SignDTO signDTO = getLoginUser(session);
-        if (signDTO == null) return "redirect:/sign/signIn";
+        if (signDTO == null) return REDIRECT_SIGN_IN_URL;
         if (categoryService.canManageCategory(categorySq, signDTO.getUserId(), isAdmin(signDTO))) {
             categoryService.delete(categorySq);
         }
-        return "redirect:/board/myCategories";
+        return REDIRECT_MYCATAGORIS_URL;
     }
 }

@@ -1,17 +1,18 @@
 package me.synology.freash97.admin.controller;
 
+import lombok.RequiredArgsConstructor;
 import me.synology.freash97.board.domain.BoardDTO;
 import me.synology.freash97.board.service.BoardService;
 import me.synology.freash97.category.domain.CategoryDTO;
 import me.synology.freash97.category.service.CategoryService;
 import me.synology.freash97.comment.service.CommentService;
+import me.synology.freash97.common.enumconfig.ResultValue;
 import me.synology.freash97.emaildomain.domain.EmailDomainDTO;
 import me.synology.freash97.emaildomain.service.EmailDomainService;
 import me.synology.freash97.sign.domain.SignDTO;
 import me.synology.freash97.sign.service.SignService;
 import me.synology.freash97.tag.domain.TagDTO;
 import me.synology.freash97.tag.service.TagService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,14 +26,18 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/admin")
+@RequiredArgsConstructor
 public class AdminController {
 
-    @Autowired private BoardService boardService;
-    @Autowired private CategoryService categoryService;
-    @Autowired private TagService tagService;
-    @Autowired private SignService signService;
-    @Autowired private EmailDomainService emailDomainService;
-    @Autowired private CommentService commentService;
+    private final BoardService boardService;
+    private final CategoryService categoryService;
+    private final TagService tagService;
+    private final SignService signService;
+    private final EmailDomainService emailDomainService;
+    private final CommentService commentService;
+
+    //URL 상수 지정
+    private static final String REDIRECT_SIGN_IN_URL = "redirect:/sign/signIn";
 
     private boolean isAdmin(HttpSession session) {
         SignDTO loginUser = (SignDTO) session.getAttribute("loginUser");
@@ -53,7 +58,7 @@ public class AdminController {
     // ── 대시보드 ──
     @GetMapping("/dashboard")
     public String dashboard(Model model, HttpSession session) {
-        if (!isAdmin(session)) return "redirect:/sign/signIn";
+        if (!isAdmin(session)) return REDIRECT_SIGN_IN_URL;
         List<BoardDTO> recentBoards = boardService.findAllForAdmin();
         model.addAttribute("recentBoards", recentBoards.size() > 10 ? recentBoards.subList(0, 10) : recentBoards);
         model.addAttribute("totalBoards", boardService.countAll());
@@ -66,7 +71,7 @@ public class AdminController {
     // ── 게시글 관리 ──
     @GetMapping("/boards")
     public String boardList(Model model, HttpSession session) {
-        if (!isAdmin(session)) return "redirect:/sign/signIn";
+        if (!isAdmin(session)) return REDIRECT_SIGN_IN_URL;
         model.addAttribute("boards", boardService.findAllForAdmin());
         return "admin/boardList";
     }
@@ -77,7 +82,7 @@ public class AdminController {
         assertAdmin(session);
         boardService.delete(boardSq);
         Map<String, Object> result = new HashMap<>();
-        result.put("success", true);
+        result.put(ResultValue.succ.getValue(), true);
         return result;
     }
 
@@ -98,7 +103,7 @@ public class AdminController {
     // ── 댓글 관리 ──
     @GetMapping("/comments")
     public String commentList(Model model, HttpSession session) {
-        if (!isAdmin(session)) return "redirect:/sign/signIn";
+        if (!isAdmin(session)) return REDIRECT_SIGN_IN_URL;
         model.addAttribute("comments", commentService.findAllForAdmin());
         return "admin/commentList";
     }
@@ -109,14 +114,14 @@ public class AdminController {
         assertAdmin(session);
         commentService.delete(commentSq);
         Map<String, Object> result = new HashMap<>();
-        result.put("success", true);
+        result.put(ResultValue.succ.getValue(), true);
         return result;
     }
 
     // ── 카테고리 관리 ──
     @GetMapping("/categories")
     public String categoryList(Model model, HttpSession session) {
-        if (!isAdmin(session)) return "redirect:/sign/signIn";
+        if (!isAdmin(session)) return REDIRECT_SIGN_IN_URL;
         model.addAttribute("categories", categoryService.findAll());
         model.addAttribute("users", signService.findAll());
         return "admin/categoryList";
@@ -128,7 +133,7 @@ public class AdminController {
         assertAdmin(session);
         categoryService.save(dto, currentUsername(session));
         Map<String, Object> result = new HashMap<>();
-        result.put("success", true);
+        result.put(ResultValue.succ.getValue(), true);
         return result;
     }
 
@@ -138,7 +143,7 @@ public class AdminController {
         assertAdmin(session);
         categoryService.update(dto, currentUsername(session));
         Map<String, Object> result = new HashMap<>();
-        result.put("success", true);
+        result.put(ResultValue.succ.getValue(), true);
         return result;
     }
 
@@ -148,14 +153,14 @@ public class AdminController {
         assertAdmin(session);
         categoryService.delete(categorySq);
         Map<String, Object> result = new HashMap<>();
-        result.put("success", true);
+        result.put(ResultValue.succ.getValue(), true);
         return result;
     }
 
     // ── 태그 관리 ──
     @GetMapping("/tags")
     public String tagList(Model model, HttpSession session) {
-        if (!isAdmin(session)) return "redirect:/sign/signIn";
+        if (!isAdmin(session)) return REDIRECT_SIGN_IN_URL;
         model.addAttribute("tags", tagService.findAll());
         return "admin/tagList";
     }
@@ -167,7 +172,7 @@ public class AdminController {
         dto.setCreateUser(currentUsername(session));
         tagService.save(dto);
         Map<String, Object> result = new HashMap<>();
-        result.put("success", true);
+        result.put(ResultValue.succ.getValue(), true);
         return result;
     }
 
@@ -177,14 +182,14 @@ public class AdminController {
         assertAdmin(session);
         tagService.delete(tagSq);
         Map<String, Object> result = new HashMap<>();
-        result.put("success", true);
+        result.put(ResultValue.succ.getValue(), true);
         return result;
     }
 
     // ── 회원 관리 ──
     @GetMapping("/users")
     public String userList(Model model, HttpSession session) {
-        if (!isAdmin(session)) return "redirect:/sign/signIn";
+        if (!isAdmin(session)) return REDIRECT_SIGN_IN_URL;
         model.addAttribute("users", signService.findAll());
         return "admin/userList";
     }
@@ -195,7 +200,7 @@ public class AdminController {
         assertAdmin(session);
         signService.updateAdmin(userId, adminYn);
         Map<String, Object> result = new HashMap<>();
-        result.put("success", true);
+        result.put(ResultValue.succ.getValue(), true);
         return result;
     }
 
@@ -205,14 +210,14 @@ public class AdminController {
         assertAdmin(session);
         signService.deleteUser(userId);
         Map<String, Object> result = new HashMap<>();
-        result.put("success", true);
+        result.put(ResultValue.succ.getValue(), true);
         return result;
     }
 
     // ── 이메일 도메인 관리 ──
     @GetMapping("/email-domains")
     public String emailDomainList(Model model, HttpSession session) {
-        if (!isAdmin(session)) return "redirect:/sign/signIn";
+        if (!isAdmin(session)) return REDIRECT_SIGN_IN_URL;
         model.addAttribute("domains", emailDomainService.findAll());
         return "admin/emailDomainList";
     }
@@ -224,7 +229,7 @@ public class AdminController {
         dto.setCreateUser(currentUsername(session));
         emailDomainService.save(dto);
         Map<String, Object> result = new HashMap<>();
-        result.put("success", true);
+        result.put(ResultValue.succ.getValue(), true);
         return result;
     }
 
@@ -234,7 +239,7 @@ public class AdminController {
         assertAdmin(session);
         emailDomainService.updateUseYn(domainSq, useYn);
         Map<String, Object> result = new HashMap<>();
-        result.put("success", true);
+        result.put(ResultValue.succ.getValue(), true);
         return result;
     }
 
@@ -244,7 +249,7 @@ public class AdminController {
         assertAdmin(session);
         emailDomainService.delete(domainSq);
         Map<String, Object> result = new HashMap<>();
-        result.put("success", true);
+        result.put(ResultValue.succ.getValue(), true);
         return result;
     }
 }
