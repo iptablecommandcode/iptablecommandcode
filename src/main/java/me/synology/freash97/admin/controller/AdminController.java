@@ -82,7 +82,7 @@ public class AdminController {
         assertAdmin(session);
         boardService.delete(boardSq);
         Map<String, Object> result = new HashMap<>();
-        result.put(ResultValue.succ.getValue(), true);
+        result.put(ResultValue.SUCC.getValue(), true);
         return result;
     }
 
@@ -114,7 +114,7 @@ public class AdminController {
         assertAdmin(session);
         commentService.delete(commentSq);
         Map<String, Object> result = new HashMap<>();
-        result.put(ResultValue.succ.getValue(), true);
+        result.put(ResultValue.SUCC.getValue(), true);
         return result;
     }
 
@@ -133,7 +133,7 @@ public class AdminController {
         assertAdmin(session);
         categoryService.save(dto, currentUsername(session));
         Map<String, Object> result = new HashMap<>();
-        result.put(ResultValue.succ.getValue(), true);
+        result.put(ResultValue.SUCC.getValue(), true);
         return result;
     }
 
@@ -143,7 +143,7 @@ public class AdminController {
         assertAdmin(session);
         categoryService.update(dto, currentUsername(session));
         Map<String, Object> result = new HashMap<>();
-        result.put(ResultValue.succ.getValue(), true);
+        result.put(ResultValue.SUCC.getValue(), true);
         return result;
     }
 
@@ -153,7 +153,7 @@ public class AdminController {
         assertAdmin(session);
         categoryService.delete(categorySq);
         Map<String, Object> result = new HashMap<>();
-        result.put(ResultValue.succ.getValue(), true);
+        result.put(ResultValue.SUCC.getValue(), true);
         return result;
     }
 
@@ -172,7 +172,7 @@ public class AdminController {
         dto.setCreateUser(currentUsername(session));
         tagService.save(dto);
         Map<String, Object> result = new HashMap<>();
-        result.put(ResultValue.succ.getValue(), true);
+        result.put(ResultValue.SUCC.getValue(), true);
         return result;
     }
 
@@ -182,7 +182,7 @@ public class AdminController {
         assertAdmin(session);
         tagService.delete(tagSq);
         Map<String, Object> result = new HashMap<>();
-        result.put(ResultValue.succ.getValue(), true);
+        result.put(ResultValue.SUCC.getValue(), true);
         return result;
     }
 
@@ -200,7 +200,7 @@ public class AdminController {
         assertAdmin(session);
         signService.updateAdmin(userId, adminYn);
         Map<String, Object> result = new HashMap<>();
-        result.put(ResultValue.succ.getValue(), true);
+        result.put(ResultValue.SUCC.getValue(), true);
         return result;
     }
 
@@ -210,7 +210,7 @@ public class AdminController {
         assertAdmin(session);
         signService.deleteUser(userId);
         Map<String, Object> result = new HashMap<>();
-        result.put(ResultValue.succ.getValue(), true);
+        result.put(ResultValue.SUCC.getValue(), true);
         return result;
     }
 
@@ -229,7 +229,7 @@ public class AdminController {
         dto.setCreateUser(currentUsername(session));
         emailDomainService.save(dto);
         Map<String, Object> result = new HashMap<>();
-        result.put(ResultValue.succ.getValue(), true);
+        result.put(ResultValue.SUCC.getValue(), true);
         return result;
     }
 
@@ -239,7 +239,7 @@ public class AdminController {
         assertAdmin(session);
         emailDomainService.updateUseYn(domainSq, useYn);
         Map<String, Object> result = new HashMap<>();
-        result.put(ResultValue.succ.getValue(), true);
+        result.put(ResultValue.SUCC.getValue(), true);
         return result;
     }
 
@@ -249,7 +249,7 @@ public class AdminController {
         assertAdmin(session);
         emailDomainService.delete(domainSq);
         Map<String, Object> result = new HashMap<>();
-        result.put(ResultValue.succ.getValue(), true);
+        result.put(ResultValue.SUCC.getValue(), true);
         return result;
     }
 }
