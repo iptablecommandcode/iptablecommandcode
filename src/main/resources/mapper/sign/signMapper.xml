@@ -18,10 +18,6 @@
         SELECT * FROM USERS WHERE username = #{username}
     </select>
 
-    <select id="findByUserAccount" parameterType="me.synology.freash97.sign.domain.SignDTO" resultMap="signResultMap">
-        SELECT * FROM USERS WHERE username = #{username} AND password = #{password}
-    </select>
-
     <insert id="save" parameterType="me.synology.freash97.sign.domain.SignDTO">
         INSERT INTO USERS (username, password, email, admin, create_user, create_date)
         VALUES (#{username}, #{password}, #{email}, 'N', #{username}, NOW())
@@ -34,6 +30,12 @@
     <select id="findAll" resultMap="signResultMap">
         SELECT * FROM USERS ORDER BY user_id ASC
     </select>
+
+    <update id="updatePassword">
+        UPDATE USERS
+        SET password = #{password}, update_date = NOW()
+        WHERE user_id = #{userId}
+    </update>
 
     <update id="updateAdmin">
         UPDATE USERS SET admin = #{adminYn}, update_date = NOW() WHERE user_id = #{userId}
